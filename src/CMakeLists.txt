@@ -56,4 +56,3 @@ set(PRIVATE_QML_INSTALL_DIR ${QML_INSTALL_DIR}/org/kde/plasma/private/volume)
 install(TARGETS plasma-volume-declarative DESTINATION ${PRIVATE_QML_INSTALL_DIR})
 install(FILES ${qml_SRCS} DESTINATION ${PRIVATE_QML_INSTALL_DIR})
 
-add_subdirectory(kcm)
