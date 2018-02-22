@@ -42,7 +42,5 @@ find_package(Canberra REQUIRED)
 find_package(GLIB2 REQUIRED)
 
 add_subdirectory(src)
-add_subdirectory(data)
-add_subdirectory(doc)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
