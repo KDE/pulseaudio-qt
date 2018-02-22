@@ -41,7 +41,6 @@ find_package(PulseAudio 5.0.0 REQUIRED)
 find_package(Canberra REQUIRED)
 find_package(GLIB2 REQUIRED)
 
-add_subdirectory(applet)
 add_subdirectory(src)
 add_subdirectory(data)
 add_subdirectory(doc)
