@@ -1,8 +1,8 @@
-project(plasma-volume-control)
+project(pulseaudio-qt)
 cmake_minimum_required(VERSION 2.8.12)
 
-set(PROJECT_VERSION "5.12.80")
-set(PROJECT_VERSION_MAJOR 5)
+set(PROJECT_VERSION "0.1")
+set(PROJECT_VERSION_MAJOR 0)
 
 set(QT_MIN_VERSION "5.7.0")
 set(KF5_MIN_VERSION "5.30.0")
@@ -10,7 +10,7 @@ set(KF5_MIN_VERSION "5.30.0")
 find_package(ECM 1.8.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 
-add_definitions(-DTRANSLATION_DOMAIN=\"kcm_pulseaudio\")
+add_definitions(-DTRANSLATION_DOMAIN=\"pulseaudio-qt\")
 
 include(FeatureSummary)
 include(KDEInstallDirs)
