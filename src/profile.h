@@ -55,24 +55,24 @@ public:
         QString infoName = QString::fromUtf8(info->name);
         if (m_name != infoName) {
             m_name = infoName;
-            emit nameChanged();
+            Q_EMIT nameChanged();
         }
         if (info->description) {
             QString infoDescription = QString::fromUtf8(info->description);
             if (m_description != infoDescription) {
                 m_description = infoDescription;
-                emit descriptionChanged();
+                Q_EMIT descriptionChanged();
             }
         }
         if (m_priority != info->priority) {
             m_priority = info->priority;
-            emit priorityChanged();
+            Q_EMIT priorityChanged();
         }
 
         Availability newAvailability = info->available ? Available : Unavailable;
         if (m_availability != newAvailability) {
             m_availability = newAvailability;
-            emit availabilityChanged();
+            Q_EMIT availabilityChanged();
         }
     }
 
@@ -81,7 +81,7 @@ public:
     quint32 priority() const;
     Availability availability() const;
 
-signals:
+Q_SIGNALS:
     void nameChanged();
     void descriptionChanged();
     void priorityChanged();

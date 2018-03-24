@@ -28,7 +28,7 @@
 namespace QPulseAudio
 {
 
-class VolumeObject : public PulseObject
+class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(qint64 volume READ volume WRITE setVolume NOTIFY volumeChanged)
@@ -47,12 +47,12 @@ public:
         updatePulseObject(info);
         if (m_muted != info->mute) {
             m_muted = info->mute;
-            emit mutedChanged();
+            Q_EMIT mutedChanged();
         }
         if (!pa_cvolume_equal(&m_volume, &info->volume)) {
             m_volume = info->volume;
-            emit volumeChanged();
-            emit channelVolumesChanged();
+            Q_EMIT volumeChanged();
+            Q_EMIT channelVolumesChanged();
         }
         QStringList infoChannels;
         infoChannels.reserve(info->channel_map.channels);
@@ -61,7 +61,7 @@ public:
         }
         if (m_channels != infoChannels) {
             m_channels = infoChannels;
-            emit channelsChanged();
+            Q_EMIT channelsChanged();
         }
     }
 

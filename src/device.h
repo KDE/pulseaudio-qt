@@ -18,8 +18,8 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DEVICE_H
-#define DEVICE_H
+#ifndef PA_DEVICE_H
+#define PA_DEVICE_H
 
 #include <QString>
 
@@ -32,7 +32,7 @@
 namespace QPulseAudio
 {
 
-class Device : public VolumeObject
+class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
 {
     Q_OBJECT
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
@@ -62,23 +62,23 @@ public:
 
         if (m_name != info->name) {
             m_name = info->name;
-            emit nameChanged();
+            Q_EMIT nameChanged();
         }
         if (m_description != info->description) {
             m_description = info->description;
-            emit descriptionChanged();
+            Q_EMIT descriptionChanged();
         }
         const char *form_factor = pa_proplist_gets(info->proplist, PA_PROP_DEVICE_FORM_FACTOR);
         if (form_factor) {
             QString formFactor = QString::fromUtf8(form_factor);
             if (m_formFactor != formFactor) {
                 m_formFactor = formFactor;
-                emit formFactorChanged();
+                Q_EMIT formFactorChanged();
             }
         }
 
         m_cardIndex = info->card;
-        emit cardIndexChanged();
+        Q_EMIT cardIndexChanged();
 
         // TODO: this rebuilds the entire port list on every update. would be
         // nicer if it actually removed what needs removing updates what needs
@@ -94,13 +94,13 @@ public:
                 m_activePortIndex = m_ports.length() - 1;
             }
         }
-        emit portsChanged();
-        emit activePortIndexChanged();
+        Q_EMIT portsChanged();
+        Q_EMIT activePortIndexChanged();
 
         State infoState = stateFromPaState(info->state);
         if (infoState != m_state) {
             m_state = infoState;
-            emit stateChanged();
+            Q_EMIT stateChanged();
         }
     }
 

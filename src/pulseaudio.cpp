@@ -167,7 +167,7 @@ void AbstractModel::propertyChanged()
     }
     int index = m_map->indexOfObject(sender());
     qCDebug(PLASMAPA) << "PROPERTY CHANGED (" << index << ") :: " << role << roleNames().value(role);
-    emit dataChanged(createIndex(index, 0), createIndex(index, 0), {role});
+    Q_EMIT dataChanged(createIndex(index, 0), createIndex(index, 0), {role});
 }
 
 void AbstractModel::onDataAdded(int index)
@@ -215,7 +215,7 @@ SinkModel::SinkModel(QObject *parent)
 
     connect(context()->server(), &Server::defaultSinkChanged, this, [this]() {
         updatePreferredSink();
-        emit defaultSinkChanged();
+        Q_EMIT defaultSinkChanged();
     });
 }
 
@@ -263,7 +263,7 @@ void SinkModel::updatePreferredSink()
     if (sink != m_preferredSink) {
         qCDebug(PLASMAPA) << "Changing preferred sink to" << sink << (sink ? sink->name() : "");
         m_preferredSink = sink;
-        emit preferredSinkChanged();
+        Q_EMIT preferredSinkChanged();
     }
 }
 

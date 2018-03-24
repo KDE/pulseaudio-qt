@@ -56,7 +56,7 @@ public:
     virtual QObject *objectAt(int index) const = 0;
     virtual int indexOfObject(QObject *object) const = 0;
 
-signals:
+Q_SIGNALS:
     void added(int index);
     void removed(int index);
 };
@@ -115,7 +115,7 @@ public:
 
         const int modelIndex = m_data.keys().indexOf(object->index());
         Q_ASSERT(modelIndex >= 0);
-        emit added(modelIndex);
+        Q_EMIT added(modelIndex);
     }
 
     // Context is passed in as parent because context needs to include the maps
@@ -142,7 +142,7 @@ public:
         if (isNew) {
             const int modelIndex = m_data.keys().indexOf(info->index);
             Q_ASSERT(modelIndex >= 0);
-            emit added(modelIndex);
+            Q_EMIT added(modelIndex);
         }
     }
 
@@ -153,7 +153,7 @@ public:
         } else {
             const int modelIndex = m_data.keys().indexOf(index);
             delete m_data.take(index);
-            emit removed(modelIndex);
+            Q_EMIT removed(modelIndex);
         }
     }
 
