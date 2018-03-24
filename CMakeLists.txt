@@ -19,7 +19,8 @@ include(ECMQtDeclareLoggingCategory)
 include(ECMAddQch)
 
 include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+# include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
@@ -31,7 +32,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PULSEAUDIOQT
                         SOVERSION 1)
 
 set(REQUIRED_QT_VERSION 5.7.0)
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core)
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
 
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
@@ -49,7 +50,6 @@ endif()
 
 install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfig.cmake"
                "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfigVersion.cmake"
-               "${CMAKE_CURRENT_SOURCE_DIR}/KF5PulseAudioQtMacros.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
