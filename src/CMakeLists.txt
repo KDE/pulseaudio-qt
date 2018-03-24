@@ -43,3 +43,5 @@ set_target_properties(KF5PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_VERSION_
                                                    SOVERSION ${PULSEAUDIOQT_SOVERSION}
                                                    EXPORT_NAME PulseAudioQt
 )
+
+install(TARGETS KF5PulseAudioQt EXPORT KF5PulseAudioQtTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
