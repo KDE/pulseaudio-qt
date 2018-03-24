@@ -27,6 +27,7 @@
 
 #include <pulse/pulseaudio.h>
 #include <pulse/ext-stream-restore.h>
+#include "kf5pulseaudioqt_export.h"
 
 namespace QPulseAudio
 {
@@ -46,7 +47,7 @@ class Module;
  * This class is nothing more than the QObject base since moc cannot handle
  * templates.
  */
-class MapBaseQObject : public QObject
+class KF5PULSEAUDIOQT_EXPORT MapBaseQObject : public QObject
 {
     Q_OBJECT
 

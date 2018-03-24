@@ -22,13 +22,12 @@
 #define PORT_H
 
 #include "profile.h"
-
-#include <pulse/def.h>
+#include "kf5pulseaudioqt_export.h"
 
 namespace QPulseAudio
 {
 
-class Port : public Profile
+class KF5PULSEAUDIOQT_EXPORT Port : public Profile
 {
     Q_OBJECT
 

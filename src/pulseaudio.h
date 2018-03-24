@@ -30,7 +30,7 @@ namespace QPulseAudio
 {
     class Context;
 
-class AbstractModel : public QAbstractListModel
+class KF5PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
@@ -69,14 +69,14 @@ private:
     AbstractModel() {}
 };
 
-class CardModel : public AbstractModel
+class KF5PULSEAUDIOQT_EXPORT CardModel : public AbstractModel
 {
     Q_OBJECT
 public:
     CardModel(QObject *parent = nullptr);
 };
 
-class SinkModel : public AbstractModel
+class KF5PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
 {
     Q_OBJECT
     Q_PROPERTY(QPulseAudio::Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
@@ -105,14 +105,14 @@ private:
     Sink *m_preferredSink;
 };
 
-class SinkInputModel : public AbstractModel
+class KF5PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
 {
     Q_OBJECT
 public:
     SinkInputModel(QObject *parent = nullptr);
 };
 
-class SourceModel : public AbstractModel
+class KF5PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
 {
     Q_OBJECT
     Q_PROPERTY(QPulseAudio::Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
@@ -130,21 +130,21 @@ signals:
     void defaultSourceChanged();
 };
 
-class SourceOutputModel : public AbstractModel
+class KF5PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
 {
     Q_OBJECT
 public:
     SourceOutputModel(QObject *parent = nullptr);
 };
 
-class StreamRestoreModel : public AbstractModel
+class KF5PULSEAUDIOQT_EXPORT StreamRestoreModel : public AbstractModel
 {
     Q_OBJECT
 public:
     StreamRestoreModel(QObject *parent = nullptr);
 };
 
-class ModuleModel : public AbstractModel
+class KF5PULSEAUDIOQT_EXPORT ModuleModel : public AbstractModel
 {
     Q_OBJECT
 public:

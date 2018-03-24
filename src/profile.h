@@ -23,11 +23,12 @@
 
 #include <QObject>
 #include <QString>
+#include "kf5pulseaudioqt_export.h"
 
 namespace QPulseAudio
 {
 
-class Profile : public QObject
+class KF5PULSEAUDIOQT_EXPORT Profile : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)

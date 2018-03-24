@@ -24,6 +24,7 @@
 #include <QString>
 
 #include <pulse/introspect.h>
+#include "kf5pulseaudioqt_export.h"
 
 #include "context.h"
 // Properties need fully qualified classes even with pointers.
@@ -35,7 +36,7 @@ namespace QPulseAudio
 {
 class GConfModule;
 
-class ModuleManager : public QObject
+class KF5PULSEAUDIOQT_EXPORT ModuleManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool combineSinks READ combineSinks WRITE setCombineSinks NOTIFY combineSinksChanged)

@@ -32,13 +32,14 @@
 
 #include "maps.h"
 #include "operation.h"
+#include "kf5pulseaudioqt_export.h"
 
 namespace QPulseAudio
 {
 
 class Server;
 
-class Context : public QObject
+class KF5PULSEAUDIOQT_EXPORT Context : public QObject
 {
     Q_OBJECT
 public:

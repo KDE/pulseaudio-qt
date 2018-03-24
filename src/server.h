@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <pulse/introspect.h>
+#include "kf5pulseaudioqt_export.h"
 
 namespace QPulseAudio
 {
@@ -31,7 +32,7 @@ class Sink;
 class Source;
 class Context;
 
-class Server : public QObject
+class KF5PULSEAUDIOQT_EXPORT Server : public QObject
 {
     Q_OBJECT
 

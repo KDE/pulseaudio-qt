@@ -24,6 +24,7 @@
 #include "debug.h"
 #include <QObject>
 
+#include "kf5pulseaudioqt_export.h"
 #include <pulse/introspect.h>
 
 namespace QPulseAudio
@@ -31,7 +32,7 @@ namespace QPulseAudio
 
 class Context;
 
-class PulseObject : public QObject
+class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(quint32 index READ index CONSTANT)

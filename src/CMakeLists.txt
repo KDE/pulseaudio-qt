@@ -32,6 +32,8 @@ target_link_libraries(KF5PulseAudioQt
     PUBLIC
         Qt5::Core
     PRIVATE
+        Qt5::Gui
+        Qt5::DBus
         ${PULSEAUDIO_LIBRARY}
         ${PULSEAUDIO_MAINLOOP_LIBRARY}
         ${GCONF_LDFLAGS}
@@ -39,9 +41,42 @@ target_link_libraries(KF5PulseAudioQt
         ${CANBERRA_LIBRARIES}
 )
 
+target_include_directories(KF5PulseAudioQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KF5PulseAudioQt>" )
+
 set_target_properties(KF5PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_VERSION_STRING}
                                                    SOVERSION ${PULSEAUDIOQT_SOVERSION}
                                                    EXPORT_NAME PulseAudioQt
 )
 
+ecm_generate_headers(PulseAudioQt_HEADERS
+    HEADER_NAMES
+        Card
+        Client
+        Context
+        Debug
+        Device
+        Maps
+        Module
+        ModuleManager
+        Operation
+        Port
+        Profile
+        PulseAudio
+        PulseObject
+        Server
+        Sink
+        SinkInput
+        Source
+        SourceOutput
+        StreamRestore
+        VolumeObject
+    REQUIRED_HEADERS PulseAudioQt_HEADERS
+)
+generate_export_header(KF5PulseAudioQt BASE_NAME KF5PulseAudioQt)
+
 install(TARGETS KF5PulseAudioQt EXPORT KF5PulseAudioQtTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES
+    ${PulseAudioQt_HEADERS}
+    ${CMAKE_CURRENT_BINARY_DIR}/kf5pulseaudioqt_export.h
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KF5PulseAudioQt/PulseAudioQt COMPONENT Devel
+)
