@@ -24,35 +24,22 @@ set(cpp_SRCS
     server.cpp
     streamrestore.cpp
     module.cpp
-    qml/globalactioncollection.cpp
-    qml/plugin.cpp
-    qml/volumeosd.cpp
-    qml/volumefeedback.cpp
 )
 
-set(qml_SRCS
-    qml/qmldir
-    qml/PulseObjectFilterModel.qml
+
+add_library(KF5PulseAudioQt SHARED ${cpp_SRCS})
+target_link_libraries(KF5PulseAudioQt
+    PUBLIC
+        Qt5::Core
+    PRIVATE
+        ${PULSEAUDIO_LIBRARY}
+        ${PULSEAUDIO_MAINLOOP_LIBRARY}
+        ${GCONF_LDFLAGS}
+        ${GOBJECT_LDFLAGS}
+        ${CANBERRA_LIBRARIES}
 )
 
-set_property(SOURCE qml/dbus/osdService.xml APPEND PROPERTY CLASSNAME OsdServiceInterface)
-qt5_add_dbus_interface(dbus_SRCS qml/dbus/osdService.xml osdservice)
-
-add_library(plasma-volume-declarative SHARED ${dbus_SRCS} ${cpp_SRCS} ${qml_SRCS})
-target_link_libraries(plasma-volume-declarative
-    Qt5::Core
-    Qt5::Gui
-    Qt5::DBus
-    Qt5::Quick
-    KF5::GlobalAccel
-    ${PULSEAUDIO_LIBRARY}
-    ${PULSEAUDIO_MAINLOOP_LIBRARY}
-    ${GCONF_LDFLAGS}
-    ${GOBJECT_LDFLAGS}
-    ${CANBERRA_LIBRARIES}
+set_target_properties(KF5PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_VERSION_STRING}
+                                                   SOVERSION ${PULSEAUDIOQT_SOVERSION}
+                                                   EXPORT_NAME PulseAudioQt
 )
-
-set(PRIVATE_QML_INSTALL_DIR ${QML_INSTALL_DIR}/org/kde/plasma/private/volume)
-install(TARGETS plasma-volume-declarative DESTINATION ${PRIVATE_QML_INSTALL_DIR})
-install(FILES ${qml_SRCS} DESTINATION ${PRIVATE_QML_INSTALL_DIR})
-
