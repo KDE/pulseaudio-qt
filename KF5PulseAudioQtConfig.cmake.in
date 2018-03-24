@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt5Core @REQUIRED_QT_VERSION@)
+
+@PACKAGE_SETUP_AUTOMOC_VARIABLES@
+include("${CMAKE_CURRENT_LIST_DIR}/KF5PulseAudioQt.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/KF5PulseAudioQtMacros.cmake")
+@PACKAGE_INCLUDE_QCHTARGETS@
