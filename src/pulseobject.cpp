@@ -19,6 +19,7 @@
 */
 
 #include "pulseobject.h"
+#include "pulseobject_p.h"
 
 #include "context.h"
 
@@ -29,6 +30,12 @@ namespace QPulseAudio
 
 PulseObject::PulseObject(QObject *parent)
     : QObject(parent)
+    , d(new PulseObjectPrivate(this))
+{
+}
+
+PulseObjectPrivate::PulseObjectPrivate(PulseObject* q)
+    : q(q)
     , m_index(0)
 {
 }
@@ -44,37 +51,37 @@ Context *PulseObject::context() const
 
 uint32_t PulseObject::index() const
 {
-    return m_index;
+    return d->m_index;
 }
 
 QString PulseObject::iconName() const
 {
-    QString name = m_properties.value(QStringLiteral("device.icon_name")).toString();
+    QString name = d->m_properties.value(QStringLiteral("device.icon_name")).toString();
     if (!name.isEmpty() && QIcon::hasThemeIcon(name)) {
         return name;
     }
 
-    name = m_properties.value(QStringLiteral("media.icon_name")).toString();
+    name = d->m_properties.value(QStringLiteral("media.icon_name")).toString();
     if (!name.isEmpty() && QIcon::hasThemeIcon(name)) {
         return name;
     }
 
-    name = m_properties.value(QStringLiteral("window.icon_name")).toString();
+    name = d->m_properties.value(QStringLiteral("window.icon_name")).toString();
     if (!name.isEmpty() && QIcon::hasThemeIcon(name)) {
         return name;
     }
 
-    name = m_properties.value(QStringLiteral("application.icon_name")).toString();
+    name = d->m_properties.value(QStringLiteral("application.icon_name")).toString();
     if (!name.isEmpty() && QIcon::hasThemeIcon(name)) {
         return name;
     }
 
-    name = m_properties.value(QStringLiteral("application.process.binary")).toString();
+    name = d->m_properties.value(QStringLiteral("application.process.binary")).toString();
     if (!name.isEmpty() && QIcon::hasThemeIcon(name)) {
         return name;
     }
 
-    name = m_properties.value(QStringLiteral("application.name")).toString();
+    name = d->m_properties.value(QStringLiteral("application.name")).toString();
     if (!name.isEmpty() && QIcon::hasThemeIcon(name)) {
         return name;
     }
@@ -89,7 +96,7 @@ QString PulseObject::iconName() const
 
 QVariantMap PulseObject::properties() const
 {
-    return m_properties;
+    return d->m_properties;
 }
 
 } // QPulseAudio

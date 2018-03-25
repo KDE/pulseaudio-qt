@@ -24,6 +24,8 @@
 #include "context_p.h"
 #include "server.h"
 
+#include "device_p.h"
+
 namespace QPulseAudio
 {
 
@@ -45,7 +47,7 @@ void Sink::setVolume(qint64 volume)
 
 void Sink::setMuted(bool muted)
 {
-    context()->d->setGenericMute(m_index, muted, &pa_context_set_sink_mute_by_index);
+    context()->d->setGenericMute(index(), muted, &pa_context_set_sink_mute_by_index);
 }
 
 void Sink::setActivePortIndex(quint32 port_index)

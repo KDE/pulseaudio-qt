@@ -23,6 +23,7 @@
 #include "context_p.h"
 
 #include "debug.h"
+#include "pulseobject_p.h"
 
 namespace QPulseAudio
 {
@@ -34,8 +35,8 @@ StreamRestore::StreamRestore(quint32 index, const QVariantMap &properties, QObje
     memset(&m_volume, 0, sizeof(m_volume));
     memset(&m_channelMap, 0, sizeof(m_channelMap));
 
-    m_index = index;
-    m_properties = properties;
+    d->m_index = index;
+    d->m_properties = properties;
 }
 
 void StreamRestore::update(const pa_ext_stream_restore_info *info)

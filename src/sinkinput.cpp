@@ -22,6 +22,7 @@
 
 #include "context.h"
 #include "context_p.h"
+#include "stream_p.h"
 
 namespace QPulseAudio
 {

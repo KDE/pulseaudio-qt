@@ -19,6 +19,8 @@
 */
 
 #include "device.h"
+#include "device_p.h"
+
 
 QPulseAudio::Device::State QPulseAudio::Device::state() const
 {

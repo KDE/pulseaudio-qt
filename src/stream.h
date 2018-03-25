@@ -44,37 +44,7 @@ class Stream : public VolumeObject
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
     Q_PROPERTY(bool corked READ isCorked NOTIFY corkedChanged)
 public:
-    template <typename PAInfo>
-    void updateStream(const PAInfo *info)
-    {
-        updateVolumeObject(info);
-
-        if (m_name != QString::fromUtf8(info->name)) {
-            m_name = QString::fromUtf8(info->name);
-            Q_EMIT nameChanged();
-        }
-        if (m_hasVolume != info->has_volume) {
-            m_hasVolume = info->has_volume;
-            Q_EMIT hasVolumeChanged();
-        }
-        if (m_volumeWritable != info->volume_writable) {
-            m_volumeWritable = info->volume_writable;
-            Q_EMIT isVolumeWritableChanged();
-        }
-        if (m_clientIndex != info->client) {
-            m_clientIndex = info->client;
-            Q_EMIT clientChanged();
-        }
-        if (m_virtualStream != (info->client == PA_INVALID_INDEX)) {
-            m_virtualStream = info->client == PA_INVALID_INDEX;
-            Q_EMIT virtualStreamChanged();
-        }
-        if (m_corked != info->corked) {
-            m_corked = info->corked;
-            Q_EMIT corkedChanged();
-        }
-    }
-
+    
     QString name() const;
     Client *client() const;
     bool isVirtualStream() const;
@@ -94,6 +64,9 @@ protected:
     Stream(QObject *parent);
     virtual ~Stream();
 
+    template <typename PAInfo>
+    void updateStream(const PAInfo *info);
+    
     quint32 m_deviceIndex;
 
 private:

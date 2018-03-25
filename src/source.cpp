@@ -23,7 +23,7 @@
 #include "context.h"
 #include "context_p.h"
 #include "server.h"
-
+#include "device_p.h"
 namespace QPulseAudio
 {
 

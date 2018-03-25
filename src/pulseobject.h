@@ -25,12 +25,12 @@
 #include <QObject>
 
 #include "kf5pulseaudioqt_export.h"
-#include <pulse/introspect.h>
 
 namespace QPulseAudio
 {
 
 class Context;
+class PulseObjectPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
 {
@@ -39,26 +39,7 @@ class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
     Q_PROPERTY(QString iconName READ iconName CONSTANT)
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)
 public:
-    template <typename PAInfo>
-    void updatePulseObject(PAInfo *info)
-    {
-        m_index = info->index;
-
-        m_properties.clear();
-        void *it = nullptr;
-        while (const char *key = pa_proplist_iterate(info->proplist, &it)) {
-            Q_ASSERT(key);
-            const char *value = pa_proplist_gets(info->proplist, key);
-            if (!value) {
-                qCDebug(PLASMAPA) << "property" << key << "not a string";
-                continue;
-            }
-            Q_ASSERT(value);
-            m_properties.insert(QString::fromUtf8(key), QString::fromUtf8(value));
-        }
-        Q_EMIT propertiesChanged();
-    }
-
+    
     quint32 index() const;
     QString iconName() const;
     QVariantMap properties() const;
@@ -67,12 +48,14 @@ Q_SIGNALS:
     void propertiesChanged();
 
 protected:
+
+    template <typename PAInfo>
+    void updatePulseObject(PAInfo *info);
+    
     PulseObject(QObject *parent);
     virtual ~PulseObject();
-
     Context *context() const;
-    quint32 m_index;
-    QVariantMap m_properties;
+    PulseObjectPrivate* d;
 
 private:
     // Ensure that we get properly parented.

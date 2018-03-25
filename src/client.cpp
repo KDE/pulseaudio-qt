@@ -21,6 +21,7 @@
 #include "client.h"
 
 #include "debug.h"
+#include "pulseobject_p.h"
 
 namespace QPulseAudio
 {

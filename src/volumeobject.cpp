@@ -19,6 +19,7 @@
 */
 
 #include "volumeobject.h"
+#include "volumeobject_p.h"
 
 namespace QPulseAudio
 {
