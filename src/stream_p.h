@@ -15,12 +15,12 @@ void Stream::updateStream(const PAInfo *info)
         m_name = QString::fromUtf8(info->name);
         Q_EMIT nameChanged();
     }
-    if (m_hasVolume != info->has_volume) {
-        m_hasVolume = info->has_volume;
+    if (VolumeObject::d->m_hasVolume != info->has_volume) {
+        VolumeObject::d->m_hasVolume = info->has_volume;
         Q_EMIT hasVolumeChanged();
     }
-    if (m_volumeWritable != info->volume_writable) {
-        m_volumeWritable = info->volume_writable;
+    if (VolumeObject::d->m_volumeWritable != info->volume_writable) {
+        VolumeObject::d->m_volumeWritable = info->volume_writable;
         Q_EMIT isVolumeWritableChanged();
     }
     if (m_clientIndex != info->client) {

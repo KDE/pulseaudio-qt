@@ -19,6 +19,7 @@
 */
 
 #include "stream.h"
+#include "volumeobject_p.h"
 
 namespace QPulseAudio
 {
@@ -30,8 +31,8 @@ Stream::Stream(QObject *parent)
     , m_virtualStream(false)
     , m_corked(false)
 {
-    m_volumeWritable = false;
-    m_hasVolume = false;
+    VolumeObject::d->m_volumeWritable = false;
+    VolumeObject::d->m_hasVolume = false;
 }
 
 Stream::~Stream()

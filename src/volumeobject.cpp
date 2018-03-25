@@ -18,6 +18,8 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <pulse/volume.h>
+
 #include "volumeobject.h"
 #include "volumeobject_p.h"
 
@@ -26,6 +28,12 @@ namespace QPulseAudio
 
 VolumeObject::VolumeObject(QObject *parent)
     : PulseObject(parent)
+    , d(new VolumeObjectPrivate(this))
+{
+}
+
+VolumeObjectPrivate::VolumeObjectPrivate(VolumeObject* q)
+    : q(q)
     , m_muted(true)
     , m_hasVolume(true)
     , m_volumeWritable(true)
@@ -39,40 +47,40 @@ VolumeObject::~VolumeObject()
 
 qint64 VolumeObject::volume() const
 {
-    return pa_cvolume_max(&m_volume);
+    return pa_cvolume_max(&d->m_volume);
 }
 
 bool VolumeObject::isMuted() const
 {
-    return m_muted;
+    return d->m_muted;
 }
 
 pa_cvolume VolumeObject::cvolume() const
 {
-    return m_volume;
+    return d->m_volume;
 }
 
 bool VolumeObject::hasVolume() const
 {
-    return m_hasVolume;
+    return d->m_hasVolume;
 }
 
 bool VolumeObject::isVolumeWritable() const
 {
-    return m_volumeWritable;
+    return d->m_volumeWritable;
 }
 
 QStringList VolumeObject::channels() const
 {
-    return m_channels;
+    return d->m_channels;
 }
 
 QList<qreal> VolumeObject::channelVolumes() const
 {
     QList<qreal> ret;
-    ret.reserve(m_volume.channels);
-    for (int i = 0; i < m_volume.channels; ++i) {
-        ret << m_volume.values[i];
+    ret.reserve(d->m_volume.channels);
+    for (int i = 0; i < d->m_volume.channels; ++i) {
+        ret << d->m_volume.values[i];
     }
     return ret;
 }

@@ -21,12 +21,12 @@
 #ifndef VOLUMEOBJECT_H
 #define VOLUMEOBJECT_H
 
-#include <pulse/volume.h>
-
 #include "pulseobject.h"
 
 namespace QPulseAudio
 {
+
+class VolumeObjectPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
 {
@@ -40,9 +40,6 @@ class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
 public:
     VolumeObject(QObject *parent);
     virtual ~VolumeObject();
-
-    template <typename PAInfo>
-    void updateVolumeObject(PAInfo *info);
 
     qint64 volume() const;
     virtual void setVolume(qint64 volume) = 0;
@@ -66,13 +63,10 @@ Q_SIGNALS:
     void channelVolumesChanged();
 
 protected:
+    template <typename PAInfo>
+    void updateVolumeObject(PAInfo *info);
     pa_cvolume cvolume() const;
-
-    pa_cvolume m_volume;
-    bool m_muted;
-    bool m_hasVolume;
-    bool m_volumeWritable;
-    QStringList m_channels;
+    VolumeObjectPrivate* d;
 };
 
 } // QPulseAudio
