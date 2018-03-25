@@ -115,7 +115,7 @@ public:
     virtual bool isDefault() const = 0;
     virtual void setDefault(bool enable) = 0;
 
-signals:
+Q_SIGNALS:
     void stateChanged();
     void nameChanged();
     void descriptionChanged();

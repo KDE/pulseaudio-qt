@@ -34,6 +34,9 @@ Server::Server(Context *context)
 {
     Q_ASSERT(context);
 
+    const QObject* obj = (&context->sinks());
+    qDebug() << "holaaaa" << obj;
+    
     connect(&context->sinks(), &MapBaseQObject::added, this, &Server::updateDefaultDevices);
     connect(&context->sinks(), &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
     connect(&context->sources(), &MapBaseQObject::added, this, &Server::updateDefaultDevices);

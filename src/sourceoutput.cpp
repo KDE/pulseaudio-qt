@@ -21,6 +21,7 @@
 #include "sourceoutput.h"
 
 #include "context.h"
+#include "context_p.h"
 
 namespace QPulseAudio
 {
@@ -41,22 +42,22 @@ void SourceOutput::update(const pa_source_output_info *info)
 
 void SourceOutput::setDeviceIndex(quint32 deviceIndex)
 {
-    context()->setGenericDeviceForStream(index(), deviceIndex, &pa_context_move_source_output_by_index);
+    context()->d->setGenericDeviceForStream(index(), deviceIndex, &pa_context_move_source_output_by_index);
 }
 
 void SourceOutput::setVolume(qint64 volume)
 {
-    context()->setGenericVolume(index(), -1, volume, cvolume(), &pa_context_set_source_output_volume);
+    context()->d->setGenericVolume(index(), -1, volume, cvolume(), &pa_context_set_source_output_volume);
 }
 
 void SourceOutput::setMuted(bool muted)
 {
-    context()->setGenericMute(index(), muted, &pa_context_set_source_output_mute);
+    context()->d->setGenericMute(index(), muted, &pa_context_set_source_output_mute);
 }
 
 void SourceOutput::setChannelVolume(int channel, qint64 volume)
 {
-    context()->setGenericVolume(index(), channel, volume, cvolume(), &pa_context_set_source_output_volume);
+    context()->d->setGenericVolume(index(), channel, volume, cvolume(), &pa_context_set_source_output_volume);
 }
 
 } // QPulseAudio

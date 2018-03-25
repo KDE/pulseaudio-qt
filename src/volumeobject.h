@@ -78,7 +78,7 @@ public:
     QList<qreal> channelVolumes() const;
     Q_INVOKABLE virtual void setChannelVolume(int channel, qint64 volume) = 0;
 
-signals:
+Q_SIGNALS:
     void volumeChanged();
     void mutedChanged();
     void hasVolumeChanged();

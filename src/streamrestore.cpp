@@ -20,6 +20,8 @@
 
 #include "streamrestore.h"
 #include "context.h"
+#include "context_p.h"
+
 #include "debug.h"
 
 namespace QPulseAudio
@@ -195,7 +197,7 @@ void StreamRestore::writeChanges(const pa_cvolume &volume, bool muted, const QSt
     m_cache.muted = muted;
     m_cache.device = device;
 
-    context()->streamRestoreWrite(&info);
+    context()->d->streamRestoreWrite(&info);
 }
 
 } // QPulseAudio

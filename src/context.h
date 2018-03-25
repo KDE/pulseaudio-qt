@@ -25,7 +25,6 @@
 #include <QObject>
 #include <QSet>
 #include "maps.h"
-#include "operation.h"
 #include "kf5pulseaudioqt_export.h"
 
 namespace QPulseAudio
@@ -66,38 +65,12 @@ public:
     QString newDefaultSink() const;
     QString newDefaultSource() const;
 
-    void subscribeCallback(pa_context *context, pa_subscription_event_type_t type, uint32_t index);
-    void contextStateCallback(pa_context *context);
-
-    void sinkCallback(const pa_sink_info *info);
-    void sinkInputCallback(const pa_sink_input_info *info);
-    void sourceCallback(const pa_source_info *info);
-    void sourceOutputCallback(const pa_source_output_info *info);
-    void clientCallback(const pa_client_info *info);
-    void cardCallback(const pa_card_info *info);
-    void moduleCallback(const pa_module_info *info);
-    void streamRestoreCallback(const pa_ext_stream_restore_info *info);
-    void serverCallback(const pa_server_info *info);
-
     void setCardProfile(quint32 index, const QString &profile);
     void setDefaultSink(const QString &name);
     void setDefaultSource(const QString &name);
-    void streamRestoreWrite(const pa_ext_stream_restore_info *info);
-
-    void setGenericVolume(quint32 index, int channel, qint64 newVolume, pa_cvolume cVolume, const std::function<pa_operation*(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)>& );
-
-    void setGenericMute(quint32 index, bool mute, const std::function<pa_operation*(pa_context *, uint32_t, int, pa_context_success_cb_t, void *)>& );
-
-    void setGenericPort(quint32 index, const QString &portName, const std::function<pa_operation*(pa_context *, uint32_t, const char*, pa_context_success_cb_t, void *)>& );
-
-    void setGenericDeviceForStream(quint32 streamIndex, quint32 deviceIndex, const std::function<pa_operation*(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)>& );
-
-private:
-
-    void connectToDaemon();
-    void reset();
 
     ContextPrivate* d;
+private:
     static Context* s_context;
 };
 
