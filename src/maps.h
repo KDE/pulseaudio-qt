@@ -29,6 +29,10 @@
 #include <pulse/ext-stream-restore.h>
 #include "kf5pulseaudioqt_export.h"
 
+#include "sink_p.h"
+#include "volumeobject_p.h"
+#include "source_p.h"
+
 namespace QPulseAudio
 {
 

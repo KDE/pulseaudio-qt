@@ -48,7 +48,7 @@ void SourceOutput::setDeviceIndex(quint32 deviceIndex)
 
 void SourceOutput::setVolume(qint64 volume)
 {
-    context()->d->setGenericVolume(index(), -1, volume, cvolume(), &pa_context_set_source_output_volume);
+    context()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_source_output_volume);
 }
 
 void SourceOutput::setMuted(bool muted)
@@ -58,7 +58,7 @@ void SourceOutput::setMuted(bool muted)
 
 void SourceOutput::setChannelVolume(int channel, qint64 volume)
 {
-    context()->d->setGenericVolume(index(), channel, volume, cvolume(), &pa_context_set_source_output_volume);
+    context()->d->setGenericVolume(index(), channel, volume, VolumeObject::d->cvolume(), &pa_context_set_source_output_volume);
 }
 
 } // QPulseAudio

@@ -54,6 +54,7 @@ public:
     QList<qreal> channelVolumes() const;
     Q_INVOKABLE virtual void setChannelVolume(int channel, qint64 volume) = 0;
 
+    VolumeObjectPrivate* d;
 Q_SIGNALS:
     void volumeChanged();
     void mutedChanged();
@@ -65,8 +66,6 @@ Q_SIGNALS:
 protected:
     template <typename PAInfo>
     void updateVolumeObject(PAInfo *info);
-    pa_cvolume cvolume() const;
-    VolumeObjectPrivate* d;
 };
 
 } // QPulseAudio

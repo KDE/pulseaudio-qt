@@ -26,13 +26,14 @@
 namespace QPulseAudio
 {
 
+class SourcePrivate;
+    
 class KF5PULSEAUDIOQT_EXPORT Source : public Device
 {
     Q_OBJECT
 public:
     Source(QObject *parent);
 
-    void update(const pa_source_info *info);
     void setVolume(qint64 volume) Q_DECL_OVERRIDE;
     void setMuted(bool muted) Q_DECL_OVERRIDE;
     void setActivePortIndex(quint32 port_index) Q_DECL_OVERRIDE;
@@ -40,6 +41,9 @@ public:
 
     bool isDefault() const Q_DECL_OVERRIDE;
     void setDefault(bool enable) Q_DECL_OVERRIDE;
+    
+    SourcePrivate* d;
+    
 };
 
 } // QPulseAudio

@@ -19,6 +19,7 @@
 */
 
 #include "source.h"
+#include "source_p.h"
 
 #include "context.h"
 #include "context_p.h"
@@ -29,18 +30,24 @@ namespace QPulseAudio
 
 Source::Source(QObject *parent)
     : Device(parent)
+    , d(new SourcePrivate(this))
 {
     connect(context()->server(), &Server::defaultSourceChanged, this, &Source::defaultChanged);
 }
 
-void Source::update(const pa_source_info *info)
+SourcePrivate::SourcePrivate(Source* q)
+    :q(q)
 {
-    updateDevice(info);
+}
+
+void SourcePrivate::update(const pa_source_info *info)
+{
+    q->updateDevice(info);
 }
 
 void Source::setVolume(qint64 volume)
 {
-    context()->d->setGenericVolume(index(), -1, volume, cvolume(), &pa_context_set_source_volume_by_index);
+    context()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_source_volume_by_index);
 }
 
 void Source::setMuted(bool muted)
@@ -60,7 +67,7 @@ void Source::setActivePortIndex(quint32 port_index)
 
 void Source::setChannelVolume(int channel, qint64 volume)
 {
-    context()->d->setGenericVolume(index(), channel, volume, cvolume(), &pa_context_set_source_volume_by_index);
+    context()->d->setGenericVolume(index(), channel, volume, VolumeObject::d->cvolume(), &pa_context_set_source_volume_by_index);
 }
 
 bool Source::isDefault() const

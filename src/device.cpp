@@ -21,48 +21,55 @@
 #include "device.h"
 #include "device_p.h"
 
+namespace QPulseAudio {
 
-QPulseAudio::Device::State QPulseAudio::Device::state() const
+Device::State Device::state() const
 {
-    return m_state;
+    return d->m_state;
 }
 
-QString QPulseAudio::Device::name() const
+QString Device::name() const
 {
-    return m_name;
+    return d->m_name;
 }
 
-QString QPulseAudio::Device::description() const
+QString Device::description() const
 {
-    return m_description;
+    return d->m_description;
 }
 
-QString QPulseAudio::Device::formFactor() const
+QString Device::formFactor() const
 {
-    return m_formFactor;
+    return d->m_formFactor;
 }
 
-quint32 QPulseAudio::Device::cardIndex() const
+quint32 Device::cardIndex() const
 {
-    return m_cardIndex;
+    return d->m_cardIndex;
 }
 
-QList<QObject *> QPulseAudio::Device::ports() const
+QList<QObject *> Device::ports() const
 {
-    return m_ports;
+    return d->m_ports;
 }
 
-quint32 QPulseAudio::Device::activePortIndex() const
+quint32 Device::activePortIndex() const
 {
-    return m_activePortIndex;
+    return d->m_activePortIndex;
 }
 
-QPulseAudio::Device::Device(QObject *parent)
+Device::Device(QObject *parent)
     : VolumeObject(parent)
+    , d(new DevicePrivate(this))
 {
 }
 
-QPulseAudio::Device::State QPulseAudio::Device::stateFromPaState(int value) const
+DevicePrivate::DevicePrivate(Device* q)
+    : q(q)
+{
+}
+
+Device::State Device::stateFromPaState(int value) const
 {
     switch (value) {
     case -1: // PA_X_INVALID_STATE
@@ -76,4 +83,5 @@ QPulseAudio::Device::State QPulseAudio::Device::stateFromPaState(int value) cons
     default:
         return UnknownState;
     }
+}
 }

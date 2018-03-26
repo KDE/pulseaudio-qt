@@ -1,6 +1,8 @@
 #ifndef VOLUMEOBJECT_P_H
 #define VOLUMEOBJECT_P_H
 
+#include <pulse/volume.h>
+
 #include "volumeobject.h"
 #include "pulseobject_p.h"
 
@@ -11,12 +13,14 @@ public:
     explicit VolumeObjectPrivate(VolumeObject* q);
 
     VolumeObject* q;
+    pa_channel_map foo;
     pa_cvolume m_volume;
     bool m_muted;
     bool m_hasVolume;
     bool m_volumeWritable;
     QStringList m_channels;
-
+    
+    pa_cvolume cvolume() const;
 };
 
 template <typename PAInfo>

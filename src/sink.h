@@ -25,6 +25,8 @@
 
 namespace QPulseAudio
 {
+    
+class SinkPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Sink : public Device
 {
@@ -32,7 +34,6 @@ class KF5PULSEAUDIOQT_EXPORT Sink : public Device
 public:
     Sink(QObject *parent);
 
-    void update(const pa_sink_info *info);
     void setVolume(qint64 volume) Q_DECL_OVERRIDE;
     void setMuted(bool muted) Q_DECL_OVERRIDE;
     void setActivePortIndex(quint32 port_index) Q_DECL_OVERRIDE;
@@ -40,6 +41,8 @@ public:
 
     bool isDefault() const Q_DECL_OVERRIDE;
     void setDefault(bool enable) Q_DECL_OVERRIDE;
+    
+    SinkPrivate* d;
 };
 
 } // QPulseAudio

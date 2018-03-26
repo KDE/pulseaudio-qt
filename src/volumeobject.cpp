@@ -55,9 +55,9 @@ bool VolumeObject::isMuted() const
     return d->m_muted;
 }
 
-pa_cvolume VolumeObject::cvolume() const
+pa_cvolume VolumeObjectPrivate::cvolume() const
 {
-    return d->m_volume;
+    return m_volume;
 }
 
 bool VolumeObject::hasVolume() const

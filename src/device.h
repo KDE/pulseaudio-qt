@@ -23,15 +23,13 @@
 
 #include <QString>
 
-#include <pulse/volume.h>
-
 #include "volumeobject.h"
-#include "port.h"
 #include "pulseobject.h"
-#include <pulse/introspect.h>
 
 namespace QPulseAudio
 {
+
+class DevicePrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
 {
@@ -67,6 +65,9 @@ public:
     virtual bool isDefault() const = 0;
     virtual void setDefault(bool enable) = 0;
 
+    template <typename PAInfo>
+    void updateDevice(const PAInfo *info);
+    DevicePrivate* d;
 Q_SIGNALS:
     void stateChanged();
     void nameChanged();
@@ -79,19 +80,10 @@ Q_SIGNALS:
 
 protected:
     Device(QObject *parent);
-    template <typename PAInfo>
-    void updateDevice(const PAInfo *info);
+// 
 
 private:
     State stateFromPaState(int value) const;
-
-    QString m_name;
-    QString m_description;
-    QString m_formFactor;
-    quint32 m_cardIndex = -1;
-    QList<QObject *> m_ports;
-    quint32 m_activePortIndex = -1;
-    State m_state = UnknownState;
 };
 
 } // QPulseAudio

@@ -19,6 +19,7 @@
 */
 
 #include "sink.h"
+#include "sink_p.h"
 
 #include "context.h"
 #include "context_p.h"
@@ -35,14 +36,19 @@ Sink::Sink(QObject *parent)
     connect(context()->server(), &Server::defaultSinkChanged, this, &Sink::defaultChanged);
 }
 
-void Sink::update(const pa_sink_info *info)
+SinkPrivate::SinkPrivate(Sink* q)
+    : q(q)
 {
-    updateDevice(info);
+}
+
+void SinkPrivate::update(const pa_sink_info *info)
+{
+    q->updateDevice(info);
 }
 
 void Sink::setVolume(qint64 volume)
 {
-    context()->d->setGenericVolume(index(), -1, volume, cvolume(), &pa_context_set_sink_volume_by_index);
+    context()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_volume_by_index);
 }
 
 void Sink::setMuted(bool muted)
@@ -62,7 +68,7 @@ void Sink::setActivePortIndex(quint32 port_index)
 
 void Sink::setChannelVolume(int channel, qint64 volume)
 {
-    context()->d->setGenericVolume(index(), channel, volume, cvolume(), &pa_context_set_sink_volume_by_index);
+    context()->d->setGenericVolume(index(), channel, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_volume_by_index);
 }
 
 bool Sink::isDefault() const

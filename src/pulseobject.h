@@ -44,6 +44,7 @@ public:
     QString iconName() const;
     QVariantMap properties() const;
 
+    PulseObjectPrivate* d;
 Q_SIGNALS:
     void propertiesChanged();
 
@@ -55,7 +56,6 @@ protected:
     PulseObject(QObject *parent);
     virtual ~PulseObject();
     Context *context() const;
-    PulseObjectPrivate* d;
 
 private:
     // Ensure that we get properly parented.
