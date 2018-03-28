@@ -19,6 +19,7 @@
 */
 
 #include "client.h"
+#include "client_p.h"
 
 #include "debug.h"
 #include "pulseobject_p.h"
@@ -28,11 +29,18 @@ namespace QPulseAudio
 
 Client::Client(QObject *parent)
     : PulseObject(parent)
+    , d(new ClientPrivate(this))
+{
+}
+
+ClientPrivate::ClientPrivate(Client* q)
+    : q(q)
 {
 }
 
 Client::~Client()
 {
+    delete d;
 }
 
 void Client::update(const pa_client_info *info)
@@ -40,15 +48,15 @@ void Client::update(const pa_client_info *info)
     updatePulseObject(info);
 
     QString infoName = QString::fromUtf8(info->name);
-    if (m_name != infoName) {
-        m_name = infoName;
+    if (d->m_name != infoName) {
+        d->m_name = infoName;
         Q_EMIT nameChanged();
     }
 }
 
 QString Client::name() const
 {
-    return m_name;
+    return d->m_name;
 }
 
 } // QPulseAudio

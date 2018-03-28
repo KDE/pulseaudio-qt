@@ -43,6 +43,7 @@
 #include "module.h"
 
 #include "context_p.h"
+#include "streamrestore_p.h"
 
 namespace QPulseAudio
 {
@@ -233,15 +234,15 @@ Context::Context(QObject *parent)
     : QObject(parent)
     , d(new ContextPrivate(this))
 {
- 
+
     qCDebug(PLASMAPA())<<"Fooo";
     d->m_server = new Server(this);
     d->m_context = nullptr;
     d->m_mainloop = nullptr;
     d->m_references = 0;
-    
+
     d->connectToDaemon();
-    
+
     QDBusServiceWatcher* watcher = new QDBusServiceWatcher(QStringLiteral("org.pulseaudio.Server"),
                                                            QDBusConnection::sessionBus(),
                                                            QDBusServiceWatcher::WatchForRegistration,
@@ -615,7 +616,7 @@ void ContextPrivate::connectToDaemon()
     if (m_context) {
         return;
     }
-    
+
     // We require a glib event loop
     if (!QByteArray(QAbstractEventDispatcher::instance()->metaObject()->className()).contains("EventDispatcherGlib")) {
         qCWarning(PLASMAPA) << "Disabling PulseAudio integration for lack of GLib event loop";

@@ -26,13 +26,14 @@
 namespace QPulseAudio
 {
 
+class SinkInputPrivate;
+
 class SinkInput : public Stream
 {
     Q_OBJECT
 public:
-    SinkInput(QObject *parent);
-
-    void update(const pa_sink_input_info *info);
+    explicit SinkInput(QObject *parent);
+    virtual ~SinkInput();
 
     void setSinkIndex(quint32 sinkIndex);
 
@@ -40,6 +41,11 @@ public:
     void setMuted(bool muted) Q_DECL_OVERRIDE;
     void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
+
+    SinkInputPrivate* d;
+
+    // TODO Move to private
+    void update(const pa_sink_input_info *info);
 };
 
 } // QPulseAudio

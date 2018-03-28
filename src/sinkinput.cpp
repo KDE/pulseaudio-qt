@@ -19,6 +19,7 @@
 */
 
 #include "sinkinput.h"
+#include "sinkinput_p.h"
 
 #include "context.h"
 #include "context_p.h"
@@ -29,14 +30,25 @@ namespace QPulseAudio
 
 SinkInput::SinkInput(QObject *parent)
     : Stream(parent)
+    , d(new SinkInputPrivate(this))
 {
+}
+
+SinkInputPrivate::SinkInputPrivate(SinkInput* q)
+    : q(q)
+{
+}
+
+SinkInput::~SinkInput()
+{
+    delete d;
 }
 
 void SinkInput::update(const pa_sink_input_info *info)
 {
     updateStream(info);
-    if (m_deviceIndex != info->sink) {
-        m_deviceIndex = info->sink;
+    if (Stream::d->m_deviceIndex != info->sink) {
+        Stream::d->m_deviceIndex = info->sink;
         Q_EMIT deviceIndexChanged();
     }
 }

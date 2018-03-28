@@ -22,11 +22,11 @@
 #define STREAMRESTORE_H
 
 #include "pulseobject.h"
-
 #include <pulse/ext-stream-restore.h>
 
 namespace QPulseAudio
 {
+class StreamRestorePrivate;
 
 class StreamRestore : public PulseObject
 {
@@ -42,8 +42,7 @@ class StreamRestore : public PulseObject
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
 public:
     StreamRestore(quint32 index, const QVariantMap &properties, QObject *parent);
-
-    void update(const pa_ext_stream_restore_info *info);
+    virtual ~StreamRestore();
 
     QString name() const;
 
@@ -68,6 +67,12 @@ public:
 
     Q_INVOKABLE void setChannelVolume(int channel, qint64 volume);
 
+    //TODO move to private
+    void update(const pa_ext_stream_restore_info *info);
+
+
+    StreamRestorePrivate* d;
+
 Q_SIGNALS:
     void nameChanged();
     void deviceChanged();
@@ -77,22 +82,6 @@ Q_SIGNALS:
     void channelVolumesChanged();
     void deviceIndexChanged();
 
-private:
-    void writeChanges(const pa_cvolume &volume, bool muted, const QString &device);
-
-    QString m_name;
-    QString m_device;
-    pa_cvolume m_volume;
-    pa_channel_map m_channelMap;
-    QStringList m_channels;
-    bool m_muted;
-
-    struct {
-        bool valid = false;
-        pa_cvolume volume;
-        bool muted;
-        QString device;
-    } m_cache;
 };
 
 } // QPulseAudio

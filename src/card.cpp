@@ -19,17 +19,32 @@
 */
 
 #include "card.h"
-
+#include "card_p.h"
 #include "debug.h"
 
 #include "context.h"
 #include "pulseobject_p.h"
+#include "cardport.h"
 
 namespace QPulseAudio
 {
 
 Card::Card(QObject *parent)
     : PulseObject(parent)
+    , d(new CardPrivate(this))
+{
+}
+
+Card::~Card(){
+    delete d;
+}
+
+CardPrivate::CardPrivate(Card* q)
+    : q(q)
+{
+}
+
+CardPrivate::~CardPrivate()
 {
 }
 
@@ -38,47 +53,47 @@ void Card::update(const pa_card_info *info)
     updatePulseObject(info);
 
     QString infoName = QString::fromUtf8(info->name);
-    if (m_name != infoName) {
-        m_name = infoName;
+    if (d->m_name != infoName) {
+        d->m_name = infoName;
         Q_EMIT nameChanged();
     }
 
-    qDeleteAll(m_profiles);
-    m_profiles.clear();
+    qDeleteAll(d->m_profiles);
+    d->m_profiles.clear();
     for (auto **it = info->profiles2; it && *it != nullptr; ++it) {
         Profile *profile = new Profile(this);
         profile->setInfo(*it);
-        m_profiles.append(profile);
+        d->m_profiles.append(profile);
         if (info->active_profile2 == *it) {
-            m_activeProfileIndex = m_profiles.length() - 1;
+            d->m_activeProfileIndex = d->m_profiles.length() - 1;
         }
     }
     Q_EMIT profilesChanged();
     Q_EMIT activeProfileIndexChanged();
 
-    qDeleteAll(m_ports);
-    m_ports.clear();
+    qDeleteAll(d->m_ports);
+    d->m_ports.clear();
     for (auto **it = info->ports; it && *it != nullptr; ++it) {
         CardPort *port = new CardPort(this);
         port->update(*it);
-        m_ports.append(port);
+        d->m_ports.append(port);
     }
     Q_EMIT portsChanged();
 }
 
 QString Card::name() const
 {
-    return m_name;
+    return d->m_name;
 }
 
 QList<QObject *> Card::profiles() const
 {
-    return m_profiles;
+    return d->m_profiles;
 }
 
 quint32 Card::activeProfileIndex() const
 {
-    return m_activeProfileIndex;
+    return d->m_activeProfileIndex;
 }
 
 void Card::setActiveProfileIndex(quint32 profileIndex)
@@ -89,7 +104,8 @@ void Card::setActiveProfileIndex(quint32 profileIndex)
 
 QList<QObject *> Card::ports() const
 {
-    return m_ports;
+    return d->m_ports;
 }
+
 
 } // QPulseAudio

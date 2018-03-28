@@ -42,6 +42,7 @@ PulseObjectPrivate::PulseObjectPrivate(PulseObject* q)
 
 PulseObject::~PulseObject()
 {
+    delete d;
 }
 
 Context *PulseObject::context() const

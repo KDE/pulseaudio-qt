@@ -22,17 +22,19 @@
 #define SOURCE_H
 
 #include "device.h"
+#include <pulse/introspect.h>
 
 namespace QPulseAudio
 {
 
 class SourcePrivate;
-    
+
 class KF5PULSEAUDIOQT_EXPORT Source : public Device
 {
     Q_OBJECT
 public:
     Source(QObject *parent);
+    virtual ~Source();
 
     void setVolume(qint64 volume) Q_DECL_OVERRIDE;
     void setMuted(bool muted) Q_DECL_OVERRIDE;
@@ -41,9 +43,12 @@ public:
 
     bool isDefault() const Q_DECL_OVERRIDE;
     void setDefault(bool enable) Q_DECL_OVERRIDE;
-    
+
     SourcePrivate* d;
-    
+
+    // TODO move to private
+    void update(const pa_source_info *info);
+
 };
 
 } // QPulseAudio

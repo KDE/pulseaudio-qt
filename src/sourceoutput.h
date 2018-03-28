@@ -25,19 +25,25 @@
 
 namespace QPulseAudio
 {
+class SourceOutputPrivate;
 
 class SourceOutput : public Stream
 {
     Q_OBJECT
 public:
     SourceOutput(QObject *parent);
-
-    void update(const pa_source_output_info *info);
+    virtual ~SourceOutput() = default;
 
     void setVolume(qint64 volume) Q_DECL_OVERRIDE;
     void setMuted(bool muted) Q_DECL_OVERRIDE;
     void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
+
+    SourceOutputPrivate* d;
+
+    //TODO move to private
+    void update(const pa_source_output_info *info);
+
 };
 
 } // QPulseAudio

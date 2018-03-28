@@ -84,4 +84,8 @@ Device::State Device::stateFromPaState(int value) const
         return UnknownState;
     }
 }
+
+Device::~Device(){
+    delete d;
+}
 }

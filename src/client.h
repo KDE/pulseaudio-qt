@@ -21,14 +21,14 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <pulse/introspect.h>
-
-#include <QMap>
-
+#include "kf5pulseaudioqt_export.h"
 #include "pulseobject.h"
+#include <pulse/introspect.h>
 
 namespace QPulseAudio
 {
+
+class ClientPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Client : public PulseObject
 {
@@ -38,15 +38,17 @@ public:
     Client(QObject *parent);
     virtual ~Client();
 
+    QString name() const;
+
+    ClientPrivate* d;
+
+    // TODO move to private
     void update(const pa_client_info *info);
 
-    QString name() const;
 
 Q_SIGNALS:
     void nameChanged();
 
-private:
-    QString m_name;
 };
 
 } // QPulseAudio

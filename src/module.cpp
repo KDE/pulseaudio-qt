@@ -19,7 +19,7 @@
 */
 
 #include "module.h"
-
+#include "module_p.h"
 #include "debug.h"
 
 #include "context.h"
@@ -30,7 +30,22 @@ namespace QPulseAudio
 
 Module::Module(QObject *parent)
     : PulseObject(parent)
+    , d(new ModulePrivate(this))
 {
+}
+
+ModulePrivate::ModulePrivate(Module* q)
+    : q(q)
+{
+}
+
+ModulePrivate::~ModulePrivate()
+{
+}
+
+Module::~Module()
+{
+    delete d;
 }
 
 void Module::update(const pa_module_info *info)
@@ -38,25 +53,25 @@ void Module::update(const pa_module_info *info)
     updatePulseObject(info);
 
     const QString infoName = QString::fromUtf8(info->name);
-    if (m_name != infoName) {
-        m_name = infoName;
+    if (d->m_name != infoName) {
+        d->m_name = infoName;
         Q_EMIT nameChanged();
     }
     const QString infoArgument = QString::fromUtf8(info->argument);
-    if (m_argument != infoArgument) {
-        m_argument = infoArgument;
+    if (d->m_argument != infoArgument) {
+        d->m_argument = infoArgument;
         Q_EMIT argumentChanged();
     }
 }
 
 QString Module::name() const
 {
-    return m_name;
+    return d->m_name;
 }
 
 QString Module::argument() const
 {
-    return m_argument;
+    return d->m_argument;
 }
 
 } // QPulseAudio

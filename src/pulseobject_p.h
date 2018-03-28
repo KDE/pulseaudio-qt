@@ -8,15 +8,15 @@
 #include "context.h"
 
 namespace QPulseAudio {
-    
+
 class PulseObjectPrivate {
 public:
     explicit PulseObjectPrivate(PulseObject* q);
-    
+
     PulseObject* q;
     quint32 m_index;
     QVariantMap m_properties;
-    
+
 };
 
 template <typename PAInfo>

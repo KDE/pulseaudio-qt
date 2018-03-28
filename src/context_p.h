@@ -12,12 +12,17 @@
 namespace QPulseAudio
 {
 
+    static const qint64 NormalVolume = PA_VOLUME_NORM;
+    static const qint64 MinimalVolume = 0;
+    static const qint64 MaximalVolume = (PA_VOLUME_NORM / 100.0) * 150;
+
+
 class ContextPrivate {
 public:
-    
+
     explicit ContextPrivate(Context* q);
     virtual ~ContextPrivate();
-    
+
     // Don't forget to add things to reset().
     SinkMap m_sinks;
     SinkInputMap m_sinkInputs;
@@ -57,7 +62,7 @@ public:
     void connectToDaemon();
 
     Context* q;
-        
+
 };
 
 }

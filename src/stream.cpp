@@ -19,6 +19,7 @@
 */
 
 #include "stream.h"
+#include "stream_p.h"
 #include "volumeobject_p.h"
 
 namespace QPulseAudio
@@ -26,10 +27,7 @@ namespace QPulseAudio
 
 Stream::Stream(QObject *parent)
     : VolumeObject(parent)
-    , m_deviceIndex(PA_INVALID_INDEX)
-    , m_clientIndex(PA_INVALID_INDEX)
-    , m_virtualStream(false)
-    , m_corked(false)
+    , d(new StreamPrivate(this))
 {
     VolumeObject::d->m_volumeWritable = false;
     VolumeObject::d->m_hasVolume = false;
@@ -37,31 +35,45 @@ Stream::Stream(QObject *parent)
 
 Stream::~Stream()
 {
+    delete d;
+}
+
+StreamPrivate::StreamPrivate(Stream *q)
+    : q(q)
+    , m_deviceIndex(PA_INVALID_INDEX)
+    , m_clientIndex(PA_INVALID_INDEX)
+    , m_virtualStream(false)
+    , m_corked(false)
+{
+}
+
+StreamPrivate::~StreamPrivate()
+{
 }
 
 QString Stream::name() const
 {
-    return m_name;
+    return d->m_name;
 }
 
 Client *Stream::client() const
 {
-    return context()->clients().data().value(m_clientIndex, nullptr);
+    return context()->clients().data().value(d->m_clientIndex, nullptr);
 }
 
 bool Stream::isVirtualStream() const
 {
-    return m_virtualStream;
+    return d->m_virtualStream;
 }
 
 quint32 Stream::deviceIndex() const
 {
-    return m_deviceIndex;
+    return d->m_deviceIndex;
 }
 
 bool Stream::isCorked() const
 {
-    return m_corked;
+    return d->m_corked;
 }
 
 } // QPulseAudio

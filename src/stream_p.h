@@ -6,13 +6,28 @@
 
 namespace QPulseAudio {
 
+class StreamPrivate {
+public:
+    explicit StreamPrivate(Stream* q);
+    virtual ~StreamPrivate();
+
+    Stream* q;
+
+    quint32 m_deviceIndex;
+    QString m_name;
+    quint32 m_clientIndex;
+    bool m_virtualStream;
+    bool m_corked;
+
+};
+
 template <typename PAInfo>
 void Stream::updateStream(const PAInfo *info)
 {
     updateVolumeObject(info);
 
-    if (m_name != QString::fromUtf8(info->name)) {
-        m_name = QString::fromUtf8(info->name);
+    if (d->m_name != QString::fromUtf8(info->name)) {
+        d->m_name = QString::fromUtf8(info->name);
         Q_EMIT nameChanged();
     }
     if (VolumeObject::d->m_hasVolume != info->has_volume) {
@@ -23,19 +38,19 @@ void Stream::updateStream(const PAInfo *info)
         VolumeObject::d->m_volumeWritable = info->volume_writable;
         Q_EMIT isVolumeWritableChanged();
     }
-    if (m_clientIndex != info->client) {
-        m_clientIndex = info->client;
+    if (d->m_clientIndex != info->client) {
+        d->m_clientIndex = info->client;
         Q_EMIT clientChanged();
     }
-    if (m_virtualStream != (info->client == PA_INVALID_INDEX)) {
-        m_virtualStream = info->client == PA_INVALID_INDEX;
+    if (d->m_virtualStream != (info->client == PA_INVALID_INDEX)) {
+        d->m_virtualStream = info->client == PA_INVALID_INDEX;
         Q_EMIT virtualStreamChanged();
     }
-    if (m_corked != info->corked) {
-        m_corked = info->corked;
+    if (d->m_corked != info->corked) {
+        d->m_corked = info->corked;
         Q_EMIT corkedChanged();
     }
 }
-    
+
 }
 #endif

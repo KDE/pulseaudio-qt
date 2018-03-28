@@ -52,7 +52,7 @@ public:
     };
     Q_ENUMS(State);
 
-    virtual ~Device() {}
+    virtual ~Device();
 
     State state() const;
     QString name() const;

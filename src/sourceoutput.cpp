@@ -19,6 +19,7 @@
 */
 
 #include "sourceoutput.h"
+#include "sourceoutput_p.h"
 
 #include "context.h"
 #include "context_p.h"
@@ -29,14 +30,20 @@ namespace QPulseAudio
 
 SourceOutput::SourceOutput(QObject *parent)
     : Stream(parent)
+    , d(new SourceOutputPrivate(this))
+{
+}
+
+SourceOutputPrivate::SourceOutputPrivate(SourceOutput* q)
+    : q(q)
 {
 }
 
 void SourceOutput::update(const pa_source_output_info *info)
 {
     updateStream(info);
-    if (m_deviceIndex != info->source) {
-        m_deviceIndex = info->source;
+    if (Stream::d->m_deviceIndex != info->source) {
+        Stream::d->m_deviceIndex = info->source;
         Q_EMIT deviceIndexChanged();
     }
 }

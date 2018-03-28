@@ -9,9 +9,7 @@ namespace QPulseAudio {
 class SinkPrivate {
 public:
     explicit SinkPrivate(Sink* q);
-    
-    void update(const pa_sink_info *info);
-    
+
     Sink* q;
 };
 }

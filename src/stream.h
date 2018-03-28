@@ -35,6 +35,8 @@
 namespace QPulseAudio
 {
 
+class StreamPrivate;
+
 class Stream : public VolumeObject
 {
     Q_OBJECT
@@ -44,7 +46,7 @@ class Stream : public VolumeObject
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
     Q_PROPERTY(bool corked READ isCorked NOTIFY corkedChanged)
 public:
-    
+
     QString name() const;
     Client *client() const;
     bool isVirtualStream() const;
@@ -52,6 +54,11 @@ public:
     bool isCorked() const;
 
     virtual void setDeviceIndex(quint32 deviceIndex) = 0;
+
+    template <typename PAInfo>
+    void updateStream(const PAInfo *info);
+
+    StreamPrivate* d;
 
 Q_SIGNALS:
     void nameChanged();
@@ -64,16 +71,6 @@ protected:
     Stream(QObject *parent);
     virtual ~Stream();
 
-    template <typename PAInfo>
-    void updateStream(const PAInfo *info);
-    
-    quint32 m_deviceIndex;
-
-private:
-    QString m_name;
-    quint32 m_clientIndex;
-    bool m_virtualStream;
-    bool m_corked;
 };
 
 } // QPulseAudio

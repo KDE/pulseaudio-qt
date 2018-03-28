@@ -40,9 +40,9 @@ SourcePrivate::SourcePrivate(Source* q)
 {
 }
 
-void SourcePrivate::update(const pa_source_info *info)
+void Source::update(const pa_source_info *info)
 {
-    q->updateDevice(info);
+    updateDevice(info);
 }
 
 void Source::setVolume(qint64 volume)
@@ -82,4 +82,8 @@ void Source::setDefault(bool enable)
     }
 }
 
+Source::~Source()
+{
+    delete d;
+}
 } // QPulseAudio

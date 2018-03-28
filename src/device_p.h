@@ -2,19 +2,18 @@
 #define DEVICE_P_H
 
 #include "device.h"
-#include "device_p.h"
 #include "volumeobject_p.h"
 #include "port.h"
 
 namespace QPulseAudio {
 
 class DevicePrivate {
-  
+
 public:
     explicit DevicePrivate(Device* q);
-    
+
     Device* q;
-    
+
     QString m_name;
     QString m_description;
     QString m_formFactor;
@@ -22,9 +21,9 @@ public:
     QList<QObject *> m_ports;
     quint32 m_activePortIndex = -1;
     Device::State m_state = Device::UnknownState;
-    
+
 };
-    
+
 template <typename PAInfo>
 void Device::updateDevice(const PAInfo *info)
 {

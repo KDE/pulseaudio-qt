@@ -3,6 +3,7 @@ include_directories(${PULSEAUDIO_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR}     ${GCONF_I
 
 set(cpp_SRCS
     card.cpp
+    cardport.cpp
     client.cpp
     context.cpp
     device.cpp

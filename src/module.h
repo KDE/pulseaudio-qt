@@ -21,15 +21,12 @@
 #ifndef MODULE_H
 #define MODULE_H
 
-#include <pulse/introspect.h>
-
-#include <QMap>
-#include <QVariant>
-
 #include "pulseobject.h"
+#include <pulse/introspect.h>
 
 namespace QPulseAudio
 {
+class ModulePrivate;
 
 class Module : public PulseObject
 {
@@ -39,19 +36,20 @@ class Module : public PulseObject
 
 public:
     Module(QObject *parent);
-
-    void update(const pa_module_info *info);
+    virtual ~Module();
 
     QString name() const;
     QString argument() const;
 
+    ModulePrivate* d;
+
+    //TODO Move to private
+    void update(const pa_module_info *info);
+
+
 Q_SIGNALS:
     void nameChanged();
     void argumentChanged();
-
-private:
-    QString m_name;
-    QString m_argument;
 };
 
 } // QPulseAudio
