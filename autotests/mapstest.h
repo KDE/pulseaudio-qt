@@ -29,4 +29,7 @@ class MapsTest : public QObject
 private Q_SLOTS:
     void initTestCase();
     void cleanupTestCase();
+
+    void basicTest();
+    void pendingRemovalsTest();
 };

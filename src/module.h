@@ -27,11 +27,12 @@
 #include <QVariant>
 
 #include "pulseobject.h"
+#include "kf5pulseaudioqt_export.h"
 
 namespace PulseAudioQt
 {
 
-class Module : public PulseObject
+class KF5PULSEAUDIOQT_EXPORT Module : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
