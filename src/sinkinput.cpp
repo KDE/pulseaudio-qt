@@ -24,7 +24,7 @@
 #include "context_p.h"
 #include "stream_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 SinkInput::SinkInput(QObject *parent)
@@ -61,4 +61,4 @@ void SinkInput::setChannelVolume(int channel, qint64 volume)
     context()->d->setGenericVolume(index(), channel, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_input_volume);
 }
 
-} // QPulseAudio
+} // PulseAudioQt

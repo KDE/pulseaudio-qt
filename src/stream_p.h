@@ -4,7 +4,7 @@
 #include "stream.h"
 #include "volumeobject_p.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 template <typename PAInfo>
 void Stream::updateStream(const PAInfo *info)

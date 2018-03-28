@@ -25,7 +25,7 @@
 #include "context_p.h"
 #include "server.h"
 #include "device_p.h"
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Source::Source(QObject *parent)
@@ -82,4 +82,4 @@ void Source::setDefault(bool enable)
     }
 }
 
-} // QPulseAudio
+} // PulseAudioQt

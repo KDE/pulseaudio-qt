@@ -23,7 +23,7 @@
 #include "debug.h"
 #include "pulseobject_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Client::Client(QObject *parent)
@@ -51,4 +51,4 @@ QString Client::name() const
     return m_name;
 }
 
-} // QPulseAudio
+} // PulseAudioQt

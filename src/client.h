@@ -27,7 +27,7 @@
 
 #include "pulseobject.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class KF5PULSEAUDIOQT_EXPORT Client : public PulseObject
@@ -49,6 +49,6 @@ private:
     QString m_name;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // CLIENT_H

@@ -20,10 +20,12 @@
 
 #include "mapstest.h"
 
+#include "maps.h"
+
 #include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
 
-// using namespace PulseAudioQt;
+using namespace PulseAudioQt;
 
 void MapsTest::initTestCase()
 {

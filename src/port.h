@@ -24,7 +24,7 @@
 #include "profile.h"
 #include "kf5pulseaudioqt_export.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class KF5PULSEAUDIOQT_EXPORT Port : public Profile
@@ -43,6 +43,6 @@ public:
     }
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // PORT_H

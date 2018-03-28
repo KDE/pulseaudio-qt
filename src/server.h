@@ -25,7 +25,7 @@
 #include <pulse/introspect.h>
 #include "kf5pulseaudioqt_export.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class Sink;
@@ -61,6 +61,6 @@ private:
     Source *m_defaultSource;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // CONTEXT_H

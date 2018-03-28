@@ -20,7 +20,7 @@
 
 #include "port.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Port::Port(QObject *parent)
@@ -32,4 +32,4 @@ Port::~Port()
 {
 }
 
-} // QPulseAudio
+} // PulseAudioQt

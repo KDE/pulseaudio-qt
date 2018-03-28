@@ -27,7 +27,7 @@
 
 #include "device_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Sink::Sink(QObject *parent)
@@ -83,4 +83,4 @@ void Sink::setDefault(bool enable)
     }
 }
 
-} // QPulseAudio
+} // PulseAudioQt

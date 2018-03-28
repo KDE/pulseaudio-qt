@@ -24,7 +24,7 @@
 #include "source.h"
 #include "debug.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Server::Server(Context *context)
@@ -123,4 +123,4 @@ void Server::updateDefaultDevices()
     }
 }
 
-} // QPulseAudio
+} // PulseAudioQt

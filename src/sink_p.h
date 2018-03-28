@@ -4,7 +4,7 @@
 #include <pulse/introspect.h>
 #include "sink.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class SinkPrivate {
 public:

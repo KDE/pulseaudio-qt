@@ -7,7 +7,7 @@
 
 #include "context.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
     
 class PulseObjectPrivate {
 public:

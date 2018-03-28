@@ -29,7 +29,7 @@
 
 #include <QTimer>
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class GConfModule : public GConfItem
@@ -133,6 +133,6 @@ void ModuleManager::updateLoadedModules()
     Q_EMIT loadedModulesChanged();
 }
 
-}
+} // namespace PulseAudioQt
 
 #include "modulemanager.moc"

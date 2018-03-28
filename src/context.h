@@ -27,7 +27,7 @@
 #include "maps.h"
 #include "kf5pulseaudioqt_export.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class Server;
@@ -74,6 +74,6 @@ private:
     static Context* s_context;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // CONTEXT_H

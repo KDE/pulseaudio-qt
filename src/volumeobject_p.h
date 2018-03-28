@@ -6,7 +6,7 @@
 #include "volumeobject.h"
 #include "pulseobject_p.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class VolumeObjectPrivate {
 public:

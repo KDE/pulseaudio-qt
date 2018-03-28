@@ -23,7 +23,7 @@
 
 #include "pulseobject.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class VolumeObjectPrivate;
@@ -68,6 +68,6 @@ protected:
     void updateVolumeObject(PAInfo *info);
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // VOLUMEOBJECT_H

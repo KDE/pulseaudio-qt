@@ -32,7 +32,7 @@
 
 class GConfItem;
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 class GConfModule;
 
@@ -65,6 +65,6 @@ private:
     QStringList m_loadedModules;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // STREAM_H

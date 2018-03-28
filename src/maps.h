@@ -33,7 +33,7 @@
 #include "volumeobject_p.h"
 #include "source_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 // Used for typedefs.
@@ -180,6 +180,6 @@ typedef MapBase<Card, pa_card_info> CardMap;
 typedef MapBase<Module, pa_module_info> ModuleMap;
 typedef MapBase<StreamRestore, pa_ext_stream_restore_info> StreamRestoreMap;
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // MAPS_H

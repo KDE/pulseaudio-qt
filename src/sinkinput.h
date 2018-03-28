@@ -23,7 +23,7 @@
 
 #include "stream.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class SinkInput : public Stream
@@ -42,6 +42,6 @@ public:
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // SINKINPUT_H

@@ -44,7 +44,7 @@
 
 #include "context_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Context* Context::s_context = nullptr;
@@ -772,4 +772,4 @@ void ContextPrivate::setGenericDeviceForStream(quint32 streamIndex, quint32 devi
     }
 }
 
-} // QPulseAudio
+} // PulseAudioQt

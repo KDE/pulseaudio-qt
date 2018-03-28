@@ -9,7 +9,7 @@
 #include <pulse/ext-stream-restore.h>
 #include <pulse/glib-mainloop.h>
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class ContextPrivate {

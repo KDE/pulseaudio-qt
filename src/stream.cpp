@@ -21,7 +21,7 @@
 #include "stream.h"
 #include "volumeobject_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Stream::Stream(QObject *parent)
@@ -64,4 +64,4 @@ bool Stream::isCorked() const
     return m_corked;
 }
 
-} // QPulseAudio
+} // PulseAudioQt
