@@ -60,10 +60,6 @@ configure_package_config_file(
   "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
-        
-include(FindPkgConfig)
-pkg_check_modules(GCONF REQUIRED gconf-2.0)
-pkg_check_modules(GOBJECT REQUIRED gobject-2.0)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     CoreAddons

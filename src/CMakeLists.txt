@@ -1,5 +1,4 @@
-include_directories(${PULSEAUDIO_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR}     ${GCONF_INCLUDE_DIRS}
-    ${GOBJECT_INCLUDE_DIRS})
+include_directories(${PULSEAUDIO_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR})
 
 set(cpp_SRCS
     card.cpp
@@ -15,8 +14,6 @@ set(cpp_SRCS
     pulseobject.cpp
     sink.cpp
     sinkinput.cpp
-    modulemanager.cpp
-    gconfitem.cpp
     source.cpp
     sourceoutput.cpp
     stream.cpp
@@ -37,8 +34,6 @@ target_link_libraries(KF5PulseAudioQt
         Qt5::DBus
         ${PULSEAUDIO_LIBRARY}
         ${PULSEAUDIO_MAINLOOP_LIBRARY}
-        ${GCONF_LDFLAGS}
-        ${GOBJECT_LDFLAGS}
         ${CANBERRA_LIBRARIES}
 )
 
@@ -56,7 +51,6 @@ ecm_generate_headers(PulseAudioQt_HEADERS
         Context
         Device
         Module
-        ModuleManager
         Port
         Profile
         PulseAudio
