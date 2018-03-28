@@ -21,7 +21,7 @@
 #include "device.h"
 #include "device_p.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 Device::State Device::state() const
 {
@@ -88,4 +88,5 @@ Device::State Device::stateFromPaState(int value) const
 Device::~Device(){
     delete d;
 }
-}
+
+} // namespace PulseAudioQt

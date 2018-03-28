@@ -2,7 +2,7 @@
 #define SINKINPUT_P_H
 #include "sinkinput.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class SinkInputPrivate {
 

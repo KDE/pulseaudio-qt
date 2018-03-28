@@ -25,8 +25,9 @@
 #include <QAbstractListModel>
 
 #include "maps.h"
+#include "kf5pulseaudioqt_export.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
     class Context;
 
@@ -38,6 +39,7 @@ public:
         PulseObjectRole = Qt::UserRole + 1
     };
 
+    ~AbstractModel() override;
     QHash<int, QByteArray> roleNames() const Q_DECL_FINAL;
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_FINAL;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
@@ -76,11 +78,12 @@ public:
     CardModel(QObject *parent = nullptr);
 };
 
+#if 0
 class KF5PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
 {
     Q_OBJECT
-    Q_PROPERTY(QPulseAudio::Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
-    Q_PROPERTY(QPulseAudio::Sink *preferredSink READ preferredSink NOTIFY preferredSinkChanged)
+    Q_PROPERTY(PulseAudioQt::Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
+    Q_PROPERTY(PulseAudioQt::Sink *preferredSink READ preferredSink NOTIFY preferredSinkChanged)
 public:
     enum ItemRole {
         SortByDefaultRole = PulseObjectRole + 1
@@ -104,6 +107,7 @@ private:
 
     Sink *m_preferredSink;
 };
+#endif
 
 class KF5PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
 {
@@ -112,10 +116,11 @@ public:
     SinkInputModel(QObject *parent = nullptr);
 };
 
+#if 0
 class KF5PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
 {
     Q_OBJECT
-    Q_PROPERTY(QPulseAudio::Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
+    Q_PROPERTY(PulseAudioQt::Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
 public:
     enum ItemRole {
         SortByDefaultRole = PulseObjectRole + 1
@@ -129,6 +134,7 @@ public:
 Q_SIGNALS:
     void defaultSourceChanged();
 };
+#endif
 
 class KF5PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
 {
@@ -151,6 +157,6 @@ public:
     ModuleModel(QObject *parent = nullptr);
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // PULSEAUDIO_H

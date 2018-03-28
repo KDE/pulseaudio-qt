@@ -26,7 +26,7 @@
 #include "debug.h"
 #include "pulseobject_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 StreamRestore::StreamRestore(quint32 index, const QVariantMap &properties, QObject *parent)
@@ -192,7 +192,7 @@ quint32 StreamRestore::deviceIndex() const
 void StreamRestore::setDeviceIndex(quint32 deviceIndex)
 {
     Q_UNUSED(deviceIndex);
-    qCWarning(PLASMAPA) << "Not implemented";
+    qCWarning(PULSEAUDIOQT) << "Not implemented";
 }
 
 void StreamRestorePrivate::writeChanges(const pa_cvolume &volume, bool muted, const QString &device)
@@ -216,4 +216,4 @@ void StreamRestorePrivate::writeChanges(const pa_cvolume &volume, bool muted, co
     q->context()->d->streamRestoreWrite(&info);
 }
 
-} // QPulseAudio
+} // PulseAudioQt

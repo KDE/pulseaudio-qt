@@ -24,7 +24,7 @@
 #include "device.h"
 #include "pulse/introspect.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class SinkPrivate;
@@ -51,6 +51,6 @@ public:
 
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // SINK_H

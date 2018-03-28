@@ -23,7 +23,7 @@
 
 #include "stream.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 class SourceOutputPrivate;
 
@@ -46,6 +46,6 @@ public:
 
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // SOURCEOUTPUT_H

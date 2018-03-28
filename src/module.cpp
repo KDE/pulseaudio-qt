@@ -25,7 +25,7 @@
 #include "context.h"
 #include "pulseobject_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Module::Module(QObject *parent)
@@ -74,4 +74,4 @@ QString Module::argument() const
     return d->m_argument;
 }
 
-} // QPulseAudio
+} // PulseAudioQt

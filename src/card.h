@@ -28,7 +28,7 @@
 #include "pulseobject.h"
 #include <pulse/introspect.h>
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 class CardPrivate;
 
@@ -61,6 +61,6 @@ Q_SIGNALS:
     void portsChanged();
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // CARD_H

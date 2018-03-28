@@ -23,12 +23,13 @@
 
 #include "pulseobject.h"
 #include <pulse/introspect.h>
+#include "kf5pulseaudioqt_export.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 class ModulePrivate;
 
-class Module : public PulseObject
+class KF5PULSEAUDIOQT_EXPORT Module : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
@@ -52,6 +53,6 @@ Q_SIGNALS:
     void argumentChanged();
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // MODULE_H

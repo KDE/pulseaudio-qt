@@ -30,10 +30,11 @@
 #include "server.h"
 #include "streamrestore.h"
 #include "module.h"
+#include "context_p.h"
 
 #include <QMetaEnum>
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
@@ -41,20 +42,34 @@ AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
     , m_map(map)
 {
     Context::instance()->ref();
+
+    connect(m_map, &MapBaseQObject::aboutToBeAdded, this, [this](int index) {
+        beginInsertRows(QModelIndex(), index, index);
+    });
+    connect(m_map, &MapBaseQObject::added, this, [this](int index) {
+        onDataAdded(index);
+        endInsertRows();
+    });
+    connect(m_map, &MapBaseQObject::aboutToBeRemoved, this, [this](int index) {
+        beginRemoveRows(QModelIndex(), index, index);
+    });
+    connect(m_map, &MapBaseQObject::removed, this, [this](int index) {
+        Q_UNUSED(index);
+        endRemoveRows();
+    });
+}
+
+AbstractModel::~AbstractModel()
+{
     //deref context after we've deleted this object
     //see https://bugs.kde.org/show_bug.cgi?id=371215
-    connect(this, &QObject::destroyed, []() {
-        Context::instance()->unref();
-    });
-
-    connect(m_map, &MapBaseQObject::added, this, &AbstractModel::onDataAdded);
-    connect(m_map, &MapBaseQObject::removed, this, &AbstractModel::onDataRemoved);
+    Context::instance()->unref();
 }
 
 QHash<int, QByteArray> AbstractModel::roleNames() const
 {
     if (!m_roles.empty()) {
-        qCDebug(PLASMAPA) << "returning roles" << m_roles;
+        qCDebug(PULSEAUDIOQT) << "returning roles" << m_roles;
         return m_roles;
     }
     Q_UNREACHABLE();
@@ -63,16 +78,23 @@ QHash<int, QByteArray> AbstractModel::roleNames() const
 
 int AbstractModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    if (parent.isValid()) {
+        return 0;
+    }
     return m_map->count();
 }
 
 QVariant AbstractModel::data(const QModelIndex &index, int role) const
 {
+    if (!hasIndex(index.row(), index.column())) {
+        return QVariant();
+    }
     QObject *data = m_map->objectAt(index.row());
     Q_ASSERT(data);
     if (role == PulseObjectRole) {
         return QVariant::fromValue(data);
+    } else if (role == Qt::DisplayRole) {
+        return static_cast<PulseObject*>(data)->properties().value(QStringLiteral("name")).toString();
     }
     int property = m_objectProperties.value(role, -1);
     if (property == -1) {
@@ -94,7 +116,7 @@ bool AbstractModel::setData(const QModelIndex &index, const QVariant &value, int
 
 int AbstractModel::role(const QByteArray &roleName) const
 {
-    qCDebug(PLASMAPA) << roleName << m_roles.key(roleName, -1);
+    qCDebug(PULSEAUDIOQT) << roleName << m_roles.key(roleName, -1);
     return m_roles.key(roleName, -1);
 }
 
@@ -144,7 +166,7 @@ void AbstractModel::initRoleNames(const QMetaObject &qobjectMetaObject)
         }
         m_signalIndexToProperties.insert(property.notifySignalIndex(), i);
     }
-    qCDebug(PLASMAPA) << m_roles;
+    qCDebug(PULSEAUDIOQT) << m_roles;
 
     // Connect to property changes also with objects already in model
     for (int i = 0; i < m_map->count(); ++i) {
@@ -166,13 +188,12 @@ void AbstractModel::propertyChanged()
         return;
     }
     int index = m_map->indexOfObject(sender());
-    qCDebug(PLASMAPA) << "PROPERTY CHANGED (" << index << ") :: " << role << roleNames().value(role);
+    qCDebug(PULSEAUDIOQT) << "PROPERTY CHANGED (" << index << ") :: " << role << roleNames().value(role);
     Q_EMIT dataChanged(createIndex(index, 0), createIndex(index, 0), {role});
 }
 
 void AbstractModel::onDataAdded(int index)
 {
-    beginInsertRows(QModelIndex(), index, index);
     QObject *data = m_map->objectAt(index);
     const QMetaObject *mo = data->metaObject();
     // We have all the data changed notify signals already stored
@@ -181,13 +202,6 @@ void AbstractModel::onDataAdded(int index)
         QMetaMethod meth = mo->method(index);
         connect(data, meth, this, propertyChangedMetaMethod());
     }
-    endInsertRows();
-}
-
-void AbstractModel::onDataRemoved(int index)
-{
-    beginRemoveRows(QModelIndex(), index, index);
-    endRemoveRows();
 }
 
 QMetaMethod AbstractModel::propertyChangedMetaMethod() const
@@ -200,6 +214,7 @@ QMetaMethod AbstractModel::propertyChangedMetaMethod() const
     return mo->method(methodIndex);
 }
 
+#if 0
 SinkModel::SinkModel(QObject *parent)
     : AbstractModel(&context()->sinks(), parent)
     , m_preferredSink(nullptr)
@@ -261,7 +276,7 @@ void SinkModel::updatePreferredSink()
     Sink *sink = findPreferredSink();
 
     if (sink != m_preferredSink) {
-        qCDebug(PLASMAPA) << "Changing preferred sink to" << sink << (sink ? sink->name() : "");
+        qCDebug(PULSEAUDIOQT) << "Changing preferred sink to" << sink << (sink ? sink->name() : "");
         m_preferredSink = sink;
         Q_EMIT preferredSinkChanged();
     }
@@ -335,35 +350,36 @@ QVariant SourceModel::data(const QModelIndex &index, int role) const
     }
     return AbstractModel::data(index, role);
 }
+#endif
 
 SinkInputModel::SinkInputModel(QObject *parent)
-    : AbstractModel(&context()->sinkInputs(), parent)
+    : AbstractModel(&context()->d->m_sinkInputs, parent)
 {
     initRoleNames(SinkInput::staticMetaObject);
 }
 
 SourceOutputModel::SourceOutputModel(QObject *parent)
-    : AbstractModel(&context()->sourceOutputs(), parent)
+    : AbstractModel(&context()->d->m_sourceOutputs, parent)
 {
     initRoleNames(SourceOutput::staticMetaObject);
 }
 
 CardModel::CardModel(QObject *parent)
-    : AbstractModel(&context()->cards(), parent)
+    : AbstractModel(&context()->d->m_cards, parent)
 {
     initRoleNames(Card::staticMetaObject);
 }
 
 StreamRestoreModel::StreamRestoreModel(QObject *parent)
-    : AbstractModel(&context()->streamRestores(), parent)
+    : AbstractModel(&context()->d->m_streamRestores, parent)
 {
     initRoleNames(StreamRestore::staticMetaObject);
 }
 
 ModuleModel::ModuleModel(QObject *parent)
-    : AbstractModel(&context()->modules(), parent)
+    : AbstractModel(&context()->d->m_modules, parent)
 {
     initRoleNames(Module::staticMetaObject);
 }
 
-} // QPulseAudio
+} // PulseAudioQt

@@ -26,7 +26,7 @@
 #include "volumeobject.h"
 #include "pulseobject.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class DevicePrivate;
@@ -86,6 +86,6 @@ private:
     State stateFromPaState(int value) const;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // DEVICE_H

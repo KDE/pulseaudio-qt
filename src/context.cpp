@@ -45,10 +45,10 @@
 #include "context_p.h"
 #include "streamrestore_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
-Context* Context::s_context = nullptr;
+Context* s_context = nullptr;
 
 static bool isGoodState(int eol)
 {
@@ -86,7 +86,7 @@ static void sink_input_callback(pa_context *context, const pa_sink_input_info *i
     }
     if (const char *id = pa_proplist_gets(info->proplist, "module-stream-restore.id")) {
         if (qstrcmp(id, "sink-input-by-media-role:event") == 0) {
-            qCDebug(PLASMAPA) << "Ignoring event role sink input.";
+            qCDebug(PULSEAUDIOQT) << "Ignoring event role sink input.";
             return;
         }
     }
@@ -184,7 +184,7 @@ static void ext_stream_restore_subscribe_cb(pa_context *context, void *data)
     Q_ASSERT(context);
     Q_ASSERT(data);
     if (!PAOperation(pa_ext_stream_restore_read(context, ext_stream_restore_read_cb, data))) {
-        qCWarning(PLASMAPA) << "pa_ext_stream_restore_read() failed";
+        qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read() failed";
     }
 }
 
@@ -197,7 +197,7 @@ static void ext_stream_restore_change_sink_cb(pa_context *context, const pa_ext_
     Q_ASSERT(data);
     if (qstrncmp(info->name, "sink-input-by", 13) == 0) {
         Context *context = static_cast<Context *>(data);
-        const QByteArray deviceData = context->newDefaultSink().toUtf8();
+        const QByteArray deviceData = context->d->m_newDefaultSink.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
         newinfo.channel_map = info->channel_map;
@@ -217,7 +217,7 @@ static void ext_stream_restore_change_source_cb(pa_context *context, const pa_ex
     Q_ASSERT(data);
     if (qstrncmp(info->name, "source-output-by", 16) == 0) {
         Context *context = static_cast<Context *>(data);
-        const QByteArray deviceData = context->newDefaultSource().toUtf8();
+        const QByteArray deviceData = context->d->m_newDefaultSource.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
         newinfo.channel_map = info->channel_map;
@@ -234,8 +234,6 @@ Context::Context(QObject *parent)
     : QObject(parent)
     , d(new ContextPrivate(this))
 {
-
-    qCDebug(PLASMAPA())<<"Fooo";
     d->m_server = new Server(this);
     d->m_context = nullptr;
     d->m_mainloop = nullptr;
@@ -308,7 +306,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
             m_sinks.removeEntry(index);
         } else {
             if (!PAOperation(pa_context_get_sink_info_by_index(context, index, sink_cb, q))) {
-                qCWarning(PLASMAPA) << "pa_context_get_sink_info_by_index() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_info_by_index() failed";
                 return;
             }
         }
@@ -319,7 +317,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
             m_sources.removeEntry(index);
         } else {
             if (!PAOperation(pa_context_get_source_info_by_index(context, index, source_cb, q))) {
-                qCWarning(PLASMAPA) << "pa_context_get_source_info_by_index() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_get_source_info_by_index() failed";
                 return;
             }
         }
@@ -330,7 +328,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
             m_sinkInputs.removeEntry(index);
         } else {
             if (!PAOperation(pa_context_get_sink_input_info(context, index, sink_input_callback, q))) {
-                qCWarning(PLASMAPA) << "pa_context_get_sink_input_info() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_input_info() failed";
                 return;
             }
         }
@@ -341,7 +339,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
             m_sourceOutputs.removeEntry(index);
         } else {
             if (!PAOperation(pa_context_get_source_output_info(context, index, source_output_cb, q))) {
-                qCWarning(PLASMAPA) << "pa_context_get_sink_input_info() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_input_info() failed";
                 return;
             }
         }
@@ -352,7 +350,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
             m_clients.removeEntry(index);
         } else {
             if (!PAOperation(pa_context_get_client_info(context, index, client_cb, q))) {
-                qCWarning(PLASMAPA) << "pa_context_get_client_info() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_get_client_info() failed";
                 return;
             }
         }
@@ -363,7 +361,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
             m_cards.removeEntry(index);
         } else {
             if (!PAOperation(pa_context_get_card_info_by_index(context, index, card_cb, q))) {
-                qCWarning(PLASMAPA) << "pa_context_get_card_info_by_index() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_get_card_info_by_index() failed";
                 return;
             }
         }
@@ -374,7 +372,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
             m_modules.removeEntry(index);
         } else {
             if (!PAOperation(pa_context_get_module_info_list(context, module_info_list_cb, q))) {
-                qCWarning(PLASMAPA) << "pa_context_get_module_info_list() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_get_module_info_list() failed";
                 return;
             }
         }
@@ -383,7 +381,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
 
     case PA_SUBSCRIPTION_EVENT_SERVER:
         if (!PAOperation(pa_context_get_server_info(context, server_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_server_info() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_server_info() failed";
             return;
         }
         break;
@@ -393,10 +391,10 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
 
 void ContextPrivate::contextStateCallback(pa_context *c)
 {
-    qCDebug(PLASMAPA) << "state callback";
+    qCDebug(PULSEAUDIOQT) << "state callback";
     pa_context_state_t state = pa_context_get_state(c);
     if (state == PA_CONTEXT_READY) {
-        qCDebug(PLASMAPA) << "ready";
+        qCDebug(PULSEAUDIOQT) << "ready";
 
         // 1. Register for the stream changes (except during probe)
         if (m_context == c) {
@@ -411,48 +409,48 @@ void ContextPrivate::contextStateCallback(pa_context *c)
                                             PA_SUBSCRIPTION_MASK_CARD|
                                             PA_SUBSCRIPTION_MASK_MODULE|
                                             PA_SUBSCRIPTION_MASK_SERVER), nullptr, nullptr))) {
-                qCWarning(PLASMAPA) << "pa_context_subscribe() failed";
+                qCWarning(PULSEAUDIOQT) << "pa_context_subscribe() failed";
                 return;
             }
         }
 
         if (!PAOperation(pa_context_get_sink_info_list(c, sink_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_sink_info_list() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_info_list() failed";
             return;
         }
 
         if (!PAOperation(pa_context_get_source_info_list(c, source_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_source_info_list() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_source_info_list() failed";
             return;
         }
 
         if (!PAOperation(pa_context_get_client_info_list(c, client_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_client_info_list() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_client_info_list() failed";
             return;
         }
 
         if (!PAOperation(pa_context_get_card_info_list(c, card_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_card_info_list() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_card_info_list() failed";
             return;
         }
 
         if (!PAOperation(pa_context_get_sink_input_info_list(c, sink_input_callback, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_sink_input_info_list() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_input_info_list() failed";
             return;
         }
 
         if (!PAOperation(pa_context_get_source_output_info_list(c, source_output_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_source_output_info_list() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_source_output_info_list() failed";
             return;
         }
 
         if (!PAOperation(pa_context_get_module_info_list(c, module_info_list_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_module_info_list() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_module_info_list() failed";
             return;
         }
 
         if (!PAOperation(pa_context_get_server_info(c, server_cb, q))) {
-            qCWarning(PLASMAPA) << "pa_context_get_server_info() failed";
+            qCWarning(PULSEAUDIOQT) << "pa_context_get_server_info() failed";
             return;
         }
 
@@ -460,10 +458,10 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             pa_ext_stream_restore_set_subscribe_cb(c, ext_stream_restore_subscribe_cb, q);
             PAOperation(pa_ext_stream_restore_subscribe(c, 1, nullptr, q));
         } else {
-            qCWarning(PLASMAPA) << "Failed to initialize stream_restore extension";
+            qCWarning(PULSEAUDIOQT) << "Failed to initialize stream_restore extension";
         }
     } else if (!PA_CONTEXT_IS_GOOD(state)) {
-        qCWarning(PLASMAPA) << "context kaput";
+        qCWarning(PULSEAUDIOQT) << "context kaput";
         if (m_context) {
             pa_context_unref(m_context);
             m_context = nullptr;
@@ -541,12 +539,12 @@ void Context::setCardProfile(quint32 index, const QString &profile)
     if (!d->m_context) {
         return;
     }
-    qCDebug(PLASMAPA) << index << profile;
+    qCDebug(PULSEAUDIOQT) << index << profile;
     if (!PAOperation(pa_context_set_card_profile_by_index(d->m_context,
                                                           index,
                                                           profile.toUtf8().constData(),
                                                           nullptr, nullptr))) {
-        qCWarning(PLASMAPA) << "pa_context_set_card_profile_by_index failed";
+        qCWarning(PULSEAUDIOQT) << "pa_context_set_card_profile_by_index failed";
         return;
     }
 }
@@ -561,7 +559,7 @@ void Context::setDefaultSink(const QString &name)
                                                  nameData.constData(),
                                                  nullptr,
                                                  nullptr))) {
-        qCWarning(PLASMAPA) << "pa_context_set_default_sink failed";
+        qCWarning(PULSEAUDIOQT) << "pa_context_set_default_sink failed";
     }
 
     // Change device for all entries in stream-restore database
@@ -569,7 +567,7 @@ void Context::setDefaultSink(const QString &name)
     if (!PAOperation(pa_ext_stream_restore_read(d->m_context,
                                                 ext_stream_restore_change_sink_cb,
                                                 this))) {
-        qCWarning(PLASMAPA) << "pa_ext_stream_restore_read failed";
+        qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }
 
@@ -583,7 +581,7 @@ void Context::setDefaultSource(const QString &name)
                                                  nameData.constData(),
                                                  nullptr,
                                                  nullptr))) {
-        qCWarning(PLASMAPA) << "pa_context_set_default_source failed";
+        qCWarning(PULSEAUDIOQT) << "pa_context_set_default_source failed";
     }
 
     // Change device for all entries in stream-restore database
@@ -591,7 +589,7 @@ void Context::setDefaultSource(const QString &name)
     if (!PAOperation(pa_ext_stream_restore_read(d->m_context,
                                                 ext_stream_restore_change_source_cb,
                                                 this))) {
-        qCWarning(PLASMAPA) << "pa_ext_stream_restore_read failed";
+        qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }
 
@@ -607,7 +605,7 @@ void ContextPrivate::streamRestoreWrite(const pa_ext_stream_restore_info *info)
                                                  true,
                                                  nullptr,
                                                  nullptr))) {
-        qCWarning(PLASMAPA) << "pa_ext_stream_restore_write failed";
+        qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_write failed";
     }
 }
 
@@ -619,11 +617,11 @@ void ContextPrivate::connectToDaemon()
 
     // We require a glib event loop
     if (!QByteArray(QAbstractEventDispatcher::instance()->metaObject()->className()).contains("EventDispatcherGlib")) {
-        qCWarning(PLASMAPA) << "Disabling PulseAudio integration for lack of GLib event loop";
+        qCWarning(PULSEAUDIOQT) << "Disabling PulseAudio integration for lack of GLib event loop";
         return;
     }
 
-    qCDebug(PLASMAPA) <<  "Attempting connection to PulseAudio sound daemon";
+    qCDebug(PULSEAUDIOQT) <<  "Attempting connection to PulseAudio sound daemon";
     if (!m_mainloop) {
         m_mainloop = pa_glib_mainloop_new(nullptr);
         Q_ASSERT(m_mainloop);
@@ -657,65 +655,14 @@ void ContextPrivate::reset()
     m_server->reset();
 }
 
-const SinkMap &Context::sinks() const
-{
-    return d->m_sinks;
-}
-
 bool Context::isValid()
 {
     return d->m_context && d->m_mainloop;
 }
 
-const SinkInputMap &Context::sinkInputs() const
-{
-    return d->m_sinkInputs;
-}
-
-const SourceMap &Context::sources() const
-{
-    return d->m_sources;
-}
-
-const SourceOutputMap &Context::sourceOutputs() const
-{
-    return d->m_sourceOutputs;
-}
-
-const ClientMap &Context::clients() const
-{
-    return d->m_clients;
-}
-
-const CardMap &Context::cards() const
-{
-    return d->m_cards;
-}
-
-const ModuleMap &Context::modules() const
-{
-    return d->m_modules;
-}
-
-const StreamRestoreMap &Context::streamRestores() const
-{
-    return d->m_streamRestores;
-}
-
 Server* Context::server() const
 {
     return d->m_server;
-}
-
-QString Context::newDefaultSource() const
-{
-    return d->m_newDefaultSource;
-}
-
-
-QString Context::newDefaultSink() const
-{
-    return d->m_newDefaultSink;
 }
 
 void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolume, pa_cvolume cVolume, const std::function<pa_operation*(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)>& pa_set_volume)
@@ -735,7 +682,7 @@ void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolu
         newCVolume.values[channel] = newVolume;
     }
     if (!pa_set_volume(m_context, index, &newCVolume, nullptr, nullptr)) {
-        qCWarning(PLASMAPA) <<  "pa_set_volume failed";
+        qCWarning(PULSEAUDIOQT) <<  "pa_set_volume failed";
         return;
     }
 }
@@ -746,7 +693,7 @@ void ContextPrivate::setGenericMute(quint32 index, bool mute, const std::functio
         return;
     }
     if (!PAOperation(pa_set_mute(m_context, index, mute, nullptr, nullptr))) {
-        qCWarning(PLASMAPA) <<  "pa_set_mute failed";
+        qCWarning(PULSEAUDIOQT) <<  "pa_set_mute failed";
         return;
     }
 }
@@ -757,7 +704,7 @@ void ContextPrivate::setGenericPort(quint32 index, const QString &portName, cons
         return;
     }
     if (!PAOperation(pa_set_port(m_context, index, portName.toUtf8().constData(), nullptr, nullptr))) {
-        qCWarning(PLASMAPA) << "pa_set_port failed";
+        qCWarning(PULSEAUDIOQT) << "pa_set_port failed";
         return;
     }
 }
@@ -768,9 +715,9 @@ void ContextPrivate::setGenericDeviceForStream(quint32 streamIndex, quint32 devi
         return;
     }
     if (!PAOperation(pa_move_stream_to_device(m_context, streamIndex, deviceIndex, nullptr, nullptr))) {
-        qCWarning(PLASMAPA) << "pa_move_stream_to_device failed";
+        qCWarning(PULSEAUDIOQT) << "pa_move_stream_to_device failed";
         return;
     }
 }
 
-} // QPulseAudio
+} // PulseAudioQt

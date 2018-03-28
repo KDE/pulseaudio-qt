@@ -32,7 +32,7 @@
 // Properties need fully qualified classes even with pointers.
 #include "client.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class StreamPrivate;
@@ -41,7 +41,7 @@ class Stream : public VolumeObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-    Q_PROPERTY(QPulseAudio::Client *client READ client NOTIFY clientChanged)
+    Q_PROPERTY(PulseAudioQt::Client *client READ client NOTIFY clientChanged)
     Q_PROPERTY(bool virtualStream READ isVirtualStream NOTIFY virtualStreamChanged)
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
     Q_PROPERTY(bool corked READ isCorked NOTIFY corkedChanged)
@@ -73,6 +73,6 @@ protected:
 
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // STREAM_H

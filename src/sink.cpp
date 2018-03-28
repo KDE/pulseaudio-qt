@@ -27,7 +27,7 @@
 
 #include "device_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Sink::Sink(QObject *parent)
@@ -65,7 +65,7 @@ void Sink::setActivePortIndex(quint32 port_index)
 {
     Port *port = qobject_cast<Port *>(ports().at(port_index));
     if (!port) {
-        qCWarning(PLASMAPA) << "invalid port set request" << port_index;
+        qCWarning(PULSEAUDIOQT) << "invalid port set request" << port_index;
         return;
     }
     context()->d->setGenericPort(index(), port->name(), &pa_context_set_sink_port_by_index);
@@ -88,4 +88,4 @@ void Sink::setDefault(bool enable)
     }
 }
 
-} // QPulseAudio
+} // PulseAudioQt

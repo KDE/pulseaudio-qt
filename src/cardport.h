@@ -7,7 +7,7 @@
 #include "debug.h"
 #include <pulse/introspect.h>
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class CardPort : public Port
 {

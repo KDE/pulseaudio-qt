@@ -1,5 +1,5 @@
 /*
-    Copyright 2014-2015 Harald Sitter <sitter@kde.org>
+    Copyright 2018 David Rosca <nowrep@gmail.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -18,39 +18,18 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CLIENT_H
-#define CLIENT_H
+#pragma once
 
-#include "kf5pulseaudioqt_export.h"
-#include "pulseobject.h"
-#include <pulse/introspect.h>
+#include <QObject>
 
-namespace PulseAudioQt
-{
-
-class ClientPrivate;
-
-class KF5PULSEAUDIOQT_EXPORT Client : public PulseObject
+class MapsTest : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-public:
-    Client(QObject *parent);
-    virtual ~Client();
 
-    QString name() const;
+private Q_SLOTS:
+    void initTestCase();
+    void cleanupTestCase();
 
-    ClientPrivate* d;
-
-    // TODO move to private
-    void update(const pa_client_info *info);
-
-
-Q_SIGNALS:
-    void nameChanged();
-
+    void basicTest();
+    void pendingRemovalsTest();
 };
-
-} // PulseAudioQt
-
-#endif // CLIENT_H

@@ -4,7 +4,7 @@
 #include <pulse/introspect.h>
 #include "sourceoutput.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class SourceOutputPrivate {
 

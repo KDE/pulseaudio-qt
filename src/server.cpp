@@ -20,11 +20,12 @@
 
 #include "server.h"
 #include "context.h"
+#include "context_p.h"
 #include "sink.h"
 #include "source.h"
 #include "debug.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Server::Server(Context *context)
@@ -34,13 +35,10 @@ Server::Server(Context *context)
 {
     Q_ASSERT(context);
 
-    const QObject* obj = (&context->sinks());
-    qDebug() << "holaaaa" << obj;
-
-    connect(&context->sinks(), &MapBaseQObject::added, this, &Server::updateDefaultDevices);
-    connect(&context->sinks(), &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
-    connect(&context->sources(), &MapBaseQObject::added, this, &Server::updateDefaultDevices);
-    connect(&context->sources(), &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sinks, &MapBaseQObject_Dptr::added, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sinks, &MapBaseQObject_Dptr::removed, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sources, &MapBaseQObject_Dptr::added, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sources, &MapBaseQObject_Dptr::removed, this, &Server::updateDefaultDevices);
 }
 
 Sink *Server::defaultSink() const
@@ -101,26 +99,26 @@ static Type *findByName(const Map &map, const QString &name)
             return out;
         }
     }
-    qCWarning(PLASMAPA) << "No object for name" << name;
+    qCWarning(PULSEAUDIOQT) << "No object for name" << name;
     return out;
 }
 
 void Server::updateDefaultDevices()
 {
-    Sink *sink = findByName<Sink>(Context::instance()->sinks().data(), m_defaultSinkName);
-    Source *source = findByName<Source>(Context::instance()->sources().data(), m_defaultSourceName);
+    Sink *sink = findByName<Sink>(Context::instance()->d->m_sinks.data(), m_defaultSinkName);
+    Source *source = findByName<Source>(Context::instance()->d->m_sources.data(), m_defaultSourceName);
 
     if (m_defaultSink != sink) {
-        qCDebug(PLASMAPA) << "Default sink changed" << sink;
+        qCDebug(PULSEAUDIOQT) << "Default sink changed" << sink;
         m_defaultSink = sink;
         Q_EMIT defaultSinkChanged(m_defaultSink);
     }
 
     if (m_defaultSource != source) {
-        qCDebug(PLASMAPA) << "Default source changed" << source;
+        qCDebug(PULSEAUDIOQT) << "Default source changed" << source;
         m_defaultSource = source;
         Q_EMIT defaultSourceChanged(m_defaultSource);
     }
 }
 
-} // QPulseAudio
+} // PulseAudioQt

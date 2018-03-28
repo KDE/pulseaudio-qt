@@ -23,7 +23,7 @@
 
 #include "stream.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class SinkInputPrivate;
@@ -48,6 +48,6 @@ public:
     void update(const pa_sink_input_info *info);
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // SINKINPUT_H

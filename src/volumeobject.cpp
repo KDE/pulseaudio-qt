@@ -23,7 +23,7 @@
 #include "volumeobject.h"
 #include "volumeobject_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 VolumeObject::VolumeObject(QObject *parent)
@@ -85,4 +85,4 @@ QList<qreal> VolumeObject::channelVolumes() const
     return ret;
 }
 
-} // QPulseAudio
+} // PulseAudioQt

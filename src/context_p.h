@@ -9,7 +9,7 @@
 #include <pulse/ext-stream-restore.h>
 #include <pulse/glib-mainloop.h>
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
     static const qint64 NormalVolume = PA_VOLUME_NORM;

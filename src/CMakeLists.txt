@@ -1,5 +1,4 @@
-include_directories(${PULSEAUDIO_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR}     ${GCONF_INCLUDE_DIRS}
-    ${GOBJECT_INCLUDE_DIRS})
+include_directories(${PULSEAUDIO_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR})
 
 set(cpp_SRCS
     card.cpp
@@ -8,6 +7,7 @@ set(cpp_SRCS
     context.cpp
     device.cpp
     maps.cpp
+    maps_dptr.cpp
     operation.cpp
     port.cpp
     profile.cpp
@@ -15,18 +15,16 @@ set(cpp_SRCS
     pulseobject.cpp
     sink.cpp
     sinkinput.cpp
-    modulemanager.cpp
-    gconfitem.cpp
     source.cpp
     sourceoutput.cpp
     stream.cpp
     volumeobject.cpp
-    debug.cpp
     server.cpp
     streamrestore.cpp
     module.cpp
 )
 
+ecm_qt_declare_logging_category(cpp_SRCS HEADER debug.h IDENTIFIER PULSEAUDIOQT CATEGORY_NAME org.kde.pulseaudio)
 
 add_library(KF5PulseAudioQt SHARED ${cpp_SRCS})
 target_link_libraries(KF5PulseAudioQt
@@ -37,8 +35,6 @@ target_link_libraries(KF5PulseAudioQt
         Qt5::DBus
         ${PULSEAUDIO_LIBRARY}
         ${PULSEAUDIO_MAINLOOP_LIBRARY}
-        ${GCONF_LDFLAGS}
-        ${GOBJECT_LDFLAGS}
         ${CANBERRA_LIBRARIES}
 )
 
@@ -54,12 +50,8 @@ ecm_generate_headers(PulseAudioQt_HEADERS
         Card
         Client
         Context
-        Debug
         Device
-        Maps
         Module
-        ModuleManager
-        Operation
         Port
         Profile
         PulseAudio

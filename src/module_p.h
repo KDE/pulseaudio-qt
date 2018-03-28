@@ -3,7 +3,7 @@
 
 #include "module.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class ModulePrivate {
 

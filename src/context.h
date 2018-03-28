@@ -25,9 +25,10 @@
 #include <QObject>
 #include <QSet>
 #include "maps.h"
+#include "maps_dptr.h"
 #include "kf5pulseaudioqt_export.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class Server;
@@ -53,27 +54,15 @@ public:
 
     bool isValid();
 
-    const SinkMap &sinks() const;
-    const SinkInputMap &sinkInputs() const;
-    const SourceMap &sources() const;
-    const SourceOutputMap &sourceOutputs() const;
-    const ClientMap &clients() const;
-    const CardMap &cards() const;
-    const ModuleMap &modules() const;
-    const StreamRestoreMap &streamRestores() const;
     Server *server() const;
-    QString newDefaultSink() const;
-    QString newDefaultSource() const;
 
     void setCardProfile(quint32 index, const QString &profile);
     void setDefaultSink(const QString &name);
     void setDefaultSource(const QString &name);
 
     ContextPrivate* d;
-private:
-    static Context* s_context;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // CONTEXT_H

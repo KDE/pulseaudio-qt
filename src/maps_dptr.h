@@ -18,8 +18,7 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MAPS_H
-#define MAPS_H
+#pragma once
 
 #include "debug.h"
 #include <QMap>
@@ -28,25 +27,22 @@
 #include <pulse/pulseaudio.h>
 #include <pulse/ext-stream-restore.h>
 
+#include "sink_p.h"
+#include "source_p.h"
+
 namespace PulseAudioQt
 {
 
 // Used for typedefs.
-class Card;
-class Client;
 class Sink;
-class SinkInput;
 class Source;
-class SourceOutput;
-class StreamRestore;
-class Module;
 
 /**
  * @see MapBase
  * This class is nothing more than the QObject base since moc cannot handle
  * templates.
  */
-class MapBaseQObject : public QObject
+class MapBaseQObject_Dptr : public QObject
 {
     Q_OBJECT
 
@@ -69,10 +65,10 @@ Q_SIGNALS:
  * index to a pulse index to an object, and any permutation thereof.
  */
 template<typename Type, typename PAInfo>
-class MapBase : public MapBaseQObject
+class MapBase_Dptr : public MapBaseQObject_Dptr
 {
 public:
-    virtual ~MapBase() {}
+    virtual ~MapBase_Dptr() {}
 
     const QMap<quint32, Type *> &data() const { return m_data; }
 
@@ -166,13 +162,7 @@ protected:
     QSet<quint32> m_pendingRemovals;
 };
 
-typedef MapBase<SinkInput, pa_sink_input_info> SinkInputMap;
-typedef MapBase<SourceOutput, pa_source_output_info> SourceOutputMap;
-typedef MapBase<Client, pa_client_info> ClientMap;
-typedef MapBase<Card, pa_card_info> CardMap;
-typedef MapBase<Module, pa_module_info> ModuleMap;
-typedef MapBase<StreamRestore, pa_ext_stream_restore_info> StreamRestoreMap;
+typedef MapBase_Dptr<Sink, pa_sink_info> SinkMap;
+typedef MapBase_Dptr<Source, pa_source_info> SourceMap;
 
 } // PulseAudioQt
-
-#endif // MAPS_H

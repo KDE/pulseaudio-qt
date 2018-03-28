@@ -4,7 +4,7 @@
 #include "streamrestore.h"
 #include <pulse/ext-stream-restore.h>
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class StreamRestorePrivate {
 

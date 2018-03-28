@@ -26,7 +26,7 @@
 #include "pulseobject_p.h"
 #include "cardport.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Card::Card(QObject *parent)
@@ -107,5 +107,4 @@ QList<QObject *> Card::ports() const
     return d->m_ports;
 }
 
-
-} // QPulseAudio
+} // PulseAudioQt

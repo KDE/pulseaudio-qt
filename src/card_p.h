@@ -4,7 +4,7 @@
 #include "card.h"
 #include <pulse/introspect.h>
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 class CardPrivate {
 
 public:

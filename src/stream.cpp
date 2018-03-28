@@ -21,8 +21,9 @@
 #include "stream.h"
 #include "stream_p.h"
 #include "volumeobject_p.h"
+#include "context_p.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 Stream::Stream(QObject *parent)
@@ -58,7 +59,7 @@ QString Stream::name() const
 
 Client *Stream::client() const
 {
-    return context()->clients().data().value(d->m_clientIndex, nullptr);
+    return context()->d->m_clients.data().value(d->m_clientIndex, nullptr);
 }
 
 bool Stream::isVirtualStream() const
@@ -76,4 +77,4 @@ bool Stream::isCorked() const
     return d->m_corked;
 }
 
-} // QPulseAudio
+} // PulseAudioQt

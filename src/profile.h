@@ -25,7 +25,7 @@
 #include <QString>
 #include "kf5pulseaudioqt_export.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class KF5PULSEAUDIOQT_EXPORT Profile : public QObject
@@ -94,6 +94,6 @@ private:
     Availability m_availability;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // PROFILE_H

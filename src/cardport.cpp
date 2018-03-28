@@ -1,6 +1,6 @@
 #include "cardport.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 CardPort::CardPort(QObject* parent)
     : Port(parent)
@@ -18,7 +18,7 @@ void CardPort::update(const pa_card_port_info* info)
         Q_ASSERT(key);
         const char *value = pa_proplist_gets(info->proplist, key);
         if (!value) {
-            qCDebug(PLASMAPA) << "property" << key << "not a string";
+            qCDebug(PULSEAUDIOQT) << "property" << key << "not a string";
             continue;
         }
         Q_ASSERT(value);

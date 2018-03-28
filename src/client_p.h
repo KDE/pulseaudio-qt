@@ -4,7 +4,7 @@
 #include <pulse/introspect.h>
 #include "client.h"
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 
 class ClientPrivate
@@ -16,6 +16,6 @@ public:
     QString m_name;
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif

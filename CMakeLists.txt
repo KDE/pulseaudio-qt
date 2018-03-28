@@ -34,6 +34,8 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PULSEAUDIOQT
 set(REQUIRED_QT_VERSION 5.7.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
 
+find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt5Test PROPERTIES DESCRIPTION "Autotests for PulseAudioQt" TYPE OPTIONAL)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5PulseAudioQt")
@@ -58,10 +60,6 @@ configure_package_config_file(
   "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
-        
-include(FindPkgConfig)
-pkg_check_modules(GCONF REQUIRED gconf-2.0)
-pkg_check_modules(GOBJECT REQUIRED gobject-2.0)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     CoreAddons
@@ -77,8 +75,13 @@ if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
 endif()
 
 add_subdirectory(src)
-#add_subdirectory(autotests)
-#add_subdirectory(tests)
+
+if (BUILD_TESTING)
+    # add_subdirectory(tests)
+    if(Qt5Test_FOUND)
+        add_subdirectory(autotests)
+    endif()
+endif()
 
 install(EXPORT KF5PulseAudioQtTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5PulseAudioQtTargets.cmake NAMESPACE KF5:: )
 

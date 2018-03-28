@@ -24,7 +24,7 @@
 #include "pulseobject.h"
 #include <pulse/ext-stream-restore.h>
 
-namespace QPulseAudio
+namespace PulseAudioQt
 {
 class StreamRestorePrivate;
 
@@ -84,6 +84,6 @@ Q_SIGNALS:
 
 };
 
-} // QPulseAudio
+} // PulseAudioQt
 
 #endif // STREAMRESTORE_H

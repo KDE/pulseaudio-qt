@@ -5,7 +5,7 @@
 #include "volumeobject_p.h"
 #include "port.h"
 
-namespace QPulseAudio {
+namespace PulseAudioQt {
 
 class DevicePrivate {
 
@@ -72,5 +72,7 @@ void Device::updateDevice(const PAInfo *info)
         Q_EMIT stateChanged();
     }
 }
-}
+
+} // namespace PulseAudioQt
+
 #endif
