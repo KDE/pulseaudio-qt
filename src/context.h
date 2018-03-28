@@ -25,7 +25,6 @@
 #include <QObject>
 #include <QSet>
 #include "maps.h"
-#include "maps_dptr.h"
 #include "kf5pulseaudioqt_export.h"
 
 namespace PulseAudioQt

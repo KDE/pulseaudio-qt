@@ -2,6 +2,7 @@
 #define CONTEXT_P_H
 
 #include "maps.h"
+#include "maps_dptr.h"
 #include "operation.h"
 #include <pulse/context.h>
 #include <pulse/introspect.h>
