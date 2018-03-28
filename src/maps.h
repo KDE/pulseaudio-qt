@@ -62,6 +62,7 @@ public:
 
 Q_SIGNALS:
     void added(int index);
+    void aboutToBeRemoved(int index);
     void removed(int index);
 };
 
@@ -156,6 +157,7 @@ public:
             m_pendingRemovals.insert(index);
         } else {
             const int modelIndex = m_data.keys().indexOf(index);
+            emit aboutToBeRemoved(modelIndex);
             delete m_data.take(index);
             Q_EMIT removed(modelIndex);
         }
