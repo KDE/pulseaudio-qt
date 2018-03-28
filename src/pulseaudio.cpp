@@ -30,6 +30,7 @@
 #include "server.h"
 #include "streamrestore.h"
 #include "module.h"
+#include "context_p.h"
 
 #include <QMetaEnum>
 
@@ -352,31 +353,31 @@ QVariant SourceModel::data(const QModelIndex &index, int role) const
 #endif
 
 SinkInputModel::SinkInputModel(QObject *parent)
-    : AbstractModel(&context()->sinkInputs(), parent)
+    : AbstractModel(&context()->d->m_sinkInputs, parent)
 {
     initRoleNames(SinkInput::staticMetaObject);
 }
 
 SourceOutputModel::SourceOutputModel(QObject *parent)
-    : AbstractModel(&context()->sourceOutputs(), parent)
+    : AbstractModel(&context()->d->m_sourceOutputs, parent)
 {
     initRoleNames(SourceOutput::staticMetaObject);
 }
 
 CardModel::CardModel(QObject *parent)
-    : AbstractModel(&context()->cards(), parent)
+    : AbstractModel(&context()->d->m_cards, parent)
 {
     initRoleNames(Card::staticMetaObject);
 }
 
 StreamRestoreModel::StreamRestoreModel(QObject *parent)
-    : AbstractModel(&context()->streamRestores(), parent)
+    : AbstractModel(&context()->d->m_streamRestores, parent)
 {
     initRoleNames(StreamRestore::staticMetaObject);
 }
 
 ModuleModel::ModuleModel(QObject *parent)
-    : AbstractModel(&context()->modules(), parent)
+    : AbstractModel(&context()->d->m_modules, parent)
 {
     initRoleNames(Module::staticMetaObject);
 }

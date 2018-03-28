@@ -21,6 +21,7 @@
 
 #include "modulemanager.h"
 #include "module.h"
+#include "context_p.h"
 
 #define PA_GCONF_ROOT "/system/pulseaudio"
 #define PA_GCONF_PATH_MODULES PA_GCONF_ROOT"/modules"
@@ -83,8 +84,8 @@ ModuleManager::ModuleManager(QObject *parent) :
     updateModulesTimer->setInterval(500);
     updateModulesTimer->setSingleShot(true);
     connect(updateModulesTimer, &QTimer::timeout, this, &ModuleManager::updateLoadedModules);
-    connect(&Context::instance()->modules(), &MapBaseQObject::added, updateModulesTimer, static_cast<void(QTimer::*)(void)>(&QTimer::start));
-    connect(&Context::instance()->modules(), &MapBaseQObject::removed, updateModulesTimer, static_cast<void(QTimer::*)(void)>(&QTimer::start));
+    connect(&Context::instance()->d->m_modules, &MapBaseQObject::added, updateModulesTimer, static_cast<void(QTimer::*)(void)>(&QTimer::start));
+    connect(&Context::instance()->d->m_modules, &MapBaseQObject::removed, updateModulesTimer, static_cast<void(QTimer::*)(void)>(&QTimer::start));
     updateLoadedModules();
 }
 
@@ -126,7 +127,7 @@ QStringList ModuleManager::loadedModules() const
 void ModuleManager::updateLoadedModules()
 {
     m_loadedModules.clear();
-    const auto modules = Context::instance()->modules().data();
+    const auto modules = Context::instance()->d->m_modules.data();
     for (Module *module : modules) {
         m_loadedModules.append(module->name());
     }

@@ -54,14 +54,6 @@ public:
 
     bool isValid();
 
-    const SinkMap &sinks() const;
-    const SinkInputMap &sinkInputs() const;
-    const SourceMap &sources() const;
-    const SourceOutputMap &sourceOutputs() const;
-    const ClientMap &clients() const;
-    const CardMap &cards() const;
-    const ModuleMap &modules() const;
-    const StreamRestoreMap &streamRestores() const;
     Server *server() const;
     QString newDefaultSink() const;
     QString newDefaultSource() const;

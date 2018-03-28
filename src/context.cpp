@@ -656,49 +656,9 @@ void ContextPrivate::reset()
     m_server->reset();
 }
 
-const SinkMap &Context::sinks() const
-{
-    return d->m_sinks;
-}
-
 bool Context::isValid()
 {
     return d->m_context && d->m_mainloop;
-}
-
-const SinkInputMap &Context::sinkInputs() const
-{
-    return d->m_sinkInputs;
-}
-
-const SourceMap &Context::sources() const
-{
-    return d->m_sources;
-}
-
-const SourceOutputMap &Context::sourceOutputs() const
-{
-    return d->m_sourceOutputs;
-}
-
-const ClientMap &Context::clients() const
-{
-    return d->m_clients;
-}
-
-const CardMap &Context::cards() const
-{
-    return d->m_cards;
-}
-
-const ModuleMap &Context::modules() const
-{
-    return d->m_modules;
-}
-
-const StreamRestoreMap &Context::streamRestores() const
-{
-    return d->m_streamRestores;
 }
 
 Server* Context::server() const
