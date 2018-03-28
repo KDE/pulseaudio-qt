@@ -196,7 +196,7 @@ static void ext_stream_restore_change_sink_cb(pa_context *context, const pa_ext_
     Q_ASSERT(data);
     if (qstrncmp(info->name, "sink-input-by", 13) == 0) {
         Context *context = static_cast<Context *>(data);
-        const QByteArray deviceData = context->newDefaultSink().toUtf8();
+        const QByteArray deviceData = context->d->m_newDefaultSink.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
         newinfo.channel_map = info->channel_map;
@@ -216,7 +216,7 @@ static void ext_stream_restore_change_source_cb(pa_context *context, const pa_ex
     Q_ASSERT(data);
     if (qstrncmp(info->name, "source-output-by", 16) == 0) {
         Context *context = static_cast<Context *>(data);
-        const QByteArray deviceData = context->newDefaultSource().toUtf8();
+        const QByteArray deviceData = context->d->m_newDefaultSource.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
         newinfo.channel_map = info->channel_map;
@@ -664,17 +664,6 @@ bool Context::isValid()
 Server* Context::server() const
 {
     return d->m_server;
-}
-
-QString Context::newDefaultSource() const
-{
-    return d->m_newDefaultSource;
-}
-
-
-QString Context::newDefaultSink() const
-{
-    return d->m_newDefaultSink;
 }
 
 void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolume, pa_cvolume cVolume, const std::function<pa_operation*(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)>& pa_set_volume)

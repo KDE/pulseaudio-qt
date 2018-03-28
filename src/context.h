@@ -55,8 +55,6 @@ public:
     bool isValid();
 
     Server *server() const;
-    QString newDefaultSink() const;
-    QString newDefaultSource() const;
 
     void setCardProfile(quint32 index, const QString &profile);
     void setDefaultSink(const QString &name);
