@@ -47,7 +47,7 @@
 namespace PulseAudioQt
 {
 
-Context* Context::s_context = nullptr;
+Context* s_context = nullptr;
 
 static bool isGoodState(int eol)
 {

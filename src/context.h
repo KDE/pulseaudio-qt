@@ -61,8 +61,6 @@ public:
     void setDefaultSource(const QString &name);
 
     ContextPrivate* d;
-private:
-    static Context* s_context;
 };
 
 } // PulseAudioQt
