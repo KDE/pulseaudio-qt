@@ -32,7 +32,7 @@ VolumeObject::VolumeObject(QObject *parent)
 {
 }
 
-VolumeObjectPrivate::VolumeObjectPrivate(VolumeObject* q)
+VolumeObjectPrivate::VolumeObjectPrivate(VolumeObject *q)
     : q(q)
     , m_muted(true)
     , m_hasVolume(true)

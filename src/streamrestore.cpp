@@ -45,7 +45,7 @@ StreamRestore::~StreamRestore()
 {
 }
 
-StreamRestorePrivate::StreamRestorePrivate(StreamRestore* q)
+StreamRestorePrivate::StreamRestorePrivate(StreamRestore *q)
     :q(q)
 {
 }

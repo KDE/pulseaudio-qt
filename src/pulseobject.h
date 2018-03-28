@@ -48,7 +48,7 @@ public:
     void updatePulseObject(PAInfo *info);
 
     Context *context() const;
-    PulseObjectPrivate* d;
+    PulseObjectPrivate *d;
 Q_SIGNALS:
     void propertiesChanged();
 

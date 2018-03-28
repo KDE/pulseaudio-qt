@@ -39,7 +39,7 @@ public:
     void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
 
-    SourceOutputPrivate* d;
+    SourceOutputPrivate *d;
 
     //TODO move to private
     void update(const pa_source_output_info *info);

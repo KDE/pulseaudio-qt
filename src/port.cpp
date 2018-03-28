@@ -19,16 +19,26 @@
 */
 
 #include "port.h"
-
+#include "port_p.h"
 namespace PulseAudioQt
 {
 
 Port::Port(QObject *parent)
     : Profile(parent)
+    , d(new PortPrivate(this))
 {
 }
 
 Port::~Port()
+{
+}
+
+PortPrivate::PortPrivate(Port *q)
+    : q(q)
+{
+}
+
+PortPrivate::~PortPrivate()
 {
 }
 

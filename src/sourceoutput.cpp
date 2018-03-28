@@ -34,7 +34,7 @@ SourceOutput::SourceOutput(QObject *parent)
 {
 }
 
-SourceOutputPrivate::SourceOutputPrivate(SourceOutput* q)
+SourceOutputPrivate::SourceOutputPrivate(SourceOutput *q)
     : q(q)
 {
 }

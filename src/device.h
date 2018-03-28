@@ -24,7 +24,6 @@
 #include <QString>
 
 #include "volumeobject.h"
-#include "pulseobject.h"
 
 namespace PulseAudioQt
 {
@@ -67,7 +66,6 @@ public:
 
     template <typename PAInfo>
     void updateDevice(const PAInfo *info);
-    DevicePrivate* d;
 Q_SIGNALS:
     void stateChanged();
     void nameChanged();
@@ -80,7 +78,7 @@ Q_SIGNALS:
 
 protected:
     Device(QObject *parent);
-// 
+    DevicePrivate *d;
 
 private:
     State stateFromPaState(int value) const;

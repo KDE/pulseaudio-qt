@@ -19,16 +19,14 @@
 */
 
 #include "profile.h"
+#include "profile_p.h"
 
 namespace PulseAudioQt
 {
 
 Profile::Profile(QObject *parent)
     : QObject(parent)
-    , m_name()
-    , m_description()
-    , m_priority(0)
-    , m_availability(Unknown)
+    , d(new ProfilePrivate(this))
 {
 }
 
@@ -36,24 +34,37 @@ Profile::~Profile()
 {
 }
 
+ProfilePrivate::ProfilePrivate(Profile *q)
+    : q(q)
+    , m_name()
+    , m_description()
+    , m_priority(0)
+    , m_availability(Profile::Unknown)
+{
+}
+
+ProfilePrivate::~ProfilePrivate()
+{
+}
+
 QString Profile::name() const
 {
-    return m_name;
+    return d->m_name;
 }
 
 QString Profile::description() const
 {
-    return m_description;
+    return d->m_description;
 }
 
 quint32 Profile::priority() const
 {
-    return m_priority;
+    return d->m_priority;
 }
 
 Profile::Availability Profile::availability() const
 {
-    return m_availability;
+    return d->m_availability;
 }
 
 } // PulseAudioQt

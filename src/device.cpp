@@ -64,7 +64,7 @@ Device::Device(QObject *parent)
 {
 }
 
-DevicePrivate::DevicePrivate(Device* q)
+DevicePrivate::DevicePrivate(Device *q)
     : q(q)
 {
 }

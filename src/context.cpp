@@ -48,7 +48,7 @@
 namespace PulseAudioQt
 {
 
-Context* s_context = nullptr;
+Context *s_context = nullptr;
 
 static bool isGoodState(int eol)
 {
@@ -250,7 +250,7 @@ Context::Context(QObject *parent)
     });
 }
 
-ContextPrivate::ContextPrivate(Context* q)
+ContextPrivate::ContextPrivate(Context *q)
     :q(q)
 {
 }
@@ -660,7 +660,7 @@ bool Context::isValid()
     return d->m_context && d->m_mainloop;
 }
 
-Server* Context::server() const
+Server *Context::server() const
 {
     return d->m_server;
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2014-2015 Harald Sitter <sitter@kde.org>
+    Copyright 2018 Nicolas Fella <nicolas.fella@gmx.de>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -17,37 +17,25 @@
     You should have received a copy of the GNU Lesser General Public
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-#ifndef SINKINPUT_H
-#define SINKINPUT_H
-
-#include "stream.h"
+#pragma once
+#include "server.h"
 
 namespace PulseAudioQt
 {
 
-class SinkInputPrivate;
-
-class SinkInput : public Stream
+class ServerPrivate
 {
-    Q_OBJECT
+
 public:
-    explicit SinkInput(QObject *parent);
-    virtual ~SinkInput();
+    explicit ServerPrivate(Server *q);
+    virtual ~ServerPrivate();
 
-    void setSinkIndex(quint32 sinkIndex);
+    Server *q;
 
-    void setVolume(qint64 volume) Q_DECL_OVERRIDE;
-    void setMuted(bool muted) Q_DECL_OVERRIDE;
-    void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
-    void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
+    QString m_defaultSinkName;
+    QString m_defaultSourceName;
+    Sink *m_defaultSink;
+    Source *m_defaultSource;
 
-    SinkInputPrivate *d;
-
-    // TODO Move to private
-    void update(const pa_sink_input_info *info);
 };
-
-} // PulseAudioQt
-
-#endif // SINKINPUT_H
+}

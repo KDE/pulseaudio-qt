@@ -34,7 +34,7 @@ Module::Module(QObject *parent)
 {
 }
 
-ModulePrivate::ModulePrivate(Module* q)
+ModulePrivate::ModulePrivate(Module *q)
     : q(q)
 {
 }

@@ -30,6 +30,7 @@
 #include "server.h"
 #include "streamrestore.h"
 #include "module.h"
+#include "context.h"
 #include "context_p.h"
 
 #include <QMetaEnum>

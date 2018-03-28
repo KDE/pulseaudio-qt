@@ -33,7 +33,7 @@ Client::Client(QObject *parent)
 {
 }
 
-ClientPrivate::ClientPrivate(Client* q)
+ClientPrivate::ClientPrivate(Client *q)
     : q(q)
 {
 }

@@ -44,7 +44,7 @@ public:
     bool isDefault() const Q_DECL_OVERRIDE;
     void setDefault(bool enable) Q_DECL_OVERRIDE;
 
-    SinkPrivate* d;
+    SinkPrivate *d;
 
     // TODO move to private
     void update(const pa_sink_info *info);

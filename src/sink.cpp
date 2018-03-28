@@ -26,6 +26,7 @@
 #include "server.h"
 
 #include "device_p.h"
+#include "volumeobject_p.h"
 
 namespace PulseAudioQt
 {
@@ -36,7 +37,7 @@ Sink::Sink(QObject *parent)
     connect(context()->server(), &Server::defaultSinkChanged, this, &Sink::defaultChanged);
 }
 
-SinkPrivate::SinkPrivate(Sink* q)
+SinkPrivate::SinkPrivate(Sink *q)
     : q(q)
 {
 }

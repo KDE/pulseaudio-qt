@@ -23,12 +23,8 @@
 
 #include <QString>
 
-#include <pulse/volume.h>
-
 #include "volumeobject.h"
-#include "pulseobject.h"
 
-#include "context.h"
 // Properties need fully qualified classes even with pointers.
 #include "client.h"
 
@@ -58,7 +54,7 @@ public:
     template <typename PAInfo>
     void updateStream(const PAInfo *info);
 
-    StreamPrivate* d;
+    StreamPrivate *d;
 
 Q_SIGNALS:
     void nameChanged();

@@ -34,15 +34,19 @@ PulseObject::PulseObject(QObject *parent)
 {
 }
 
-PulseObjectPrivate::PulseObjectPrivate(PulseObject* q)
+PulseObject::~PulseObject()
+{
+    delete d;
+}
+
+PulseObjectPrivate::PulseObjectPrivate(PulseObject *q)
     : q(q)
     , m_index(0)
 {
 }
 
-PulseObject::~PulseObject()
+PulseObjectPrivate::~PulseObjectPrivate()
 {
-    delete d;
 }
 
 Context *PulseObject::context() const

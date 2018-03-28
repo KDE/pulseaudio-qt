@@ -34,7 +34,7 @@ SinkInput::SinkInput(QObject *parent)
 {
 }
 
-SinkInputPrivate::SinkInputPrivate(SinkInput* q)
+SinkInputPrivate::SinkInputPrivate(SinkInput *q)
     : q(q)
 {
 }

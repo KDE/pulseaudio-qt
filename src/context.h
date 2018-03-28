@@ -21,11 +21,9 @@
 #ifndef CONTEXT_H
 #define CONTEXT_H
 
-#include <QMutex>
 #include <QObject>
-#include <QSet>
-#include "maps.h"
 #include "kf5pulseaudioqt_export.h"
+#include "pulse/volume.h"
 
 namespace PulseAudioQt
 {
@@ -59,7 +57,7 @@ public:
     void setDefaultSink(const QString &name);
     void setDefaultSource(const QString &name);
 
-    ContextPrivate* d;
+    ContextPrivate *d;
 };
 
 } // PulseAudioQt

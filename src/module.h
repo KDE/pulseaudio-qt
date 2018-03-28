@@ -42,7 +42,6 @@ public:
     QString name() const;
     QString argument() const;
 
-    ModulePrivate* d;
 
     //TODO Move to private
     void update(const pa_module_info *info);
@@ -51,6 +50,9 @@ public:
 Q_SIGNALS:
     void nameChanged();
     void argumentChanged();
+
+private:
+    ModulePrivate *d;
 };
 
 } // PulseAudioQt

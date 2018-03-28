@@ -23,8 +23,10 @@
 #include "debug.h"
 
 #include "context.h"
+#include "pulseobject.h"
 #include "pulseobject_p.h"
 #include "cardport.h"
+#include "profile_p.h"
 
 namespace PulseAudioQt
 {

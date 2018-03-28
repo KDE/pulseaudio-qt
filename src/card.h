@@ -23,13 +23,12 @@
 
 #include <QList>
 
-#include "profile.h"
-#include "port.h"
 #include "pulseobject.h"
 #include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
+
 class CardPrivate;
 
 class Card : public PulseObject
@@ -49,11 +48,12 @@ public:
     void setActiveProfileIndex(quint32 profileIndex);
     QList<QObject *> ports() const;
 
-    CardPrivate* d;
 
     //TODO move to private
     void update(const pa_card_info *info);
 
+protected:
+    CardPrivate* d;
 Q_SIGNALS:
     void nameChanged();
     void profilesChanged();

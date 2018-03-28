@@ -40,11 +40,12 @@ public:
 
     QString name() const;
 
-    ClientPrivate* d;
 
     // TODO move to private
     void update(const pa_client_info *info);
 
+protected:
+    ClientPrivate *d;
 
 Q_SIGNALS:
     void nameChanged();

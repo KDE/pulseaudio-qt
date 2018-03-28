@@ -28,6 +28,8 @@
 namespace PulseAudioQt
 {
 
+class ProfilePrivate;
+
 class KF5PULSEAUDIOQT_EXPORT Profile : public QObject
 {
     Q_OBJECT
@@ -48,33 +50,7 @@ public:
     virtual ~Profile();
 
     template<typename PAInfo>
-    void setInfo(const PAInfo *info)
-    {
-        // Description is optional. Name not so much as we need some ID.
-        Q_ASSERT(info->name);
-        QString infoName = QString::fromUtf8(info->name);
-        if (m_name != infoName) {
-            m_name = infoName;
-            Q_EMIT nameChanged();
-        }
-        if (info->description) {
-            QString infoDescription = QString::fromUtf8(info->description);
-            if (m_description != infoDescription) {
-                m_description = infoDescription;
-                Q_EMIT descriptionChanged();
-            }
-        }
-        if (m_priority != info->priority) {
-            m_priority = info->priority;
-            Q_EMIT priorityChanged();
-        }
-
-        Availability newAvailability = info->available ? Available : Unavailable;
-        if (m_availability != newAvailability) {
-            m_availability = newAvailability;
-            Q_EMIT availabilityChanged();
-        }
-    }
+    void setInfo(const PAInfo *info);
 
     QString name() const;
     QString description() const;
@@ -88,10 +64,7 @@ Q_SIGNALS:
     void availabilityChanged();
 
 private:
-    QString m_name;
-    QString m_description;
-    quint32 m_priority;
-    Availability m_availability;
+    ProfilePrivate *d;
 };
 
 } // PulseAudioQt

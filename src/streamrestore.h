@@ -71,7 +71,7 @@ public:
     void update(const pa_ext_stream_restore_info *info);
 
 
-    StreamRestorePrivate* d;
+    StreamRestorePrivate *d;
 
 Q_SIGNALS:
     void nameChanged();
