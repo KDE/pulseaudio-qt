@@ -61,6 +61,7 @@ public:
     virtual int indexOfObject(QObject *object) const = 0;
 
 Q_SIGNALS:
+    void aboutToBeAdded(int index);
     void added(int index);
     void aboutToBeRemoved(int index);
     void removed(int index);
@@ -116,10 +117,17 @@ public:
     {
         Q_ASSERT(!m_data.contains(object->index()));
 
-        m_data.insert(object->index(), object);
+        int modelIndex = 0;
+        for (auto it = m_data.constBegin(); it != m_data.constEnd(); ++it) {
+            if (object->index() < it.key()) {
+                break;
+            }
+            modelIndex++;
+        }
 
-        const int modelIndex = m_data.keys().indexOf(object->index());
-        Q_ASSERT(modelIndex >= 0);
+        Q_EMIT aboutToBeAdded(modelIndex);
+        m_data.insert(object->index(), object);
+        Q_ASSERT(modelIndex == m_data.keys().indexOf(object->index()));
         Q_EMIT added(modelIndex);
     }
 
@@ -135,19 +143,14 @@ public:
             return;
         }
 
-        const bool isNew = !m_data.contains(info->index);
-
         auto *obj = m_data.value(info->index, nullptr);
         if (!obj) {
             obj = new Type(parent);
         }
         obj->update(info);
-        m_data.insert(info->index, obj);
 
-        if (isNew) {
-            const int modelIndex = m_data.keys().indexOf(info->index);
-            Q_ASSERT(modelIndex >= 0);
-            Q_EMIT added(modelIndex);
+        if (!m_data.contains(info->index)) {
+            insert(obj);
         }
     }
 
@@ -157,7 +160,7 @@ public:
             m_pendingRemovals.insert(index);
         } else {
             const int modelIndex = m_data.keys().indexOf(index);
-            emit aboutToBeRemoved(modelIndex);
+            Q_EMIT aboutToBeRemoved(modelIndex);
             delete m_data.take(index);
             Q_EMIT removed(modelIndex);
         }
