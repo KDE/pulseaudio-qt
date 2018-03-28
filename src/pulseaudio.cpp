@@ -213,6 +213,7 @@ QMetaMethod AbstractModel::propertyChangedMetaMethod() const
     return mo->method(methodIndex);
 }
 
+#if 0
 SinkModel::SinkModel(QObject *parent)
     : AbstractModel(&context()->sinks(), parent)
     , m_preferredSink(nullptr)
@@ -348,6 +349,7 @@ QVariant SourceModel::data(const QModelIndex &index, int role) const
     }
     return AbstractModel::data(index, role);
 }
+#endif
 
 SinkInputModel::SinkInputModel(QObject *parent)
     : AbstractModel(&context()->sinkInputs(), parent)
