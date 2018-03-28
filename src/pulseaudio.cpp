@@ -69,7 +69,7 @@ AbstractModel::~AbstractModel()
 QHash<int, QByteArray> AbstractModel::roleNames() const
 {
     if (!m_roles.empty()) {
-        qCDebug(PLASMAPA) << "returning roles" << m_roles;
+        qCDebug(PULSEAUDIOQT) << "returning roles" << m_roles;
         return m_roles;
     }
     Q_UNREACHABLE();
@@ -116,7 +116,7 @@ bool AbstractModel::setData(const QModelIndex &index, const QVariant &value, int
 
 int AbstractModel::role(const QByteArray &roleName) const
 {
-    qCDebug(PLASMAPA) << roleName << m_roles.key(roleName, -1);
+    qCDebug(PULSEAUDIOQT) << roleName << m_roles.key(roleName, -1);
     return m_roles.key(roleName, -1);
 }
 
@@ -166,7 +166,7 @@ void AbstractModel::initRoleNames(const QMetaObject &qobjectMetaObject)
         }
         m_signalIndexToProperties.insert(property.notifySignalIndex(), i);
     }
-    qCDebug(PLASMAPA) << m_roles;
+    qCDebug(PULSEAUDIOQT) << m_roles;
 
     // Connect to property changes also with objects already in model
     for (int i = 0; i < m_map->count(); ++i) {
@@ -188,7 +188,7 @@ void AbstractModel::propertyChanged()
         return;
     }
     int index = m_map->indexOfObject(sender());
-    qCDebug(PLASMAPA) << "PROPERTY CHANGED (" << index << ") :: " << role << roleNames().value(role);
+    qCDebug(PULSEAUDIOQT) << "PROPERTY CHANGED (" << index << ") :: " << role << roleNames().value(role);
     Q_EMIT dataChanged(createIndex(index, 0), createIndex(index, 0), {role});
 }
 
@@ -276,7 +276,7 @@ void SinkModel::updatePreferredSink()
     Sink *sink = findPreferredSink();
 
     if (sink != m_preferredSink) {
-        qCDebug(PLASMAPA) << "Changing preferred sink to" << sink << (sink ? sink->name() : "");
+        qCDebug(PULSEAUDIOQT) << "Changing preferred sink to" << sink << (sink ? sink->name() : "");
         m_preferredSink = sink;
         Q_EMIT preferredSinkChanged();
     }

@@ -99,7 +99,7 @@ static Type *findByName(const Map &map, const QString &name)
             return out;
         }
     }
-    qCWarning(PLASMAPA) << "No object for name" << name;
+    qCWarning(PULSEAUDIOQT) << "No object for name" << name;
     return out;
 }
 
@@ -109,13 +109,13 @@ void Server::updateDefaultDevices()
     Source *source = findByName<Source>(Context::instance()->d->m_sources.data(), m_defaultSourceName);
 
     if (m_defaultSink != sink) {
-        qCDebug(PLASMAPA) << "Default sink changed" << sink;
+        qCDebug(PULSEAUDIOQT) << "Default sink changed" << sink;
         m_defaultSink = sink;
         Q_EMIT defaultSinkChanged(m_defaultSink);
     }
 
     if (m_defaultSource != source) {
-        qCDebug(PLASMAPA) << "Default source changed" << source;
+        qCDebug(PULSEAUDIOQT) << "Default source changed" << source;
         m_defaultSource = source;
         Q_EMIT defaultSourceChanged(m_defaultSource);
     }

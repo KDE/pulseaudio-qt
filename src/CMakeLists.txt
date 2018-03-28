@@ -18,12 +18,12 @@ set(cpp_SRCS
     sourceoutput.cpp
     stream.cpp
     volumeobject.cpp
-    debug.cpp
     server.cpp
     streamrestore.cpp
     module.cpp
 )
 
+ecm_qt_declare_logging_category(cpp_SRCS HEADER debug.h IDENTIFIER PULSEAUDIOQT CATEGORY_NAME org.kde.pulseaudio)
 
 add_library(KF5PulseAudioQt SHARED ${cpp_SRCS})
 target_link_libraries(KF5PulseAudioQt

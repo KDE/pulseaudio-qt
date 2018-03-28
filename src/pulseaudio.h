@@ -25,6 +25,7 @@
 #include <QAbstractListModel>
 
 #include "maps.h"
+#include "kf5pulseaudioqt_export.h"
 
 namespace PulseAudioQt
 {

@@ -177,7 +177,7 @@ quint32 StreamRestore::deviceIndex() const
 void StreamRestore::setDeviceIndex(quint32 deviceIndex)
 {
     Q_UNUSED(deviceIndex);
-    qCWarning(PLASMAPA) << "Not implemented";
+    qCWarning(PULSEAUDIOQT) << "Not implemented";
 }
 
 void StreamRestore::writeChanges(const pa_cvolume &volume, bool muted, const QString &device)
