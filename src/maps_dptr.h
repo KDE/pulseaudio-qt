@@ -26,7 +26,6 @@
 
 #include <pulse/pulseaudio.h>
 #include <pulse/ext-stream-restore.h>
-#include "kf5pulseaudioqt_export.h"
 
 #include "sink_p.h"
 #include "source_p.h"
@@ -43,7 +42,7 @@ class Source;
  * This class is nothing more than the QObject base since moc cannot handle
  * templates.
  */
-class KF5PULSEAUDIOQT_EXPORT MapBaseQObject_Dptr : public QObject
+class MapBaseQObject_Dptr : public QObject
 {
     Q_OBJECT
 
