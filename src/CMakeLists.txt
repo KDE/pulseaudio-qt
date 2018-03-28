@@ -54,12 +54,9 @@ ecm_generate_headers(PulseAudioQt_HEADERS
         Card
         Client
         Context
-        Debug
         Device
-        Maps
         Module
         ModuleManager
-        Operation
         Port
         Profile
         PulseAudio
