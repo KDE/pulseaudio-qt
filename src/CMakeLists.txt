@@ -34,7 +34,6 @@ target_link_libraries(KF5PulseAudioQt
         Qt5::DBus
         ${PULSEAUDIO_LIBRARY}
         ${PULSEAUDIO_MAINLOOP_LIBRARY}
-        ${CANBERRA_LIBRARIES}
 )
 
 target_include_directories(KF5PulseAudioQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KF5PulseAudioQt>" )

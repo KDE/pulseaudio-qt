@@ -67,7 +67,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     I18n
 )
 find_package(PulseAudio 5.0.0 REQUIRED)
-find_package(Canberra REQUIRED)
 find_package(GLIB2 REQUIRED)
 
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
