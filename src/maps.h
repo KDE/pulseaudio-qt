@@ -18,8 +18,7 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MAPS_H
-#define MAPS_H
+#pragma once
 
 #include "debug.h"
 #include <QMap>
@@ -76,17 +75,15 @@ public:
 
     const QMap<quint32, Type *> &data() const { return m_data; }
 
-    int count() const Q_DECL_OVERRIDE
+    int count() const override
     {
         return m_data.count();
     }
 
-    int indexOfObject(QObject *object) const Q_DECL_OVERRIDE
+    int indexOfObject(QObject *object) const override
     {
         int index = 0;
-        QMapIterator<quint32, Type *> it(m_data);
-        while (it.hasNext()) {
-            it.next();
+        for (auto it = m_data.constBegin(); it != m_data.constEnd(); ++it) {
             if (it.value() == object) {
                 return index;
             }
@@ -95,8 +92,9 @@ public:
         return -1;
     }
 
-    QObject *objectAt(int index) const Q_DECL_OVERRIDE
+    QObject *objectAt(int index) const override
     {
+        Q_ASSERT(index >= 0 && index < m_data.count());
         return (m_data.constBegin() + index).value();
     }
 
@@ -138,7 +136,7 @@ public:
             return;
         }
 
-        auto *obj = m_data.value(info->index, nullptr);
+        auto *obj = m_data.value(info->index);
         if (!obj) {
             obj = new Type(parent);
         }
@@ -154,7 +152,14 @@ public:
         if (!m_data.contains(index)) {
             m_pendingRemovals.insert(index);
         } else {
-            const int modelIndex = m_data.keys().indexOf(index);
+            int modelIndex = 0;
+            for (auto it = m_data.constBegin(); it != m_data.constEnd(); ++it) {
+                if (it.key() == index) {
+                    break;
+                }
+                modelIndex++;
+            }
+            Q_ASSERT(modelIndex == m_data.keys().indexOf(index));
             Q_EMIT aboutToBeRemoved(modelIndex);
             delete m_data.take(index);
             Q_EMIT removed(modelIndex);
@@ -162,7 +167,7 @@ public:
     }
 
 protected:
-    QMap<quint32, Type *> m_data;
+    QMap<quint32, Type*> m_data;
     QSet<quint32> m_pendingRemovals;
 };
 
@@ -174,5 +179,3 @@ typedef MapBase<Module, pa_module_info> ModuleMap;
 typedef MapBase<StreamRestore, pa_ext_stream_restore_info> StreamRestoreMap;
 
 } // PulseAudioQt
-
-#endif // MAPS_H
