@@ -54,36 +54,36 @@ StreamRestorePrivate::~StreamRestorePrivate()
 {
 }
 
-void StreamRestore::update(const pa_ext_stream_restore_info *info)
+void StreamRestorePrivate::update(const pa_ext_stream_restore_info *info)
 {
-    d->m_cache.valid = false;
+    m_cache.valid = false;
     const QString infoName = QString::fromUtf8(info->name);
-    if (d->m_name != infoName) {
-        d->m_name = infoName;
-        Q_EMIT nameChanged();
+    if (m_name != infoName) {
+        m_name = infoName;
+        Q_EMIT q->nameChanged();
     }
     const QString infoDevice = QString::fromUtf8(info->device);
-    if (d->m_device != infoDevice) {
-        d->m_device = infoDevice;
-        Q_EMIT deviceChanged();
+    if (m_device != infoDevice) {
+        m_device = infoDevice;
+        Q_EMIT q->deviceChanged();
     }
-    if (d->m_muted != info->mute) {
-        d->m_muted = info->mute;
-        Q_EMIT mutedChanged();
+    if (m_muted != info->mute) {
+        m_muted = info->mute;
+        Q_EMIT q->mutedChanged();
     }
-    if (memcmp(&d->m_volume, &info->volume, sizeof(pa_cvolume)) != 0) {
-        d->m_volume = info->volume;
-        Q_EMIT volumeChanged();
-        Q_EMIT channelVolumesChanged();
+    if (memcmp(&m_volume, &info->volume, sizeof(pa_cvolume)) != 0) {
+        m_volume = info->volume;
+        Q_EMIT q->volumeChanged();
+        Q_EMIT q->channelVolumesChanged();
     }
-    if (memcmp(&d->m_channelMap, &info->channel_map, sizeof(pa_channel_map)) != 0) {
-        d->m_channels.clear();
-        d->m_channels.reserve(info->channel_map.channels);
+    if (memcmp(&m_channelMap, &info->channel_map, sizeof(pa_channel_map)) != 0) {
+        m_channels.clear();
+        m_channels.reserve(info->channel_map.channels);
         for (int i = 0; i < info->channel_map.channels; ++i) {
-            d->m_channels << QString::fromUtf8(pa_channel_position_to_pretty_string(info->channel_map.map[i]));
+            m_channels << QString::fromUtf8(pa_channel_position_to_pretty_string(info->channel_map.map[i]));
         }
-        d->m_channelMap = info->channel_map;
-        Q_EMIT channelsChanged();
+        m_channelMap = info->channel_map;
+        Q_EMIT q->channelsChanged();
     }
 }
 

@@ -21,6 +21,7 @@
 #define CARD_P_H
 
 #include "card.h"
+#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
@@ -33,6 +34,8 @@ public:
     virtual ~CardPrivate();
 
     Card *q;
+
+    void update(const pa_card_info *info);
 
     QString m_name;
     QList<QObject *> m_profiles;

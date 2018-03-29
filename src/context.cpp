@@ -576,7 +576,7 @@ void ContextPrivate::streamRestoreCallback(const pa_ext_stream_restore_info *inf
         m_streamRestores.insert(obj);
     }
 
-    obj->update(info);
+    obj->d->update(info);
 }
 
 void ContextPrivate::serverCallback(const pa_server_info *info)

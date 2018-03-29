@@ -24,7 +24,6 @@
 #include <QList>
 
 #include "pulseobject.h"
-#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
@@ -48,12 +47,8 @@ public:
     void setActiveProfileIndex(quint32 profileIndex);
     QList<QObject *> ports() const;
 
-
-    //TODO move to private
-    void update(const pa_card_info *info);
-
-protected:
     CardPrivate* d;
+
 Q_SIGNALS:
     void nameChanged();
     void profilesChanged();

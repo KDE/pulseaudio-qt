@@ -31,6 +31,11 @@
 
 #include "sink_p.h"
 #include "source_p.h"
+#include "card_p.h"
+#include "sinkinput_p.h"
+#include "sourceoutput_p.h"
+#include "client_p.h"
+#include "streamrestore_p.h"
 
 namespace PulseAudioQt
 {
@@ -157,12 +162,7 @@ protected:
     QSet<quint32> m_pendingRemovals;
 };
 
-typedef MapBase<SinkInput, pa_sink_input_info> SinkInputMap;
-typedef MapBase<SourceOutput, pa_source_output_info> SourceOutputMap;
-typedef MapBase<Client, pa_client_info> ClientMap;
-typedef MapBase<Card, pa_card_info> CardMap;
 typedef MapBase<Module, pa_module_info> ModuleMap;
-typedef MapBase<StreamRestore, pa_ext_stream_restore_info> StreamRestoreMap;
 
 
 // FIXME: The only difference is update (obj->update() => obj->d->update())
@@ -252,7 +252,12 @@ protected:
     QSet<quint32> m_pendingRemovals;
 };
 
+typedef MapBase_Dptr<Card, pa_card_info> CardMap;
+typedef MapBase_Dptr<Client, pa_client_info> ClientMap;
+typedef MapBase_Dptr<SinkInput, pa_sink_input_info> SinkInputMap;
 typedef MapBase_Dptr<Sink, pa_sink_info> SinkMap;
 typedef MapBase_Dptr<Source, pa_source_info> SourceMap;
+typedef MapBase_Dptr<SourceOutput, pa_source_output_info> SourceOutputMap;
+typedef MapBase_Dptr<StreamRestore, pa_ext_stream_restore_info> StreamRestoreMap;
 
 } // PulseAudioQt

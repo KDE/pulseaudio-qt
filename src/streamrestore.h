@@ -22,7 +22,6 @@
 #define STREAMRESTORE_H
 
 #include "pulseobject.h"
-#include <pulse/ext-stream-restore.h>
 
 namespace PulseAudioQt
 {
@@ -66,10 +65,6 @@ public:
     void setDeviceIndex(quint32 deviceIndex);
 
     Q_INVOKABLE void setChannelVolume(int channel, qint64 volume);
-
-    //TODO move to private
-    void update(const pa_ext_stream_restore_info *info);
-
 
     StreamRestorePrivate *d;
 

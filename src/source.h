@@ -22,7 +22,6 @@
 #define SOURCE_H
 
 #include "device.h"
-#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {

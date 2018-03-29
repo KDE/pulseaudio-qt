@@ -39,12 +39,12 @@ SourceOutputPrivate::SourceOutputPrivate(SourceOutput *q)
 {
 }
 
-void SourceOutput::update(const pa_source_output_info *info)
+void SourceOutputPrivate::update(const pa_source_output_info *info)
 {
-    updateStream(info);
-    if (Stream::d->m_deviceIndex != info->source) {
-        Stream::d->m_deviceIndex = info->source;
-        Q_EMIT deviceIndexChanged();
+    q->updateStream(info);
+    if (q->Stream::d->m_deviceIndex != info->source) {
+        q->Stream::d->m_deviceIndex = info->source;
+        Q_EMIT q->deviceIndexChanged();
     }
 }
 

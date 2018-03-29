@@ -23,7 +23,6 @@
 
 #include "kf5pulseaudioqt_export.h"
 #include "pulseobject.h"
-#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
@@ -40,11 +39,6 @@ public:
 
     QString name() const;
 
-
-    // TODO move to private
-    void update(const pa_client_info *info);
-
-protected:
     ClientPrivate *d;
 
 Q_SIGNALS:

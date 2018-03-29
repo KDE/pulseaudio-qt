@@ -43,9 +43,6 @@ public:
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
 
     SinkInputPrivate *d;
-
-    // TODO Move to private
-    void update(const pa_sink_input_info *info);
 };
 
 } // PulseAudioQt

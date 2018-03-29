@@ -34,6 +34,7 @@ public:
     virtual ~StreamRestorePrivate();
 
     void writeChanges(const pa_cvolume &volume, bool muted, const QString &device);
+    void update(const pa_ext_stream_restore_info *info);
 
     StreamRestore *q;
     QString m_name;

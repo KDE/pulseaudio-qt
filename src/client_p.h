@@ -21,6 +21,7 @@
 #define CLIENT_P_H
 
 #include "client.h"
+#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
@@ -29,6 +30,8 @@ class ClientPrivate
 {
 public:
     ClientPrivate(Client *q);
+
+    void update(const pa_client_info *info);
 
     Client *q;
     QString m_name;

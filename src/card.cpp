@@ -50,37 +50,37 @@ CardPrivate::~CardPrivate()
 {
 }
 
-void Card::update(const pa_card_info *info)
+void CardPrivate::update(const pa_card_info *info)
 {
-    updatePulseObject(info);
+    q->updatePulseObject(info);
 
     QString infoName = QString::fromUtf8(info->name);
-    if (d->m_name != infoName) {
-        d->m_name = infoName;
-        Q_EMIT nameChanged();
+    if (m_name != infoName) {
+        m_name = infoName;
+        Q_EMIT q->nameChanged();
     }
 
-    qDeleteAll(d->m_profiles);
-    d->m_profiles.clear();
+    qDeleteAll(m_profiles);
+    m_profiles.clear();
     for (auto **it = info->profiles2; it && *it != nullptr; ++it) {
-        Profile *profile = new Profile(this);
+        Profile *profile = new Profile(q);
         profile->setInfo(*it);
-        d->m_profiles.append(profile);
+        m_profiles.append(profile);
         if (info->active_profile2 == *it) {
-            d->m_activeProfileIndex = d->m_profiles.length() - 1;
+            m_activeProfileIndex = m_profiles.length() - 1;
         }
     }
-    Q_EMIT profilesChanged();
-    Q_EMIT activeProfileIndexChanged();
+    Q_EMIT q->profilesChanged();
+    Q_EMIT q->activeProfileIndexChanged();
 
-    qDeleteAll(d->m_ports);
-    d->m_ports.clear();
+    qDeleteAll(m_ports);
+    m_ports.clear();
     for (auto **it = info->ports; it && *it != nullptr; ++it) {
-        CardPort *port = new CardPort(this);
+        CardPort *port = new CardPort(q);
         port->update(*it);
-        d->m_ports.append(port);
+        m_ports.append(port);
     }
-    Q_EMIT portsChanged();
+    Q_EMIT q->portsChanged();
 }
 
 QString Card::name() const

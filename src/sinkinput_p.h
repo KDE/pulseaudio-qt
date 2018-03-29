@@ -19,7 +19,9 @@
 */
 #ifndef SINKINPUT_P_H
 #define SINKINPUT_P_H
+
 #include "sinkinput.h"
+#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
@@ -31,6 +33,8 @@ public:
     explicit SinkInputPrivate(SinkInput *q);
 
     SinkInput *q;
+
+    void update(const pa_sink_input_info *info);
 
 };
 }

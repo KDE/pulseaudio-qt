@@ -22,7 +22,6 @@
 #define SINK_H
 
 #include "device.h"
-#include "pulse/introspect.h"
 
 namespace PulseAudioQt
 {

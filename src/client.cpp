@@ -43,14 +43,14 @@ Client::~Client()
     delete d;
 }
 
-void Client::update(const pa_client_info *info)
+void ClientPrivate::update(const pa_client_info *info)
 {
-    updatePulseObject(info);
+    q->updatePulseObject(info);
 
     QString infoName = QString::fromUtf8(info->name);
-    if (d->m_name != infoName) {
-        d->m_name = infoName;
-        Q_EMIT nameChanged();
+    if (m_name != infoName) {
+        m_name = infoName;
+        Q_EMIT q->nameChanged();
     }
 }
 

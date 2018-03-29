@@ -44,12 +44,12 @@ SinkInput::~SinkInput()
     delete d;
 }
 
-void SinkInput::update(const pa_sink_input_info *info)
+void SinkInputPrivate::update(const pa_sink_input_info *info)
 {
-    updateStream(info);
-    if (Stream::d->m_deviceIndex != info->sink) {
-        Stream::d->m_deviceIndex = info->sink;
-        Q_EMIT deviceIndexChanged();
+    q->updateStream(info);
+    if (q->Stream::d->m_deviceIndex != info->sink) {
+        q->Stream::d->m_deviceIndex = info->sink;
+        Q_EMIT q->deviceIndexChanged();
     }
 }
 
