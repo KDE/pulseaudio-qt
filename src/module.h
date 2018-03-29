@@ -22,7 +22,6 @@
 #define MODULE_H
 
 #include "pulseobject.h"
-#include <pulse/introspect.h>
 #include "kf5pulseaudioqt_export.h"
 
 namespace PulseAudioQt
@@ -42,12 +41,12 @@ public:
     QString name() const;
     QString argument() const;
 
+    ModulePrivate *d;
+
 Q_SIGNALS:
     void nameChanged();
     void argumentChanged();
 
-public:
-    ModulePrivate *d;
 };
 
 } // PulseAudioQt

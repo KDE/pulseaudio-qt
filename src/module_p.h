@@ -21,6 +21,7 @@
 #define MODULE_P_H
 
 #include "module.h"
+#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
