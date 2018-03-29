@@ -72,62 +72,52 @@ void MapsTest::basicTest()
 
     QCOMPARE(map.indexOfObject(index10), 0);
 
-    // Insert 0 to the beginning (0, 10)
+    // Add 0 (10, 0)
     info->index = 0;
     map.updateEntry(info, &p);
     QCOMPARE(map.count(), 2);
-    QCOMPARE(map.objectAt(1), index10);
+    QCOMPARE(map.objectAt(0), index10);
 
-    QObject *index0 = map.objectAt(0);
+    QObject *index0 = map.objectAt(1);
     QVERIFY(index0);
 
-    QCOMPARE(map.indexOfObject(index0), 0);
-    QCOMPARE(map.indexOfObject(index10), 1);
+    QCOMPARE(map.indexOfObject(index0), 1);
+    QCOMPARE(map.indexOfObject(index10), 0);
 
-    // Insert 4 in the middle (0, 4, 10)
+    // Add 4, 15 (10, 0, 4, 15)
     info->index = 4;
     map.updateEntry(info, &p);
-    QCOMPARE(map.count(), 3);
-    QCOMPARE(map.objectAt(0), index0);
-    QCOMPARE(map.objectAt(2), index10);
-
-    QObject *index4 = map.objectAt(1);
-    QVERIFY(index4);
-
-    QCOMPARE(map.indexOfObject(index0), 0);
-    QCOMPARE(map.indexOfObject(index4), 1);
-    QCOMPARE(map.indexOfObject(index10), 2);
-
-    // Insert 15 at the end (0, 4, 10, 15)
     info->index = 15;
     map.updateEntry(info, &p);
-    QCOMPARE(map.count(), 4);
-    QCOMPARE(map.objectAt(0), index0);
-    QCOMPARE(map.objectAt(1), index4);
-    QCOMPARE(map.objectAt(2), index10);
 
+    QCOMPARE(map.count(), 4);
+    QCOMPARE(map.objectAt(0), index10);
+    QCOMPARE(map.objectAt(1), index0);
+
+    QObject *index4 = map.objectAt(2);
+    QVERIFY(index4);
     QObject *index15 = map.objectAt(3);
     QVERIFY(index15);
 
-    QCOMPARE(map.indexOfObject(index0), 0);
-    QCOMPARE(map.indexOfObject(index4), 1);
-    QCOMPARE(map.indexOfObject(index10), 2);
+    QCOMPARE(map.indexOfObject(index10), 0);
+    QCOMPARE(map.indexOfObject(index0), 1);
+    QCOMPARE(map.indexOfObject(index4), 2);
     QCOMPARE(map.indexOfObject(index15), 3);
 
-    // Remove 4 from the middle (0, 10, 15)
+    // Remove 4 (10, 0, 15)
     map.removeEntry(4);
     QCOMPARE(map.count(), 3);
-    QCOMPARE(map.objectAt(0), index0);
-    QCOMPARE(map.objectAt(1), index10);
+    QCOMPARE(map.objectAt(0), index10);
+    QCOMPARE(map.objectAt(1), index0);
     QCOMPARE(map.objectAt(2), index15);
 
-    // Remove 0 from the beginning (10, 15)
+    // Remove 0 (10, 15)
     map.removeEntry(0);
     QCOMPARE(map.count(), 2);
     QCOMPARE(map.objectAt(0), index10);
     QCOMPARE(map.objectAt(1), index15);
 
-    // Remove 15 from the end (10)
+    // Remove 15 (10)
     map.removeEntry(15);
     QCOMPARE(map.count(), 1);
     QCOMPARE(map.objectAt(0), index10);

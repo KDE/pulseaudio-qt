@@ -1,5 +1,6 @@
 /*
     Copyright 2014-2015 Harald Sitter <sitter@kde.org>
+    Copyright 2018 David Rosca <nowrep@gmail.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -20,8 +21,9 @@
 
 #pragma once
 
-#include "debug.h"
-#include <QMap>
+#include <QSet>
+#include <QHash>
+#include <QVector>
 #include <QObject>
 
 #include <pulse/pulseaudio.h>
@@ -73,7 +75,7 @@ class MapBase : public MapBaseQObject
 public:
     virtual ~MapBase() {}
 
-    const QMap<quint32, Type *> &data() const { return m_data; }
+    const QVector<Type*> &data() const { return m_data; }
 
     int count() const override
     {
@@ -82,45 +84,31 @@ public:
 
     int indexOfObject(QObject *object) const override
     {
-        int index = 0;
-        for (auto it = m_data.constBegin(); it != m_data.constEnd(); ++it) {
-            if (it.value() == object) {
-                return index;
-            }
-            index++;
-        }
-        return -1;
+        return m_data.indexOf(static_cast<Type*>(object));
     }
 
     QObject *objectAt(int index) const override
     {
-        Q_ASSERT(index >= 0 && index < m_data.count());
-        return (m_data.constBegin() + index).value();
+        return m_data.at(index);
     }
 
     void reset()
     {
-        while (!m_data.isEmpty()) {
-            removeEntry(m_data.lastKey());
+        while (!m_hash.isEmpty()) {
+            removeEntry(m_data.at(m_data.count() - 1)->index());
         }
         m_pendingRemovals.clear();
     }
 
     void insert(Type *object)
     {
-        Q_ASSERT(!m_data.contains(object->index()));
+        Q_ASSERT(!m_data.contains(object));
 
-        int modelIndex = 0;
-        for (auto it = m_data.constBegin(); it != m_data.constEnd(); ++it) {
-            if (object->index() < it.key()) {
-                break;
-            }
-            modelIndex++;
-        }
+        const int modelIndex = m_data.count();
 
         Q_EMIT aboutToBeAdded(modelIndex);
-        m_data.insert(object->index(), object);
-        Q_ASSERT(modelIndex == m_data.keys().indexOf(object->index()));
+        m_data.append(object);
+        m_hash[object->index()] = object;
         Q_EMIT added(modelIndex);
     }
 
@@ -136,38 +124,32 @@ public:
             return;
         }
 
-        auto *obj = m_data.value(info->index);
+        auto *obj = m_hash.value(info->index);
         if (!obj) {
             obj = new Type(parent);
-        }
-        obj->update(info);
-
-        if (!m_data.contains(info->index)) {
+            obj->update(info);
             insert(obj);
+        } else {
+            obj->update(info);
         }
     }
 
     void removeEntry(quint32 index)
     {
-        if (!m_data.contains(index)) {
+        if (!m_hash.contains(index)) {
             m_pendingRemovals.insert(index);
         } else {
-            int modelIndex = 0;
-            for (auto it = m_data.constBegin(); it != m_data.constEnd(); ++it) {
-                if (it.key() == index) {
-                    break;
-                }
-                modelIndex++;
-            }
-            Q_ASSERT(modelIndex == m_data.keys().indexOf(index));
+            const int modelIndex = m_data.indexOf(m_hash.value(index));
             Q_EMIT aboutToBeRemoved(modelIndex);
-            delete m_data.take(index);
+            m_data.removeAt(modelIndex);
+            delete m_hash.take(index);
             Q_EMIT removed(modelIndex);
         }
     }
 
 protected:
-    QMap<quint32, Type*> m_data;
+    QVector<Type*> m_data;
+    QHash<quint32, Type*> m_hash;
     QSet<quint32> m_pendingRemovals;
 };
 
