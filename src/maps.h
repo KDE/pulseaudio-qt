@@ -61,9 +61,9 @@ public:
 
 Q_SIGNALS:
     void aboutToBeAdded(int index);
-    void added(int index);
+    void added(int index, QObject *object);
     void aboutToBeRemoved(int index);
-    void removed(int index);
+    void removed(int index, QObject *object);
 };
 
 /**
@@ -112,7 +112,7 @@ public:
         Q_EMIT aboutToBeAdded(modelIndex);
         m_data.append(object);
         m_hash[object->index()] = object;
-        Q_EMIT added(modelIndex);
+        Q_EMIT added(modelIndex, object);
     }
 
     // Context is passed in as parent because context needs to include the maps
@@ -145,8 +145,9 @@ public:
             const int modelIndex = m_data.indexOf(m_hash.value(index));
             Q_EMIT aboutToBeRemoved(modelIndex);
             m_data.removeAt(modelIndex);
-            delete m_hash.take(index);
-            Q_EMIT removed(modelIndex);
+            auto object = m_hash.take(index);
+            Q_EMIT removed(modelIndex, object);
+            delete object;
         }
     }
 
@@ -206,7 +207,7 @@ public:
         Q_EMIT aboutToBeAdded(modelIndex);
         m_data.append(object);
         m_hash[object->index()] = object;
-        Q_EMIT added(modelIndex);
+        Q_EMIT added(modelIndex, object);
     }
 
     // Context is passed in as parent because context needs to include the maps
@@ -239,8 +240,9 @@ public:
             const int modelIndex = m_data.indexOf(m_hash.value(index));
             Q_EMIT aboutToBeRemoved(modelIndex);
             m_data.removeAt(modelIndex);
-            delete m_hash.take(index);
-            Q_EMIT removed(modelIndex);
+            auto object =  m_hash.take(index);
+            Q_EMIT removed(modelIndex, object);
+            delete object;
         }
     }
 
