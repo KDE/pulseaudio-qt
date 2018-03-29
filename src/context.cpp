@@ -23,15 +23,9 @@
 
 #include <QAbstractEventDispatcher>
 #include "debug.h"
-#include <QMutexLocker>
 #include <QTimer>
 #include <QDBusServiceWatcher>
 #include <QDBusConnection>
-
-#include <pulse/mainloop.h>
-#include <pulse/pulseaudio.h>
-#include <pulse/glib-mainloop.h>
-#include <pulse/ext-stream-restore.h>
 
 #include "card.h"
 #include "client.h"
