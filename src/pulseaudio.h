@@ -24,12 +24,15 @@
 
 #include <QAbstractListModel>
 
-#include "maps.h"
 #include "kf5pulseaudioqt_export.h"
 
 namespace PulseAudioQt
 {
-    class Context;
+
+class Context;
+class MapBaseQObject;
+class Sink;
+class Source;
 
 class KF5PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
 {

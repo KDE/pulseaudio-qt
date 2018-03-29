@@ -21,6 +21,7 @@
 
 #include "pulseaudio.h"
 
+#include "maps.h"
 #include "debug.h"
 #include "card.h"
 #include "sink.h"
