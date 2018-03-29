@@ -78,7 +78,6 @@ public:
     CardModel(QObject *parent = nullptr);
 };
 
-#if 0
 class KF5PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
 {
     Q_OBJECT
@@ -107,7 +106,6 @@ private:
 
     Sink *m_preferredSink;
 };
-#endif
 
 class KF5PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
 {
@@ -116,7 +114,6 @@ public:
     SinkInputModel(QObject *parent = nullptr);
 };
 
-#if 0
 class KF5PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
 {
     Q_OBJECT
@@ -134,7 +131,6 @@ public:
 Q_SIGNALS:
     void defaultSourceChanged();
 };
-#endif
 
 class KF5PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
 {

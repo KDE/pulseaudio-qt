@@ -42,9 +42,9 @@ SourcePrivate::SourcePrivate(Source *q)
 {
 }
 
-void Source::update(const pa_source_info *info)
+void SourcePrivate::update(const pa_source_info *info)
 {
-    updateDevice(info);
+    q->updateDevice(info);
 }
 
 void Source::setVolume(qint64 volume)

@@ -31,6 +31,8 @@ class SourcePrivate
 public:
     explicit SourcePrivate(Source *q);
 
+    void update(const pa_source_info *info);
+
     Source *q;
 };
 }

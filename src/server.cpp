@@ -36,10 +36,10 @@ Server::Server(Context *context)
 {
     Q_ASSERT(context);
 
-    connect(&context->d->m_sinks, &MapBaseQObject_Dptr::added, this, &Server::updateDefaultDevices);
-    connect(&context->d->m_sinks, &MapBaseQObject_Dptr::removed, this, &Server::updateDefaultDevices);
-    connect(&context->d->m_sources, &MapBaseQObject_Dptr::added, this, &Server::updateDefaultDevices);
-    connect(&context->d->m_sources, &MapBaseQObject_Dptr::removed, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sinks, &MapBaseQObject::added, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sinks, &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sources, &MapBaseQObject::added, this, &Server::updateDefaultDevices);
+    connect(&context->d->m_sources, &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
 }
 
 ServerPrivate::ServerPrivate(Server *q)
@@ -96,17 +96,15 @@ void Server::update(const pa_server_info *info)
     updateDefaultDevices();
 }
 
-template <typename Type, typename Map>
-static Type *findByName(const Map &map, const QString &name)
+template <typename Type, typename Vector>
+static Type *findByName(const Vector &vector, const QString &name)
 {
     Type *out = nullptr;
     if (name.isEmpty()) {
         return out;
     }
-    QMapIterator<quint32, Type *> it(map);
-    while (it.hasNext()) {
-        it.next();
-        out = it.value();
+    for (Type *t : vector) {
+        out = t;
         if (out->name() == name) {
             return out;
         }

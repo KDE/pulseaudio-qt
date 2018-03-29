@@ -7,7 +7,6 @@ set(cpp_SRCS
     context.cpp
     device.cpp
     maps.cpp
-    maps_dptr.cpp
     operation.cpp
     port.cpp
     profile.cpp

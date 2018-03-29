@@ -29,6 +29,9 @@
 #include <pulse/pulseaudio.h>
 #include <pulse/ext-stream-restore.h>
 
+#include "sink_p.h"
+#include "source_p.h"
+
 namespace PulseAudioQt
 {
 
@@ -159,5 +162,95 @@ typedef MapBase<Client, pa_client_info> ClientMap;
 typedef MapBase<Card, pa_card_info> CardMap;
 typedef MapBase<Module, pa_module_info> ModuleMap;
 typedef MapBase<StreamRestore, pa_ext_stream_restore_info> StreamRestoreMap;
+
+
+// FIXME: The only difference is update (obj->update() => obj->d->update())
+// It should replace MapBase once all objects have d-ptr
+template<typename Type, typename PAInfo>
+class MapBase_Dptr : public MapBaseQObject
+{
+public:
+    virtual ~MapBase_Dptr() {}
+
+    const QVector<Type*> &data() const { return m_data; }
+
+    int count() const override
+    {
+        return m_data.count();
+    }
+
+    int indexOfObject(QObject *object) const override
+    {
+        return m_data.indexOf(static_cast<Type*>(object));
+    }
+
+    QObject *objectAt(int index) const override
+    {
+        return m_data.at(index);
+    }
+
+    void reset()
+    {
+        while (!m_hash.isEmpty()) {
+            removeEntry(m_data.at(m_data.count() - 1)->index());
+        }
+        m_pendingRemovals.clear();
+    }
+
+    void insert(Type *object)
+    {
+        Q_ASSERT(!m_data.contains(object));
+
+        const int modelIndex = m_data.count();
+
+        Q_EMIT aboutToBeAdded(modelIndex);
+        m_data.append(object);
+        m_hash[object->index()] = object;
+        Q_EMIT added(modelIndex);
+    }
+
+    // Context is passed in as parent because context needs to include the maps
+    // so we'd cause a circular dep if we were to try to use the instance here.
+    // Plus that's weird separation anyway.
+    void updateEntry(const PAInfo *info, QObject *parent)
+    {
+        Q_ASSERT(info);
+
+        if (m_pendingRemovals.remove(info->index)) {
+            // Was already removed again.
+            return;
+        }
+
+        auto *obj = m_hash.value(info->index);
+        if (!obj) {
+            obj = new Type(parent);
+            obj->d->update(info);
+            insert(obj);
+        } else {
+            obj->d->update(info);
+        }
+    }
+
+    void removeEntry(quint32 index)
+    {
+        if (!m_hash.contains(index)) {
+            m_pendingRemovals.insert(index);
+        } else {
+            const int modelIndex = m_data.indexOf(m_hash.value(index));
+            Q_EMIT aboutToBeRemoved(modelIndex);
+            m_data.removeAt(modelIndex);
+            delete m_hash.take(index);
+            Q_EMIT removed(modelIndex);
+        }
+    }
+
+protected:
+    QVector<Type*> m_data;
+    QHash<quint32, Type*> m_hash;
+    QSet<quint32> m_pendingRemovals;
+};
+
+typedef MapBase_Dptr<Sink, pa_sink_info> SinkMap;
+typedef MapBase_Dptr<Source, pa_source_info> SourceMap;
 
 } // PulseAudioQt

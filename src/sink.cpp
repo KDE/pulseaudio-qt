@@ -47,9 +47,9 @@ Sink::~Sink()
     delete d;
 }
 
-void Sink::update(const pa_sink_info *info)
+void SinkPrivate::update(const pa_sink_info *info)
 {
-    updateDevice(info);
+    q->updateDevice(info);
 }
 
 void Sink::setVolume(qint64 volume)

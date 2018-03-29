@@ -45,10 +45,6 @@ public:
     void setDefault(bool enable) Q_DECL_OVERRIDE;
 
     SourcePrivate *d;
-
-    // TODO move to private
-    void update(const pa_source_info *info);
-
 };
 
 } // PulseAudioQt
