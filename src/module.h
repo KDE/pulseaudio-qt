@@ -42,14 +42,11 @@ public:
     QString name() const;
     QString argument() const;
 
-    //TODO Move to private
-    void update(const pa_module_info *info);
-
 Q_SIGNALS:
     void nameChanged();
     void argumentChanged();
 
-private:
+public:
     ModulePrivate *d;
 };
 

@@ -32,6 +32,8 @@ public:
     explicit ModulePrivate(Module *q);
     virtual ~ModulePrivate();
 
+    void update(const pa_module_info *info);
+
     Module *q;
 
     QString m_name;

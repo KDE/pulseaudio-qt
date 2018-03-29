@@ -43,25 +43,25 @@ ModulePrivate::~ModulePrivate()
 {
 }
 
+void ModulePrivate::update(const pa_module_info *info)
+{
+    q->updatePulseObject(info);
+
+    const QString infoName = QString::fromUtf8(info->name);
+    if (m_name != infoName) {
+        m_name = infoName;
+        Q_EMIT q->nameChanged();
+    }
+    const QString infoArgument = QString::fromUtf8(info->argument);
+    if (m_argument != infoArgument) {
+        m_argument = infoArgument;
+        Q_EMIT q->argumentChanged();
+    }
+}
+
 Module::~Module()
 {
     delete d;
-}
-
-void Module::update(const pa_module_info *info)
-{
-    updatePulseObject(info);
-
-    const QString infoName = QString::fromUtf8(info->name);
-    if (d->m_name != infoName) {
-        d->m_name = infoName;
-        Q_EMIT nameChanged();
-    }
-    const QString infoArgument = QString::fromUtf8(info->argument);
-    if (d->m_argument != infoArgument) {
-        d->m_argument = infoArgument;
-        Q_EMIT argumentChanged();
-    }
 }
 
 QString Module::name() const
