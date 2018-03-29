@@ -33,6 +33,7 @@ namespace PulseAudioQt
 
 Sink::Sink(QObject *parent)
     : Device(parent)
+    , d(new SinkPrivate(this))
 {
     connect(context()->server(), &Server::defaultSinkChanged, this, &Sink::defaultChanged);
 }
