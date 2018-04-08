@@ -23,9 +23,10 @@
 
 #include "pulseobject.h"
 
+struct pa_ext_stream_restore_info;
+
 namespace PulseAudioQt
 {
-class StreamRestorePrivate;
 
 class StreamRestore : public PulseObject
 {
@@ -67,8 +68,6 @@ public:
 
     Q_INVOKABLE void setChannelVolume(int channel, qint64 volume);
 
-    StreamRestorePrivate *d;
-
 Q_SIGNALS:
     void nameChanged();
     void deviceChanged();
@@ -78,6 +77,10 @@ Q_SIGNALS:
     void channelVolumesChanged();
     void deviceIndexChanged();
 
+private:
+    class StreamRestorePrivate *const d;
+    friend class MapBase<StreamRestore, pa_ext_stream_restore_info>;
+    friend class ContextPrivate;
 };
 
 } // PulseAudioQt

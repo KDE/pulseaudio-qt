@@ -119,8 +119,6 @@ public:
     void setDefaultSink(const QString &name);
     void setDefaultSource(const QString &name);
 
-    class ContextPrivate *d;
-
 Q_SIGNALS:
     /**
      * Indicates that sink was added.
@@ -201,6 +199,11 @@ Q_SIGNALS:
      * Indicates that streamRestore was removed.
      */
     void streamRestoreRemoved(StreamRestore *streamRestore);
+
+public:
+    class ContextPrivate *const d;
+
+    friend class Sink;
 };
 
 } // PulseAudioQt

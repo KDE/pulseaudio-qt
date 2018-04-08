@@ -24,26 +24,28 @@
 #include "kf5pulseaudioqt_export.h"
 #include "pulseobject.h"
 
+struct pa_client_info;
+
 namespace PulseAudioQt
 {
-
-class ClientPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Client : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+
 public:
     Client(QObject *parent);
     virtual ~Client();
 
     QString name() const;
 
-    ClientPrivate *d;
-
 Q_SIGNALS:
     void nameChanged();
 
+private:
+    class ClientPrivate *const d;
+    friend class MapBase<Client, pa_client_info>;
 };
 
 } // PulseAudioQt

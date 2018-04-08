@@ -54,8 +54,6 @@ public:
     template <typename PAInfo>
     void updateStream(const PAInfo *info);
 
-    StreamPrivate *d;
-
 Q_SIGNALS:
     void nameChanged();
     void clientChanged();
@@ -67,6 +65,10 @@ protected:
     Stream(QObject *parent);
     virtual ~Stream();
 
+    class StreamPrivate *const d;
+
+    friend class SinkInputPrivate;
+    friend class SourceOutputPrivate;
 };
 
 } // PulseAudioQt

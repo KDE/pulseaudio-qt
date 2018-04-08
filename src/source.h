@@ -23,10 +23,10 @@
 
 #include "device.h"
 
+struct pa_source_info;
+
 namespace PulseAudioQt
 {
-
-class SourcePrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Source : public Device
 {
@@ -44,7 +44,9 @@ public:
     bool isDefault() const Q_DECL_OVERRIDE;
     void setDefault(bool enable) Q_DECL_OVERRIDE;
 
-    SourcePrivate *d;
+private:
+    class SourcePrivate *const d;
+    friend class MapBase<Source, pa_source_info>;
 };
 
 } // PulseAudioQt

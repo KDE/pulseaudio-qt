@@ -23,10 +23,10 @@
 
 #include "device.h"
 
+struct pa_sink_info;
+
 namespace PulseAudioQt
 {
-
-class SinkPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Sink : public Device
 {
@@ -44,7 +44,9 @@ public:
     bool isDefault() const Q_DECL_OVERRIDE;
     void setDefault(bool enable) Q_DECL_OVERRIDE;
 
-    SinkPrivate *d;
+private:
+    class SinkPrivate *const d;
+    friend class MapBase<Sink, pa_sink_info>;
 };
 
 } // PulseAudioQt

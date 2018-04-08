@@ -30,7 +30,8 @@ namespace PulseAudioQt
 {
 
 class Context;
-class PulseObjectPrivate;
+
+template<typename Type, typename PAInfo> class MapBase;
 
 class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
 {
@@ -38,8 +39,8 @@ class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
     Q_PROPERTY(quint32 index READ index CONSTANT)
     Q_PROPERTY(QString iconName READ iconName CONSTANT)
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)
-public:
 
+public:
     quint32 index() const;
     QString iconName() const;
     QVariantMap properties() const;
@@ -48,14 +49,15 @@ public:
     void updatePulseObject(PAInfo *info);
 
     Context *context() const;
-    PulseObjectPrivate *d;
+
 Q_SIGNALS:
     void propertiesChanged();
 
 protected:
-
     PulseObject(QObject *parent);
     virtual ~PulseObject();
+
+    class PulseObjectPrivate *const d;
 
 private:
     // Ensure that we get properly parented.

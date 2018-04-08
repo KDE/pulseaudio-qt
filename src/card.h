@@ -23,12 +23,13 @@
 
 #include "pulseobject.h"
 
+struct pa_card_info;
+
 namespace PulseAudioQt
 {
 
 class Port;
 class Profile;
-class CardPrivate;
 
 class Card : public PulseObject
 {
@@ -48,13 +49,15 @@ public:
     void setActiveProfileIndex(quint32 profileIndex);
     QVector<Port*> ports() const;
 
-    CardPrivate* d;
-
 Q_SIGNALS:
     void nameChanged();
     void profilesChanged();
     void activeProfileIndexChanged();
     void portsChanged();
+
+private:
+    class CardPrivate *const d;
+    friend class MapBase<Card, pa_card_info>;
 };
 
 } // PulseAudioQt

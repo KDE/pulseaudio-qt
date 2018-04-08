@@ -23,9 +23,10 @@
 
 #include "stream.h"
 
+struct pa_source_output_info;
+
 namespace PulseAudioQt
 {
-class SourceOutputPrivate;
 
 class SourceOutput : public Stream
 {
@@ -40,7 +41,9 @@ public:
     void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
 
-    SourceOutputPrivate *d;
+private:
+    class SourceOutputPrivate *const d;
+    friend class MapBase<SourceOutput, pa_source_output_info>;
 };
 
 } // PulseAudioQt

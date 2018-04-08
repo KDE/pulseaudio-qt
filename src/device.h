@@ -67,6 +67,7 @@ public:
 
     template <typename PAInfo>
     void updateDevice(const PAInfo *info);
+
 Q_SIGNALS:
     void stateChanged();
     void nameChanged();

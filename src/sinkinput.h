@@ -23,10 +23,10 @@
 
 #include "stream.h"
 
+struct pa_sink_input_info;
+
 namespace PulseAudioQt
 {
-
-class SinkInputPrivate;
 
 class SinkInput : public Stream
 {
@@ -43,7 +43,9 @@ public:
     void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
 
-    SinkInputPrivate *d;
+private:
+    class SinkInputPrivate *const d;
+    friend class MapBase<SinkInput, pa_sink_input_info>;
 };
 
 } // PulseAudioQt

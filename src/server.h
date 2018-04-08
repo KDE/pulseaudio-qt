@@ -31,7 +31,6 @@ namespace PulseAudioQt
 class Sink;
 class Source;
 class Context;
-class ServerPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Server : public QObject
 {
@@ -55,7 +54,7 @@ Q_SIGNALS:
 
 private:
     void updateDefaultDevices();
-    ServerPrivate *d;
+    class ServerPrivate *const d;
 };
 
 } // PulseAudioQt

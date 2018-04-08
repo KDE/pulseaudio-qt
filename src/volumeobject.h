@@ -26,8 +26,6 @@
 namespace PulseAudioQt
 {
 
-class VolumeObjectPrivate;
-
 class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
 {
     Q_OBJECT
@@ -55,8 +53,6 @@ public:
     QVector<qreal> channelVolumes() const;
     Q_INVOKABLE virtual void setChannelVolume(int channel, qint64 volume) = 0;
 
-    VolumeObjectPrivate *d;
-
 Q_SIGNALS:
     void volumeChanged();
     void mutedChanged();
@@ -68,6 +64,8 @@ Q_SIGNALS:
 protected:
     template <typename PAInfo>
     void updateVolumeObject(PAInfo *info);
+
+    class VolumeObjectPrivate *const d;
 };
 
 } // PulseAudioQt
