@@ -37,7 +37,7 @@ class KF5PULSEAUDIOQT_EXPORT Server : public QObject
     Q_OBJECT
 
 public:
-    explicit Server(Context *context);
+    ~Server();
 
     Sink *defaultSink() const;
     void setDefaultSink(Sink *sink);
@@ -53,8 +53,13 @@ Q_SIGNALS:
     void defaultSourceChanged(Source *source);
 
 private:
+    explicit Server(Context *context);
+
     void updateDefaultDevices();
+
     class ServerPrivate *const d;
+
+    friend class Context;
 };
 
 } // PulseAudioQt

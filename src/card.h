@@ -40,8 +40,7 @@ class Card : public PulseObject
     Q_PROPERTY(QVector<Port*> ports READ ports NOTIFY portsChanged)
 
 public:
-    Card(QObject *parent);
-    virtual ~Card();
+    ~Card();
 
     QString name() const;
     QVector<Profile*> profiles() const;
@@ -56,6 +55,8 @@ Q_SIGNALS:
     void portsChanged();
 
 private:
+    explicit Card(QObject *parent);
+
     class CardPrivate *const d;
     friend class MapBase<Card, pa_card_info>;
 };

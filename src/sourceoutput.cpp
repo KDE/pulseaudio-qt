@@ -34,6 +34,10 @@ SourceOutput::SourceOutput(QObject *parent)
 {
 }
 
+SourceOutput::~SourceOutput()
+{
+}
+
 SourceOutputPrivate::SourceOutputPrivate(SourceOutput *q)
     : q(q)
 {

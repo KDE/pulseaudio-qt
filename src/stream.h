@@ -43,6 +43,8 @@ class Stream : public VolumeObject
     Q_PROPERTY(bool corked READ isCorked NOTIFY corkedChanged)
 
 public:
+    ~Stream();
+
     QString name() const;
     Client *client() const;
     bool isVirtualStream() const;
@@ -62,8 +64,7 @@ Q_SIGNALS:
     void corkedChanged();
 
 protected:
-    Stream(QObject *parent);
-    virtual ~Stream();
+    explicit Stream(QObject *parent);
 
     class StreamPrivate *const d;
 

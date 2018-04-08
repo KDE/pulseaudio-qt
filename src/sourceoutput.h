@@ -33,8 +33,7 @@ class SourceOutput : public Stream
     Q_OBJECT
 
 public:
-    SourceOutput(QObject *parent);
-    virtual ~SourceOutput() = default;
+    ~SourceOutput();
 
     void setVolume(qint64 volume) Q_DECL_OVERRIDE;
     void setMuted(bool muted) Q_DECL_OVERRIDE;
@@ -42,6 +41,8 @@ public:
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
 
 private:
+    explicit SourceOutput(QObject *parent);
+
     class SourceOutputPrivate *const d;
     friend class MapBase<SourceOutput, pa_source_output_info>;
 };

@@ -35,8 +35,7 @@ class KF5PULSEAUDIOQT_EXPORT Client : public PulseObject
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
 
 public:
-    Client(QObject *parent);
-    virtual ~Client();
+    ~Client();
 
     QString name() const;
 
@@ -44,6 +43,8 @@ Q_SIGNALS:
     void nameChanged();
 
 private:
+    explicit Client(QObject *parent);
+
     class ClientPrivate *const d;
     friend class MapBase<Client, pa_client_info>;
 };

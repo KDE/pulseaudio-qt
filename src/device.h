@@ -42,6 +42,7 @@ class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(QVector<Port*> ports READ ports NOTIFY portsChanged)
     Q_PROPERTY(quint32 activePortIndex READ activePortIndex WRITE setActivePortIndex NOTIFY activePortIndexChanged)
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
+
 public:
     enum State {
         InvalidState = 0,
@@ -52,7 +53,7 @@ public:
     };
     Q_ENUMS(State);
 
-    virtual ~Device();
+    ~Device();
 
     State state() const;
     QString name() const;
@@ -79,7 +80,7 @@ Q_SIGNALS:
     void defaultChanged();
 
 protected:
-    Device(QObject *parent);
+    explicit Device(QObject *parent);
     DevicePrivate *d;
 
 private:

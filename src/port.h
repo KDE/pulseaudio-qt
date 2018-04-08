@@ -27,21 +27,21 @@
 namespace PulseAudioQt
 {
 
-class PortPrivate;
-
 class KF5PULSEAUDIOQT_EXPORT Port : public Profile
 {
     Q_OBJECT
 
 public:
-    Port(QObject *parent);
-    virtual ~Port();
+    ~Port();
 
     template<typename PAInfo>
     void setInfo(const PAInfo *info);
 
-private:
-    PortPrivate *d;
+protected:
+    explicit Port(QObject *parent);
+    class PortPrivate *const d;
+
+    friend class Device;
 };
 
 } // PulseAudioQt

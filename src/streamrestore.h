@@ -42,8 +42,7 @@ class StreamRestore : public PulseObject
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
 
 public:
-    StreamRestore(quint32 index, const QVariantMap &properties, QObject *parent);
-    virtual ~StreamRestore();
+    ~StreamRestore();
 
     QString name() const;
 
@@ -78,6 +77,8 @@ Q_SIGNALS:
     void deviceIndexChanged();
 
 private:
+    explicit StreamRestore(quint32 index, const QVariantMap &properties, QObject *parent);
+
     class StreamRestorePrivate *const d;
     friend class MapBase<StreamRestore, pa_ext_stream_restore_info>;
     friend class ContextPrivate;

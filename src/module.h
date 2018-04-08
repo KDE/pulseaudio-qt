@@ -24,9 +24,10 @@
 #include "pulseobject.h"
 #include "kf5pulseaudioqt_export.h"
 
+struct pa_module_info;
+
 namespace PulseAudioQt
 {
-class ModulePrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Module : public PulseObject
 {
@@ -35,18 +36,20 @@ class KF5PULSEAUDIOQT_EXPORT Module : public PulseObject
     Q_PROPERTY(QString argument READ argument NOTIFY argumentChanged)
 
 public:
-    Module(QObject *parent);
-    virtual ~Module();
+    ~Module();
 
     QString name() const;
     QString argument() const;
-
-    ModulePrivate *d;
 
 Q_SIGNALS:
     void nameChanged();
     void argumentChanged();
 
+private:
+    explicit Module(QObject *parent);
+
+    class ModulePrivate *const d;
+    friend class MapBase<Module, pa_module_info>;
 };
 
 } // PulseAudioQt

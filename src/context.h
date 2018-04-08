@@ -43,7 +43,6 @@ class KF5PULSEAUDIOQT_EXPORT Context : public QObject
     Q_OBJECT
 
 public:
-    Context(QObject *parent = nullptr);
     ~Context();
 
     static Context *instance();
@@ -201,6 +200,8 @@ Q_SIGNALS:
     void streamRestoreRemoved(StreamRestore *streamRestore);
 
 private:
+    explicit Context(QObject *parent = nullptr);
+
     class ContextPrivate *const d;
 
     friend class Sink;

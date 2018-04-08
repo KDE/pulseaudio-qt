@@ -28,8 +28,6 @@
 namespace PulseAudioQt
 {
 
-class ProfilePrivate;
-
 class KF5PULSEAUDIOQT_EXPORT Profile : public QObject
 {
     Q_OBJECT
@@ -46,8 +44,7 @@ public:
     };
     Q_ENUM(Availability)
 
-    Profile(QObject *parent);
-    virtual ~Profile();
+    ~Profile();
 
     template<typename PAInfo>
     void setInfo(const PAInfo *info);
@@ -63,8 +60,12 @@ Q_SIGNALS:
     void priorityChanged();
     void availabilityChanged();
 
-private:
-    ProfilePrivate *d;
+protected:
+    explicit Profile(QObject *parent);
+    class ProfilePrivate *const d;
+
+    friend class Device;
+    friend class CardPrivate;
 };
 
 } // PulseAudioQt

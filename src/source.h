@@ -33,8 +33,7 @@ class KF5PULSEAUDIOQT_EXPORT Source : public Device
     Q_OBJECT
 
 public:
-    Source(QObject *parent);
-    virtual ~Source();
+    ~Source();
 
     void setVolume(qint64 volume) Q_DECL_OVERRIDE;
     void setMuted(bool muted) Q_DECL_OVERRIDE;
@@ -45,6 +44,8 @@ public:
     void setDefault(bool enable) Q_DECL_OVERRIDE;
 
 private:
+    explicit Source(QObject *parent);
+
     class SourcePrivate *const d;
     friend class MapBase<Source, pa_source_info>;
 };

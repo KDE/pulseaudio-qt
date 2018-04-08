@@ -42,6 +42,10 @@ Server::Server(Context *context)
     connect(&context->d->m_sources, &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
 }
 
+Server::~Server()
+{
+}
+
 ServerPrivate::ServerPrivate(Server *q)
     : q(q)
     , m_defaultSink(nullptr)

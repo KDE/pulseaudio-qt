@@ -37,8 +37,7 @@ class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
     Q_PROPERTY(QVector<qreal> channelVolumes READ channelVolumes NOTIFY channelVolumesChanged)
 
 public:
-    VolumeObject(QObject *parent);
-    virtual ~VolumeObject();
+    ~VolumeObject();
 
     qint64 volume() const;
     virtual void setVolume(qint64 volume) = 0;
@@ -62,6 +61,8 @@ Q_SIGNALS:
     void channelVolumesChanged();
 
 protected:
+    explicit VolumeObject(QObject *parent);
+
     template <typename PAInfo>
     void updateVolumeObject(PAInfo *info);
 

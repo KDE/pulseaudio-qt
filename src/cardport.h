@@ -35,8 +35,7 @@ class CardPort : public Port
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)
 
 public:
-    explicit CardPort(QObject *parent = nullptr);
-    virtual ~CardPort() {}
+    ~CardPort();
 
     void update(const pa_card_port_info *info);
 
@@ -46,7 +45,11 @@ Q_SIGNALS:
     void propertiesChanged();
 
 private:
+    explicit CardPort(QObject *parent);
+
     QVariantMap m_properties;
+
+    friend class CardPrivate;
 };
 
 } // PulseAudioQt

@@ -28,6 +28,10 @@ CardPort::CardPort(QObject *parent)
 {
 }
 
+CardPort::~CardPort()
+{
+}
+
 void CardPort::update(const pa_card_port_info *info)
 {
     setInfo(info);

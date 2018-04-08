@@ -33,8 +33,7 @@ class KF5PULSEAUDIOQT_EXPORT Sink : public Device
     Q_OBJECT
 
 public:
-    explicit Sink(QObject *parent);
-    virtual ~Sink();
+    ~Sink();
 
     void setVolume(qint64 volume) Q_DECL_OVERRIDE;
     void setMuted(bool muted) Q_DECL_OVERRIDE;
@@ -45,6 +44,8 @@ public:
     void setDefault(bool enable) Q_DECL_OVERRIDE;
 
 private:
+    explicit Sink(QObject *parent);
+
     class SinkPrivate *const d;
     friend class MapBase<Sink, pa_sink_info>;
 };

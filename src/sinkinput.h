@@ -33,8 +33,7 @@ class SinkInput : public Stream
     Q_OBJECT
 
 public:
-    explicit SinkInput(QObject *parent);
-    virtual ~SinkInput();
+    ~SinkInput();
 
     void setSinkIndex(quint32 sinkIndex);
 
@@ -44,6 +43,8 @@ public:
     void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
 
 private:
+    SinkInput(QObject *parent);
+
     class SinkInputPrivate *const d;
     friend class MapBase<SinkInput, pa_sink_input_info>;
 };

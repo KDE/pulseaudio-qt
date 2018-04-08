@@ -41,6 +41,8 @@ class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)
 
 public:
+    ~PulseObject();
+
     quint32 index() const;
     QString iconName() const;
     QVariantMap properties() const;
@@ -54,8 +56,7 @@ Q_SIGNALS:
     void propertiesChanged();
 
 protected:
-    PulseObject(QObject *parent);
-    virtual ~PulseObject();
+    explicit PulseObject(QObject *parent);
 
     class PulseObjectPrivate *const d;
 
