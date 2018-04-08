@@ -37,6 +37,12 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
 find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5Test PROPERTIES DESCRIPTION "Autotests for PulseAudioQt" TYPE OPTIONAL)
 
+find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
+
+find_package(Qt5Quick ${REQUIRED_QT_VERSION} CONFIG)
+set_package_properties(Qt5Quick PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
+
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5PulseAudioQt")
 
@@ -76,7 +82,7 @@ endif()
 add_subdirectory(src)
 
 if (BUILD_TESTING)
-    # add_subdirectory(tests)
+    add_subdirectory(tests)
     if(Qt5Test_FOUND)
         add_subdirectory(autotests)
     endif()
