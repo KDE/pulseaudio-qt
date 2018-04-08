@@ -41,8 +41,8 @@ class Stream : public VolumeObject
     Q_PROPERTY(bool virtualStream READ isVirtualStream NOTIFY virtualStreamChanged)
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
     Q_PROPERTY(bool corked READ isCorked NOTIFY corkedChanged)
-public:
 
+public:
     QString name() const;
     Client *client() const;
     bool isVirtualStream() const;

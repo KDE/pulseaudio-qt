@@ -30,6 +30,7 @@ class SourceOutputPrivate;
 class SourceOutput : public Stream
 {
     Q_OBJECT
+
 public:
     SourceOutput(QObject *parent);
     virtual ~SourceOutput() = default;

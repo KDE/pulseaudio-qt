@@ -31,6 +31,7 @@ class SourcePrivate;
 class KF5PULSEAUDIOQT_EXPORT Source : public Device
 {
     Q_OBJECT
+
 public:
     Source(QObject *parent);
     virtual ~Source();

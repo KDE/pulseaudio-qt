@@ -38,9 +38,9 @@ public:
     void update(const pa_card_info *info);
 
     QString m_name;
-    QList<QObject *> m_profiles;
+    QVector<Profile*> m_profiles;
     quint32 m_activeProfileIndex;
-    QList<QObject *> m_ports;
+    QVector<Port*> m_ports;
 };
 }
 

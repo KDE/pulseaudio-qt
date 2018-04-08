@@ -156,14 +156,14 @@ bool StreamRestore::isVolumeWritable() const
     return true;
 }
 
-QStringList StreamRestore::channels() const
+QVector<QString> StreamRestore::channels() const
 {
     return d->m_channels;
 }
 
-QList<qreal> StreamRestore::channelVolumes() const
+QVector<qreal> StreamRestore::channelVolumes() const
 {
-    QList<qreal> ret;
+    QVector<qreal> ret;
     ret.reserve(d->m_volume.channels);
     for (int i = 0; i < d->m_volume.channels; ++i) {
         ret << d->m_volume.values[i];

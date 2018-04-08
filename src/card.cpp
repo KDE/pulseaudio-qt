@@ -88,7 +88,7 @@ QString Card::name() const
     return d->m_name;
 }
 
-QList<QObject *> Card::profiles() const
+QVector<Profile*> Card::profiles() const
 {
     return d->m_profiles;
 }
@@ -104,7 +104,7 @@ void Card::setActiveProfileIndex(quint32 profileIndex)
     context()->setCardProfile(index(), profile->name());
 }
 
-QList<QObject *> Card::ports() const
+QVector<Port*> Card::ports() const
 {
     return d->m_ports;
 }

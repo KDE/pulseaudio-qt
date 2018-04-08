@@ -41,7 +41,7 @@ public:
     QString m_description;
     QString m_formFactor;
     quint32 m_cardIndex = -1;
-    QList<QObject *> m_ports;
+    QVector<Port*> m_ports;
     quint32 m_activePortIndex = -1;
     Device::State m_state = Device::UnknownState;
 

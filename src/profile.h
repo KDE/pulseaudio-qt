@@ -37,8 +37,8 @@ class KF5PULSEAUDIOQT_EXPORT Profile : public QObject
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(quint32 priority READ priority NOTIFY priorityChanged)
     Q_PROPERTY(Availability availability READ availability NOTIFY availabilityChanged)
-public:
 
+public:
     enum Availability {
         Unknown,
         Available,

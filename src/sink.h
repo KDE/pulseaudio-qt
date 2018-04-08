@@ -31,6 +31,7 @@ class SinkPrivate;
 class KF5PULSEAUDIOQT_EXPORT Sink : public Device
 {
     Q_OBJECT
+
 public:
     explicit Sink(QObject *parent);
     virtual ~Sink();

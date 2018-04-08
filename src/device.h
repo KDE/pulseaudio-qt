@@ -28,6 +28,7 @@
 namespace PulseAudioQt
 {
 
+class Port;
 class DevicePrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
@@ -38,7 +39,7 @@ class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(QString formFactor READ formFactor NOTIFY formFactorChanged)
     Q_PROPERTY(quint32 cardIndex READ cardIndex NOTIFY cardIndexChanged)
-    Q_PROPERTY(QList<QObject *> ports READ ports NOTIFY portsChanged)
+    Q_PROPERTY(QVector<Port*> ports READ ports NOTIFY portsChanged)
     Q_PROPERTY(quint32 activePortIndex READ activePortIndex WRITE setActivePortIndex NOTIFY activePortIndexChanged)
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
 public:
@@ -58,7 +59,7 @@ public:
     QString description() const;
     QString formFactor() const;
     quint32 cardIndex() const;
-    QList<QObject *> ports() const;
+    QVector<Port*> ports() const;
     quint32 activePortIndex() const;
     virtual void setActivePortIndex(quint32 port_index) = 0;
     virtual bool isDefault() const = 0;

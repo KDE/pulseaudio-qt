@@ -31,6 +31,7 @@ class SinkInputPrivate;
 class SinkInput : public Stream
 {
     Q_OBJECT
+
 public:
     explicit SinkInput(QObject *parent);
     virtual ~SinkInput();

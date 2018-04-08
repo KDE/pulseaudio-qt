@@ -21,31 +21,32 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include <QList>
-
 #include "pulseobject.h"
 
 namespace PulseAudioQt
 {
 
+class Port;
+class Profile;
 class CardPrivate;
 
 class Card : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-    Q_PROPERTY(QList<QObject *> profiles READ profiles  NOTIFY profilesChanged)
+    Q_PROPERTY(QVector<Profile*> profiles READ profiles NOTIFY profilesChanged)
     Q_PROPERTY(quint32 activeProfileIndex READ activeProfileIndex WRITE setActiveProfileIndex NOTIFY activeProfileIndexChanged)
-    Q_PROPERTY(QList<QObject *> ports READ ports NOTIFY portsChanged)
+    Q_PROPERTY(QVector<Port*> ports READ ports NOTIFY portsChanged)
+
 public:
     Card(QObject *parent);
     virtual ~Card();
 
     QString name() const;
-    QList<QObject *> profiles() const;
+    QVector<Profile*> profiles() const;
     quint32 activeProfileIndex() const;
     void setActiveProfileIndex(quint32 profileIndex);
-    QList<QObject *> ports() const;
+    QVector<Port*> ports() const;
 
     CardPrivate* d;
 

@@ -34,12 +34,12 @@ class KF5PULSEAUDIOQT_EXPORT Port : public Profile
     Q_OBJECT
 
 public:
-
     Port(QObject *parent);
     virtual ~Port();
 
     template<typename PAInfo>
     void setInfo(const PAInfo *info);
+
 private:
     PortPrivate *d;
 };

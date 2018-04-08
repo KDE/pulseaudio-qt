@@ -41,7 +41,7 @@ public:
     QString m_device;
     pa_cvolume m_volume;
     pa_channel_map m_channelMap;
-    QStringList m_channels;
+    QVector<QString> m_channels;
     bool m_muted;
 
     struct {
