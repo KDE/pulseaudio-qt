@@ -67,7 +67,7 @@ static void sink_cb(pa_context *context, const pa_sink_info *info, int eol, void
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->sinkCallback(info);
+    static_cast<ContextPrivate*>(data)->sinkCallback(info);
 }
 
 static void sink_input_callback(pa_context *context, const pa_sink_input_info *info, int eol, void *data)
@@ -86,7 +86,7 @@ static void sink_input_callback(pa_context *context, const pa_sink_input_info *i
     }
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->sinkInputCallback(info);
+    static_cast<ContextPrivate*>(data)->sinkInputCallback(info);
 }
 
 static void source_cb(pa_context *context, const pa_source_info *info, int eol, void *data)
@@ -98,7 +98,7 @@ static void source_cb(pa_context *context, const pa_source_info *info, int eol, 
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->sourceCallback(info);
+    static_cast<ContextPrivate*>(data)->sourceCallback(info);
 }
 
 static void source_output_cb(pa_context *context, const pa_source_output_info *info, int eol, void *data)
@@ -114,7 +114,7 @@ static void source_output_cb(pa_context *context, const pa_source_output_info *i
     }
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->sourceOutputCallback(info);
+    static_cast<ContextPrivate*>(data)->sourceOutputCallback(info);
 }
 
 static void client_cb(pa_context *context, const pa_client_info *info, int eol, void *data)
@@ -123,7 +123,7 @@ static void client_cb(pa_context *context, const pa_client_info *info, int eol, 
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->clientCallback(info);
+    static_cast<ContextPrivate*>(data)->clientCallback(info);
 }
 
 static void card_cb(pa_context *context, const pa_card_info *info, int eol, void *data)
@@ -132,7 +132,7 @@ static void card_cb(pa_context *context, const pa_card_info *info, int eol, void
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->cardCallback(info);
+    static_cast<ContextPrivate*>(data)->cardCallback(info);
 }
 
 static void module_info_list_cb(pa_context *context, const pa_module_info *info, int eol, void *data)
@@ -141,26 +141,26 @@ static void module_info_list_cb(pa_context *context, const pa_module_info *info,
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->moduleCallback(info);
+    static_cast<ContextPrivate*>(data)->moduleCallback(info);
 }
 
 static void server_cb(pa_context *context, const pa_server_info *info, void *data)
 {
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->serverCallback(info);
+    static_cast<ContextPrivate*>(data)->serverCallback(info);
 }
 
 static void context_state_callback(pa_context *context, void *data)
 {
     Q_ASSERT(data);
-    ((Context *)data)->d->contextStateCallback(context);
+    static_cast<ContextPrivate*>(data)->contextStateCallback(context);
 }
 
 static void subscribe_cb(pa_context *context, pa_subscription_event_type_t type, uint32_t index, void *data)
 {
     Q_ASSERT(data);
-    ((Context *)data)->d->subscribeCallback(context, type, index);
+    static_cast<ContextPrivate*>(data)->subscribeCallback(context, type, index);
 }
 
 static void ext_stream_restore_read_cb(pa_context *context, const pa_ext_stream_restore_info *info, int eol, void *data)
@@ -170,7 +170,7 @@ static void ext_stream_restore_read_cb(pa_context *context, const pa_ext_stream_
     }
     Q_ASSERT(context);
     Q_ASSERT(data);
-    ((Context *)data)->d->streamRestoreCallback(info);
+    static_cast<ContextPrivate*>(data)->streamRestoreCallback(info);
 }
 
 static void ext_stream_restore_subscribe_cb(pa_context *context, void *data)
@@ -190,15 +190,15 @@ static void ext_stream_restore_change_sink_cb(pa_context *context, const pa_ext_
     Q_ASSERT(context);
     Q_ASSERT(data);
     if (qstrncmp(info->name, "sink-input-by", 13) == 0) {
-        Context *context = static_cast<Context *>(data);
-        const QByteArray deviceData = context->d->m_newDefaultSink.toUtf8();
+        ContextPrivate *contextp = static_cast<ContextPrivate*>(data);
+        const QByteArray deviceData = contextp->m_newDefaultSink.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
         newinfo.channel_map = info->channel_map;
         newinfo.volume = info->volume;
         newinfo.mute = info->mute;
         newinfo.device = deviceData.constData();
-        context->d->streamRestoreWrite(&newinfo);
+        contextp->streamRestoreWrite(&newinfo);
     }
 }
 
@@ -210,15 +210,15 @@ static void ext_stream_restore_change_source_cb(pa_context *context, const pa_ex
     Q_ASSERT(context);
     Q_ASSERT(data);
     if (qstrncmp(info->name, "source-output-by", 16) == 0) {
-        Context *context = static_cast<Context *>(data);
-        const QByteArray deviceData = context->d->m_newDefaultSource.toUtf8();
+        ContextPrivate *contextp = static_cast<ContextPrivate*>(data);
+        const QByteArray deviceData = contextp->m_newDefaultSource.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
         newinfo.channel_map = info->channel_map;
         newinfo.volume = info->volume;
         newinfo.mute = info->mute;
         newinfo.device = deviceData.constData();
-        context->d->streamRestoreWrite(&newinfo);
+        contextp->streamRestoreWrite(&newinfo);
     }
 }
 
@@ -355,7 +355,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         if ((type & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_REMOVE) {
             m_sinks.removeEntry(index);
         } else {
-            if (!PAOperation(pa_context_get_sink_info_by_index(context, index, sink_cb, q))) {
+            if (!PAOperation(pa_context_get_sink_info_by_index(context, index, sink_cb, this))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_info_by_index() failed";
                 return;
             }
@@ -366,7 +366,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         if ((type & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_REMOVE) {
             m_sources.removeEntry(index);
         } else {
-            if (!PAOperation(pa_context_get_source_info_by_index(context, index, source_cb, q))) {
+            if (!PAOperation(pa_context_get_source_info_by_index(context, index, source_cb, this))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_get_source_info_by_index() failed";
                 return;
             }
@@ -377,7 +377,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         if ((type & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_REMOVE) {
             m_sinkInputs.removeEntry(index);
         } else {
-            if (!PAOperation(pa_context_get_sink_input_info(context, index, sink_input_callback, q))) {
+            if (!PAOperation(pa_context_get_sink_input_info(context, index, sink_input_callback, this))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_input_info() failed";
                 return;
             }
@@ -388,7 +388,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         if ((type & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_REMOVE) {
             m_sourceOutputs.removeEntry(index);
         } else {
-            if (!PAOperation(pa_context_get_source_output_info(context, index, source_output_cb, q))) {
+            if (!PAOperation(pa_context_get_source_output_info(context, index, source_output_cb, this))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_input_info() failed";
                 return;
             }
@@ -399,7 +399,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         if ((type & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_REMOVE) {
             m_clients.removeEntry(index);
         } else {
-            if (!PAOperation(pa_context_get_client_info(context, index, client_cb, q))) {
+            if (!PAOperation(pa_context_get_client_info(context, index, client_cb, this))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_get_client_info() failed";
                 return;
             }
@@ -410,7 +410,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         if ((type & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_REMOVE) {
             m_cards.removeEntry(index);
         } else {
-            if (!PAOperation(pa_context_get_card_info_by_index(context, index, card_cb, q))) {
+            if (!PAOperation(pa_context_get_card_info_by_index(context, index, card_cb, this))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_get_card_info_by_index() failed";
                 return;
             }
@@ -421,7 +421,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         if ((type & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_REMOVE) {
             m_modules.removeEntry(index);
         } else {
-            if (!PAOperation(pa_context_get_module_info_list(context, module_info_list_cb, q))) {
+            if (!PAOperation(pa_context_get_module_info_list(context, module_info_list_cb, this))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_get_module_info_list() failed";
                 return;
             }
@@ -430,7 +430,7 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
 
 
     case PA_SUBSCRIPTION_EVENT_SERVER:
-        if (!PAOperation(pa_context_get_server_info(context, server_cb, q))) {
+        if (!PAOperation(pa_context_get_server_info(context, server_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_server_info() failed";
             return;
         }
@@ -448,7 +448,7 @@ void ContextPrivate::contextStateCallback(pa_context *c)
 
         // 1. Register for the stream changes (except during probe)
         if (m_context == c) {
-            pa_context_set_subscribe_callback(c, subscribe_cb, q);
+            pa_context_set_subscribe_callback(c, subscribe_cb, this);
 
             if (!PAOperation(pa_context_subscribe(c, (pa_subscription_mask_t)
                                            (PA_SUBSCRIPTION_MASK_SINK|
@@ -464,49 +464,49 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             }
         }
 
-        if (!PAOperation(pa_context_get_sink_info_list(c, sink_cb, q))) {
+        if (!PAOperation(pa_context_get_sink_info_list(c, sink_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_info_list() failed";
             return;
         }
 
-        if (!PAOperation(pa_context_get_source_info_list(c, source_cb, q))) {
+        if (!PAOperation(pa_context_get_source_info_list(c, source_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_source_info_list() failed";
             return;
         }
 
-        if (!PAOperation(pa_context_get_client_info_list(c, client_cb, q))) {
+        if (!PAOperation(pa_context_get_client_info_list(c, client_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_client_info_list() failed";
             return;
         }
 
-        if (!PAOperation(pa_context_get_card_info_list(c, card_cb, q))) {
+        if (!PAOperation(pa_context_get_card_info_list(c, card_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_card_info_list() failed";
             return;
         }
 
-        if (!PAOperation(pa_context_get_sink_input_info_list(c, sink_input_callback, q))) {
+        if (!PAOperation(pa_context_get_sink_input_info_list(c, sink_input_callback, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_sink_input_info_list() failed";
             return;
         }
 
-        if (!PAOperation(pa_context_get_source_output_info_list(c, source_output_cb, q))) {
+        if (!PAOperation(pa_context_get_source_output_info_list(c, source_output_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_source_output_info_list() failed";
             return;
         }
 
-        if (!PAOperation(pa_context_get_module_info_list(c, module_info_list_cb, q))) {
+        if (!PAOperation(pa_context_get_module_info_list(c, module_info_list_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_module_info_list() failed";
             return;
         }
 
-        if (!PAOperation(pa_context_get_server_info(c, server_cb, q))) {
+        if (!PAOperation(pa_context_get_server_info(c, server_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_server_info() failed";
             return;
         }
 
-        if (PAOperation(pa_ext_stream_restore_read(c, ext_stream_restore_read_cb, q))) {
-            pa_ext_stream_restore_set_subscribe_cb(c, ext_stream_restore_subscribe_cb, q);
-            PAOperation(pa_ext_stream_restore_subscribe(c, 1, nullptr, q));
+        if (PAOperation(pa_ext_stream_restore_read(c, ext_stream_restore_read_cb, this))) {
+            pa_ext_stream_restore_set_subscribe_cb(c, ext_stream_restore_subscribe_cb, this);
+            PAOperation(pa_ext_stream_restore_subscribe(c, 1, nullptr, this));
         } else {
             qCWarning(PULSEAUDIOQT) << "Failed to initialize stream_restore extension";
         }
@@ -616,7 +616,7 @@ void Context::setDefaultSink(const QString &name)
     d->m_newDefaultSink = name;
     if (!PAOperation(pa_ext_stream_restore_read(d->m_context,
                                                 ext_stream_restore_change_sink_cb,
-                                                this))) {
+                                                d))) {
         qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }
@@ -638,7 +638,7 @@ void Context::setDefaultSource(const QString &name)
     d->m_newDefaultSource = name;
     if (!PAOperation(pa_ext_stream_restore_read(d->m_context,
                                                 ext_stream_restore_change_source_cb,
-                                                this))) {
+                                                d))) {
         qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }
@@ -689,7 +689,7 @@ void ContextPrivate::connectToDaemon()
         m_mainloop = nullptr;
         return;
     }
-    pa_context_set_state_callback(m_context, &context_state_callback, q);
+    pa_context_set_state_callback(m_context, &context_state_callback, this);
 }
 
 void ContextPrivate::reset()

@@ -200,10 +200,23 @@ Q_SIGNALS:
      */
     void streamRestoreRemoved(StreamRestore *streamRestore);
 
-public:
+private:
     class ContextPrivate *const d;
 
     friend class Sink;
+    friend class SinkInput;
+    friend class Source;
+    friend class SourceOutput;
+    friend class Stream;
+    friend class StreamRestorePrivate;
+    friend class Server;
+    friend class SinkModel;
+    friend class SinkInputModel;
+    friend class SourceModel;
+    friend class SourceOutputModel;
+    friend class StreamRestoreModel;
+    friend class CardModel;
+    friend class ModuleModel;
 };
 
 } // PulseAudioQt
