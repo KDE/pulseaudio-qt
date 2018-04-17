@@ -92,12 +92,12 @@ void Server::reset()
     }
 }
 
-void Server::update(const pa_server_info *info)
+void ServerPrivate::update(const pa_server_info *info)
 {
-    d->m_defaultSinkName = QString::fromUtf8(info->default_sink_name);
-    d->m_defaultSourceName = QString::fromUtf8(info->default_source_name);
+    m_defaultSinkName = QString::fromUtf8(info->default_sink_name);
+    m_defaultSourceName = QString::fromUtf8(info->default_source_name);
 
-    updateDefaultDevices();
+    q->updateDefaultDevices();
 }
 
 template <typename Type, typename Vector>

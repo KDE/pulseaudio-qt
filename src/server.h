@@ -22,7 +22,6 @@
 #define SERVER_H
 
 #include <QObject>
-#include <pulse/introspect.h>
 #include "kf5pulseaudioqt_export.h"
 
 namespace PulseAudioQt
@@ -46,7 +45,6 @@ public:
     void setDefaultSource(Source *source);
 
     void reset();
-    void update(const pa_server_info *info);
 
 Q_SIGNALS:
     void defaultSinkChanged(Sink *sink);
@@ -59,7 +57,9 @@ private:
 
     class ServerPrivate *const d;
 
+    friend class ServerPrivate;
     friend class Context;
+    friend class ContextPrivate;
 };
 
 } // PulseAudioQt

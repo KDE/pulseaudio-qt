@@ -19,6 +19,7 @@
 */
 #pragma once
 #include "server.h"
+#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
@@ -37,5 +38,6 @@ public:
     Sink *m_defaultSink;
     Source *m_defaultSource;
 
+    void update(const pa_server_info *info);
 };
 }
