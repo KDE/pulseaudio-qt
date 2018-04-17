@@ -10,7 +10,7 @@ set(cpp_SRCS
     operation.cpp
     port.cpp
     profile.cpp
-    pulseaudio.cpp
+    models.cpp
     pulseobject.cpp
     sink.cpp
     sinkinput.cpp
@@ -52,7 +52,7 @@ ecm_generate_headers(PulseAudioQt_HEADERS
         Module
         Port
         Profile
-        PulseAudio
+        Models
         PulseObject
         Server
         Sink

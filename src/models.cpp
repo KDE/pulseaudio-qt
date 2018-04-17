@@ -19,7 +19,7 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "pulseaudio.h"
+#include "models.h"
 
 #include "maps.h"
 #include "debug.h"

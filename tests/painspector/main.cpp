@@ -20,7 +20,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include "pulseaudio.h"
+#include "models.h"
 
 int main(int argc, char *argv[])
 {
