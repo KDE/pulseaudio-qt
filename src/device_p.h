@@ -22,6 +22,8 @@
 
 #include <pulse/proplist.h>
 
+#include <QVector>
+
 #include "device.h"
 #include "port.h"
 #include "port_p.h"

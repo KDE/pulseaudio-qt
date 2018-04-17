@@ -21,6 +21,7 @@
 #define STREAMRESTORE_P_H
 
 #include "streamrestore.h"
+#include <QVector>
 #include <pulse/ext-stream-restore.h>
 
 namespace PulseAudioQt

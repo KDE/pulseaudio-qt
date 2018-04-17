@@ -20,6 +20,8 @@
 #ifndef PULSEOBJECT_P_H
 #define PULSEOBJECT_P_H
 
+#include "debug.h"
+
 #include <QVariantMap>
 
 #include <pulse/introspect.h>

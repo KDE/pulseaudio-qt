@@ -21,7 +21,6 @@
 #ifndef PULSEOBJECT_H
 #define PULSEOBJECT_H
 
-#include "debug.h"
 #include <QObject>
 
 #include "kf5pulseaudioqt_export.h"

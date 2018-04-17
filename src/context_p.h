@@ -20,6 +20,7 @@
 #ifndef CONTEXT_P_H
 #define CONTEXT_P_H
 
+#include <functional>
 #include "maps.h"
 #include "operation.h"
 #include <pulse/context.h>

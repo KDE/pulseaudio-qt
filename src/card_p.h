@@ -21,6 +21,8 @@
 #define CARD_P_H
 
 #include "card.h"
+#include "profile.h"
+#include <QVector>
 #include <pulse/introspect.h>
 
 namespace PulseAudioQt
