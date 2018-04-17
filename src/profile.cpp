@@ -25,7 +25,7 @@ namespace PulseAudioQt
 {
 
 Profile::Profile(QObject *parent)
-    : QObject(parent)
+    : PulseObject(parent)
     , d(new ProfilePrivate(this))
 {
 }
