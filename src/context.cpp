@@ -45,6 +45,20 @@ namespace PulseAudioQt
 
 Context *s_context = nullptr;
 
+qint64 normalVolume()
+{
+    return PA_VOLUME_NORM;
+}
+
+qint64 minimumVolume()
+{
+    return 0;
+}
+
+qint64 maximumVolume()
+{
+    return (PA_VOLUME_NORM / 100.0) * 150;
+}
 static bool isGoodState(int eol)
 {
     if (eol < 0) {

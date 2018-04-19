@@ -23,7 +23,6 @@
 
 #include <QObject>
 #include "kf5pulseaudioqt_export.h"
-#include "pulse/volume.h"
 
 namespace PulseAudioQt
 {
@@ -38,6 +37,10 @@ class StreamRestore;
 class Module;
 class Server;
 
+KF5PULSEAUDIOQT_EXPORT qint64 normalVolume();
+KF5PULSEAUDIOQT_EXPORT qint64 minimumVolume();
+KF5PULSEAUDIOQT_EXPORT qint64 maximumVolume();
+
 class KF5PULSEAUDIOQT_EXPORT Context : public QObject
 {
     Q_OBJECT
@@ -46,10 +49,6 @@ public:
     ~Context();
 
     static Context *instance();
-
-    static const qint64 NormalVolume = PA_VOLUME_NORM;
-    static const qint64 MinimalVolume = 0;
-    static const qint64 MaximalVolume = (PA_VOLUME_NORM / 100.0) * 150;
 
     void ref();
     void unref();
