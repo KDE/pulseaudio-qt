@@ -33,6 +33,8 @@ class Context;
 class MapBaseQObject;
 class Sink;
 class Source;
+class AbstractModelPrivate;
+class SinkModelPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
 {
@@ -63,12 +65,8 @@ private:
     void onDataRemoved(int index);
     QMetaMethod propertyChangedMetaMethod() const;
 
-    const MapBaseQObject *m_map;
-    QHash<int, QByteArray> m_roles;
-    QHash<int, int> m_objectProperties;
-    QHash<int, int> m_signalIndexToProperties;
+    AbstractModelPrivate *d;
 
-private:
     // Prevent leaf-classes from default constructing as we want to enforce
     // them passing us a context or explicit nullptrs.
     AbstractModel() {}
@@ -79,6 +77,8 @@ class KF5PULSEAUDIOQT_EXPORT CardModel : public AbstractModel
     Q_OBJECT
 public:
     CardModel(QObject *parent = nullptr);
+private:
+    void *d;
 };
 
 class KF5PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
@@ -93,6 +93,7 @@ public:
     Q_ENUMS(ItemRole)
 
     SinkModel(QObject *parent = nullptr);
+    virtual ~SinkModel();
     Sink *defaultSink() const;
     Sink *preferredSink() const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
@@ -106,8 +107,7 @@ private:
     void sinkRemoved(int index);
     void updatePreferredSink();
     Sink *findPreferredSink() const;
-
-    Sink *m_preferredSink;
+    SinkModelPrivate *d;
 };
 
 class KF5PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
@@ -115,6 +115,8 @@ class KF5PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
     Q_OBJECT
 public:
     SinkInputModel(QObject *parent = nullptr);
+private:
+    void *d;
 };
 
 class KF5PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
@@ -133,6 +135,9 @@ public:
 
 Q_SIGNALS:
     void defaultSourceChanged();
+
+private:
+    void *d;
 };
 
 class KF5PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
@@ -140,6 +145,8 @@ class KF5PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
     Q_OBJECT
 public:
     SourceOutputModel(QObject *parent = nullptr);
+private:
+    void *d;
 };
 
 class KF5PULSEAUDIOQT_EXPORT StreamRestoreModel : public AbstractModel
@@ -147,6 +154,8 @@ class KF5PULSEAUDIOQT_EXPORT StreamRestoreModel : public AbstractModel
     Q_OBJECT
 public:
     StreamRestoreModel(QObject *parent = nullptr);
+private:
+    void *d;
 };
 
 class KF5PULSEAUDIOQT_EXPORT ModuleModel : public AbstractModel
@@ -154,6 +163,8 @@ class KF5PULSEAUDIOQT_EXPORT ModuleModel : public AbstractModel
     Q_OBJECT
 public:
     ModuleModel(QObject *parent = nullptr);
+private:
+    void *d;
 };
 
 } // PulseAudioQt
