@@ -65,7 +65,7 @@ public:
     quint32 deviceIndex() const;
     void setDeviceIndex(quint32 deviceIndex);
 
-    Q_INVOKABLE void setChannelVolume(int channel, qint64 volume);
+    void setChannelVolume(int channel, qint64 volume);
 
 Q_SIGNALS:
     void nameChanged();
