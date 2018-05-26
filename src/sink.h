@@ -35,13 +35,13 @@ class KF5PULSEAUDIOQT_EXPORT Sink : public Device
 public:
     ~Sink();
 
-    void setVolume(qint64 volume) Q_DECL_OVERRIDE;
-    void setMuted(bool muted) Q_DECL_OVERRIDE;
-    void setActivePortIndex(quint32 port_index) Q_DECL_OVERRIDE;
-    void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
+    void setVolume(qint64 volume) override;
+    void setMuted(bool muted) override;
+    void setActivePortIndex(quint32 port_index) override;
+    void setChannelVolume(int channel, qint64 volume) override;
 
-    bool isDefault() const Q_DECL_OVERRIDE;
-    void setDefault(bool enable) Q_DECL_OVERRIDE;
+    bool isDefault() const override;
+    void setDefault(bool enable) override;
 
 private:
     explicit Sink(QObject *parent);

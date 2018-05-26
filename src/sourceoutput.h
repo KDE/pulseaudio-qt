@@ -35,10 +35,10 @@ class SourceOutput : public Stream
 public:
     ~SourceOutput();
 
-    void setVolume(qint64 volume) Q_DECL_OVERRIDE;
-    void setMuted(bool muted) Q_DECL_OVERRIDE;
-    void setChannelVolume(int channel, qint64 volume) Q_DECL_OVERRIDE;
-    void setDeviceIndex(quint32 deviceIndex) Q_DECL_OVERRIDE;
+    void setVolume(qint64 volume) override;
+    void setMuted(bool muted) override;
+    void setChannelVolume(int channel, qint64 volume) override;
+    void setDeviceIndex(quint32 deviceIndex) override;
 
 private:
     explicit SourceOutput(QObject *parent);
