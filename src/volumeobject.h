@@ -67,6 +67,7 @@ protected:
     void updateVolumeObject(PAInfo *info);
 
     class VolumeObjectPrivate *const d;
+    friend class DevicePrivate;
 };
 
 } // PulseAudioQt

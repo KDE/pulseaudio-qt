@@ -66,9 +66,6 @@ public:
     virtual bool isDefault() const = 0;
     virtual void setDefault(bool enable) = 0;
 
-    template <typename PAInfo>
-    void updateDevice(const PAInfo *info);
-
 Q_SIGNALS:
     void stateChanged();
     void nameChanged();
@@ -84,7 +81,8 @@ protected:
     DevicePrivate *d;
 
 private:
-    State stateFromPaState(int value) const;
+    friend class SinkPrivate;
+    friend class SourcePrivate;
 };
 
 } // PulseAudioQt

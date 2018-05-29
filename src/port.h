@@ -41,7 +41,7 @@ protected:
     explicit Port(QObject *parent);
     class PortPrivate *const d;
 
-    friend class Device;
+    friend class DevicePrivate;
 };
 
 } // PulseAudioQt

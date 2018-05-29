@@ -69,19 +69,19 @@ DevicePrivate::DevicePrivate(Device *q)
 {
 }
 
-Device::State Device::stateFromPaState(int value) const
+Device::State DevicePrivate::stateFromPaState(int value) const
 {
     switch (value) {
     case -1: // PA_X_INVALID_STATE
-        return InvalidState;
+        return Device::InvalidState;
     case 0:  // PA_X_RUNNING
-        return RunningState;
+        return Device::RunningState;
     case 1:  // PA_X_IDLE
-        return IdleState;
+        return Device::IdleState;
     case 2:  // PA_X_SUSPENDED
-        return SuspendedState;
+        return Device::SuspendedState;
     default:
-        return UnknownState;
+        return Device::UnknownState;
     }
 }
 

@@ -50,7 +50,7 @@ Sink::~Sink()
 
 void SinkPrivate::update(const pa_sink_info *info)
 {
-    q->updateDevice(info);
+    q->Device::d->updateDevice(info);
 }
 
 void Sink::setVolume(qint64 volume)
