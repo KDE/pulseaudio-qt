@@ -47,9 +47,6 @@ public:
 
     ~Profile();
 
-    template<typename PAInfo>
-    void setInfo(const PAInfo *info);
-
     QString name() const;
     QString description() const;
     quint32 priority() const;
@@ -67,6 +64,7 @@ protected:
 
     friend class Device;
     friend class CardPrivate;
+    friend class PortPrivate;
 };
 
 } // PulseAudioQt

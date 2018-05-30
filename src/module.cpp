@@ -45,7 +45,7 @@ ModulePrivate::~ModulePrivate()
 
 void ModulePrivate::update(const pa_module_info *info)
 {
-    q->updatePulseObject(info);
+    q->PulseObject::d->updatePulseObject(info);
 
     const QString infoName = QString::fromUtf8(info->name);
     if (m_name != infoName) {

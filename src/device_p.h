@@ -27,6 +27,7 @@
 #include "device.h"
 #include "port.h"
 #include "port_p.h"
+#include "volumeobject_p.h"
 
 namespace PulseAudioQt
 {
@@ -52,7 +53,7 @@ public:
     template <typename PAInfo>
     void updateDevice(const PAInfo *info)
     {
-        q->updateVolumeObject(info);
+        q->VolumeObject::d->updateVolumeObject(info);
 
         if (m_name != info->name) {
             m_name = info->name;
@@ -82,7 +83,7 @@ public:
         m_ports.clear();
         for (auto **ports = info->ports; ports && *ports != nullptr; ++ports) {
             Port *port = new Port(q);
-            port->setInfo(*ports);
+            port->d->setInfo(*ports);
             m_ports.append(port);
             if (info->active_port == *ports) {
                 m_activePortIndex = m_ports.length() - 1;

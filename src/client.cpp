@@ -45,7 +45,7 @@ Client::~Client()
 
 void ClientPrivate::update(const pa_client_info *info)
 {
-    q->updatePulseObject(info);
+    q->PulseObject::d->updatePulseObject(info);
 
     QString infoName = QString::fromUtf8(info->name);
     if (m_name != infoName) {

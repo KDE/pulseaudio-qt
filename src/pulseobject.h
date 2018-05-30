@@ -46,9 +46,6 @@ public:
     QString iconName() const;
     QVariantMap properties() const;
 
-    template <typename PAInfo>
-    void updatePulseObject(PAInfo *info);
-
     Context *context() const;
 
 Q_SIGNALS:
@@ -62,6 +59,10 @@ protected:
 private:
     // Ensure that we get properly parented.
     PulseObject();
+    friend class ClientPrivate;
+    friend class CardPrivate;
+    friend class ModulePrivate;
+    friend class VolumeObjectPrivate;
 };
 
 } // PulseAudioQt

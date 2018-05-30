@@ -40,31 +40,31 @@ public:
     QVector<QString> m_channels;
 
     pa_cvolume cvolume() const;
+
+    template <typename PAInfo>
+    void updateVolumeObject(PAInfo *info)
+    {
+        q->PulseObject::d->updatePulseObject(info);
+        if (m_muted != info->mute) {
+            m_muted = info->mute;
+            Q_EMIT q->mutedChanged();
+        }
+        if (!pa_cvolume_equal(&m_volume, &info->volume)) {
+            m_volume = info->volume;
+            Q_EMIT q->volumeChanged();
+            Q_EMIT q->channelVolumesChanged();
+        }
+        QVector<QString> infoChannels;
+        infoChannels.reserve(info->channel_map.channels);
+        for (int i = 0; i < info->channel_map.channels; ++i) {
+            infoChannels << QString::fromUtf8(pa_channel_position_to_pretty_string(info->channel_map.map[i]));
+        }
+        if (m_channels != infoChannels) {
+            m_channels = infoChannels;
+            Q_EMIT q->channelsChanged();
+        }
+    }
+
 };
-
-template <typename PAInfo>
-void VolumeObject::updateVolumeObject(PAInfo *info)
-{
-    updatePulseObject(info);
-    if (d->m_muted != info->mute) {
-        d->m_muted = info->mute;
-        Q_EMIT mutedChanged();
-    }
-    if (!pa_cvolume_equal(&d->m_volume, &info->volume)) {
-        d->m_volume = info->volume;
-        Q_EMIT volumeChanged();
-        Q_EMIT channelVolumesChanged();
-    }
-    QVector<QString> infoChannels;
-    infoChannels.reserve(info->channel_map.channels);
-    for (int i = 0; i < info->channel_map.channels; ++i) {
-        infoChannels << QString::fromUtf8(pa_channel_position_to_pretty_string(info->channel_map.map[i]));
-    }
-    if (d->m_channels != infoChannels) {
-        d->m_channels = infoChannels;
-        Q_EMIT channelsChanged();
-    }
-}
-
 }
 #endif

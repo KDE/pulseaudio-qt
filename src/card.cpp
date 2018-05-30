@@ -52,7 +52,7 @@ CardPrivate::~CardPrivate()
 
 void CardPrivate::update(const pa_card_info *info)
 {
-    q->updatePulseObject(info);
+    q->PulseObject::d->updatePulseObject(info);
 
     QString infoName = QString::fromUtf8(info->name);
     if (m_name != infoName) {
@@ -64,7 +64,7 @@ void CardPrivate::update(const pa_card_info *info)
     m_profiles.clear();
     for (auto **it = info->profiles2; it && *it != nullptr; ++it) {
         Profile *profile = new Profile(q);
-        profile->setInfo(*it);
+        profile->d->setInfo(*it);
         m_profiles.append(profile);
         if (info->active_profile2 == *it) {
             m_activeProfileIndex = m_profiles.length() - 1;

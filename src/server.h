@@ -44,7 +44,6 @@ public:
     Source *defaultSource() const;
     void setDefaultSource(Source *source);
 
-    void reset();
 
 Q_SIGNALS:
     void defaultSinkChanged(Sink *sink);
@@ -53,6 +52,7 @@ Q_SIGNALS:
 private:
     explicit Server(Context *context);
 
+    void reset();
     void updateDefaultDevices();
 
     class ServerPrivate *const d;

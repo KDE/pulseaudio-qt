@@ -41,26 +41,25 @@ public:
     quint32 m_index;
     QVariantMap m_properties;
 
-};
+    template <typename PAInfo>
+    void updatePulseObject(PAInfo *info)
+    {
+        m_index = info->index;
 
-template <typename PAInfo>
-void PulseObject::updatePulseObject(PAInfo *info)
-{
-    d->m_index = info->index;
-
-    d->m_properties.clear();
-    void *it = nullptr;
-    while (const char *key = pa_proplist_iterate(info->proplist, &it)) {
-        Q_ASSERT(key);
-        const char *value = pa_proplist_gets(info->proplist, key);
-        if (!value) {
-            qCDebug(PULSEAUDIOQT) << "property" << key << "not a string";
-            continue;
+        m_properties.clear();
+        void *it = nullptr;
+        while (const char *key = pa_proplist_iterate(info->proplist, &it)) {
+            Q_ASSERT(key);
+            const char *value = pa_proplist_gets(info->proplist, key);
+            if (!value) {
+                qCDebug(PULSEAUDIOQT) << "property" << key << "not a string";
+                continue;
+            }
+            Q_ASSERT(value);
+            m_properties.insert(QString::fromUtf8(key), QString::fromUtf8(value));
         }
-        Q_ASSERT(value);
-        d->m_properties.insert(QString::fromUtf8(key), QString::fromUtf8(value));
+        Q_EMIT q->propertiesChanged();
     }
-    Q_EMIT propertiesChanged();
-}
+};
 }
 #endif

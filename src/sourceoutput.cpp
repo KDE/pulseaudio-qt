@@ -45,7 +45,7 @@ SourceOutputPrivate::SourceOutputPrivate(SourceOutput *q)
 
 void SourceOutputPrivate::update(const pa_source_output_info *info)
 {
-    q->updateStream(info);
+    q->Stream::d->updateStream(info);
     if (q->Stream::d->m_deviceIndex != info->source) {
         q->Stream::d->m_deviceIndex = info->source;
         Q_EMIT q->deviceIndexChanged();

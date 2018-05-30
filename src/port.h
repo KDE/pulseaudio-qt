@@ -34,9 +34,6 @@ class KF5PULSEAUDIOQT_EXPORT Port : public Profile
 public:
     ~Port();
 
-    template<typename PAInfo>
-    void setInfo(const PAInfo *info);
-
 protected:
     explicit Port(QObject *parent);
     class PortPrivate *const d;

@@ -63,11 +63,9 @@ Q_SIGNALS:
 protected:
     explicit VolumeObject(QObject *parent);
 
-    template <typename PAInfo>
-    void updateVolumeObject(PAInfo *info);
-
     class VolumeObjectPrivate *const d;
     friend class DevicePrivate;
+    friend class StreamPrivate;
 };
 
 } // PulseAudioQt

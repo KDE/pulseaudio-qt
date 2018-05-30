@@ -53,9 +53,6 @@ public:
 
     virtual void setDeviceIndex(quint32 deviceIndex) = 0;
 
-    template <typename PAInfo>
-    void updateStream(const PAInfo *info);
-
 Q_SIGNALS:
     void nameChanged();
     void clientChanged();

@@ -32,14 +32,15 @@ public:
     explicit PortPrivate(Port *q);
     virtual ~PortPrivate();
 
+    template<typename PAInfo>
+    void setInfo(const PAInfo *info)
+    {
+        q->Profile::d->setInfo(info);
+    }
+
     Port *q;
 };
 
-template<typename PAInfo>
-void Port::setInfo(const PAInfo *info)
-{
-    Profile::setInfo(info);
-}
 
 }
 

@@ -46,7 +46,7 @@ SinkInput::~SinkInput()
 
 void SinkInputPrivate::update(const pa_sink_input_info *info)
 {
-    q->updateStream(info);
+    q->Stream::d->updateStream(info);
     if (q->Stream::d->m_deviceIndex != info->sink) {
         q->Stream::d->m_deviceIndex = info->sink;
         Q_EMIT q->deviceIndexChanged();
