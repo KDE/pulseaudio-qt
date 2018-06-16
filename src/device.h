@@ -33,6 +33,7 @@ class PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
     Q_PROPERTY(qint64 baseVolume READ baseVolume NOTIFY baseVolumeChanged)
     Q_PROPERTY(QVariantMap pulseProperties READ pulseProperties NOTIFY pulsePropertiesChanged)
+    Q_PROPERTY(bool virtualDevice READ isVirtualDevice NOTIFY virtualDeviceChanged)
 
 public:
     enum State {
@@ -115,6 +116,11 @@ public:
      */
     virtual Q_INVOKABLE void switchStreams() = 0;
 
+    /**
+     * @returns true when the device is a virtual device (e.g. a software-only sink)
+     */
+    bool isVirtualDevice() const;
+
 Q_SIGNALS:
     void stateChanged();
     void descriptionChanged();
@@ -125,6 +131,7 @@ Q_SIGNALS:
     void defaultChanged();
     void baseVolumeChanged();
     void pulsePropertiesChanged();
+    void virtualDeviceChanged();
 
 protected:
     /** @private */

@@ -49,6 +49,11 @@ QVariantMap Device::pulseProperties() const
     return d->m_pulseProperties;
 }
 
+bool Device::isVirtualDevice() const
+{
+    return d->m_virtualDevice;
+}
+
 Device::Device(QObject *parent)
     : VolumeObject(parent)
     , d(new DevicePrivate(this))

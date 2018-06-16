@@ -33,6 +33,7 @@ public:
     Device::State m_state = Device::UnknownState;
     qint64 m_baseVolume = -1;
     QVariantMap m_pulseProperties;
+    bool m_virtualDevice = false;
 
     Device::State stateFromPaState(int value) const;
 
@@ -126,6 +127,12 @@ public:
         if (m_baseVolume != info->base_volume) {
             m_baseVolume = info->base_volume;
             Q_EMIT q->baseVolumeChanged();
+        }
+
+        const bool isVirtual = !(info->flags & 4); // PA_X_HARDWARE
+        if (m_virtualDevice != isVirtual) {
+            m_virtualDevice = isVirtual;
+            Q_EMIT q->virtualDeviceChanged();
         }
     }
 };
