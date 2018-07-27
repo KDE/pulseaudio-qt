@@ -42,6 +42,12 @@ public:
     template<typename PAInfo>
     void setInfo(const PAInfo *info)
     {
+        setCommonInfo(info, info->available ? Profile::Available : Profile::Unavailable);
+    }
+
+    template<typename PAInfo>
+    void setCommonInfo(const PAInfo *info, Profile::Availability newAvailability)
+    {
         // Description is optional. Name not so much as we need some ID.
         Q_ASSERT(info->name);
         QString infoName = QString::fromUtf8(info->name);
@@ -61,12 +67,10 @@ public:
             Q_EMIT q->priorityChanged();
         }
 
-        Profile::Availability newAvailability = info->available ? Profile::Available : Profile::Unavailable;
         if (m_availability != newAvailability) {
             m_availability = newAvailability;
             Q_EMIT q->availabilityChanged();
         }
     }
 };
-
 }

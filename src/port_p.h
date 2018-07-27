@@ -22,6 +22,7 @@
 
 #include "port.h"
 #include "profile_p.h"
+#include <pulse/def.h>
 
 namespace PulseAudioQt
 {
@@ -32,15 +33,23 @@ public:
     explicit PortPrivate(Port *q);
     virtual ~PortPrivate();
 
+    Port *q;
+
     template<typename PAInfo>
     void setInfo(const PAInfo *info)
     {
-        q->Profile::d->setInfo(info);
+        Profile::Availability newAvailability;
+            switch (info->available) {
+            case PA_PORT_AVAILABLE_NO:
+                newAvailability = Profile::Unavailable;
+                break;
+            case PA_PORT_AVAILABLE_YES:
+                newAvailability = Profile::Available;
+                break;
+            default:
+                newAvailability = Profile::Unknown;
+            }
+            q->Profile::d->setCommonInfo(info, newAvailability);
     }
-
-    Port *q;
 };
-
-
 }
-

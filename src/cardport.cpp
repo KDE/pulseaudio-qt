@@ -34,6 +34,7 @@ CardPort::~CardPort()
 
 void CardPort::update(const pa_card_port_info *info)
 {
+
     Port::d->setInfo(info);
 
     m_properties.clear();
