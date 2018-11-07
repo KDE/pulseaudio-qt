@@ -532,7 +532,7 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             m_context = nullptr;
         }
         reset();
-        QTimer::singleShot(1000, [this]{
+        QTimer::singleShot(1000, q, [this]{
             connectToDaemon();
         });
     }

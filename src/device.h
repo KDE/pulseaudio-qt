@@ -51,7 +51,7 @@ public:
         SuspendedState,
         UnknownState
     };
-    Q_ENUMS(State);
+    Q_ENUM(State);
 
     ~Device();
 
