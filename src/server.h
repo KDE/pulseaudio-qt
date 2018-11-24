@@ -46,8 +46,8 @@ public:
 
 
 Q_SIGNALS:
-    void defaultSinkChanged(Sink *sink);
-    void defaultSourceChanged(Source *source);
+    void defaultSinkChanged(PulseAudioQt::Sink *sink);
+    void defaultSourceChanged(PulseAudioQt::Source *source);
 
 private:
     explicit Server(Context *context);

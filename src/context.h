@@ -121,82 +121,82 @@ Q_SIGNALS:
     /**
      * Indicates that sink was added.
      */
-    void sinkAdded(Sink *sink);
+    void sinkAdded(PulseAudioQt::Sink *sink);
 
     /**
      * Indicates that sink was removed.
      */
-    void sinkRemoved(Sink *sink);
+    void sinkRemoved(PulseAudioQt::Sink *sink);
 
     /**
      * Indicates that sink input was added.
      */
-    void sinkInputAdded(SinkInput *sinkInput);
+    void sinkInputAdded(PulseAudioQt::SinkInput *sinkInput);
 
     /**
      * Indicates that sink input was removed.
      */
-    void sinkInputRemoved(SinkInput *sinkInput);
+    void sinkInputRemoved(PulseAudioQt::SinkInput *sinkInput);
 
     /**
      * Indicates that source was added.
      */
-    void sourceAdded(Source *source);
+    void sourceAdded(PulseAudioQt::Source *source);
 
     /**
      * Indicates that source was removed.
      */
-    void sourceRemoved(Source *source);
+    void sourceRemoved(PulseAudioQt::Source *source);
 
     /**
      * Indicates that source output was added.
      */
-    void sourceOutputAdded(SourceOutput *sourceOutput);
+    void sourceOutputAdded(PulseAudioQt::SourceOutput *sourceOutput);
 
     /**
      * Indicates that source output was removed.
      */
-    void sourceOutputRemoved(SourceOutput *sourceOutput);
+    void sourceOutputRemoved(PulseAudioQt::SourceOutput *sourceOutput);
 
     /**
      * Indicates that client was added.
      */
-    void clientAdded(Client *client);
+    void clientAdded(PulseAudioQt::Client *client);
 
     /**
      * Indicates that client was removed.
      */
-    void clientRemoved(Client *client);
+    void clientRemoved(PulseAudioQt::Client *client);
 
     /**
      * Indicates that card was added.
      */
-    void cardAdded(Card *card);
+    void cardAdded(PulseAudioQt::Card *card);
 
     /**
      * Indicates that card was removed.
      */
-    void cardRemoved(Card *card);
+    void cardRemoved(PulseAudioQt::Card *card);
 
     /**
      * Indicates that module was added.
      */
-    void moduleAdded(Module *module);
+    void moduleAdded(PulseAudioQt::Module *module);
 
     /**
      * Indicates that module was removed.
      */
-    void moduleRemoved(Module *module);
+    void moduleRemoved(PulseAudioQt::Module *module);
 
     /**
      * Indicates that stream restore was added.
      */
-    void streamRestoreAdded(StreamRestore *streamRestore);
+    void streamRestoreAdded(PulseAudioQt::StreamRestore *streamRestore);
 
     /**
      * Indicates that streamRestore was removed.
      */
-    void streamRestoreRemoved(StreamRestore *streamRestore);
+    void streamRestoreRemoved(PulseAudioQt::StreamRestore *streamRestore);
 
 private:
     explicit Context(QObject *parent = nullptr);
