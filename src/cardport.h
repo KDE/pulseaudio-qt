@@ -41,9 +41,6 @@ public:
 
     QVariantMap properties() const;
 
-Q_SIGNALS:
-    void propertiesChanged();
-
 private:
     explicit CardPort(QObject *parent);
 
