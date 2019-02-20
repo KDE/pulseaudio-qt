@@ -10,6 +10,7 @@
 #include "context.h"
 #include "context_p.h"
 #include "server.h"
+#include "sinkinput.h"
 
 #include "device_p.h"
 #include "volumeobject_p.h"
@@ -88,6 +89,14 @@ quint32 Sink::monitorIndex() const
 void Sink::setChannelVolumes(const QVector<qint64> &channelVolumes)
 {
     Context::instance()->d->setGenericVolumes(index(), channelVolumes, VolumeObject::d->m_volume, &pa_context_set_sink_volume_by_index);
+}
+
+void Sink::switchStreams()
+{
+    auto data = context()->sinkInputs().data();
+    std::for_each(data.begin(), data.end(), [this](SinkInput* paObj) {
+        paObj->setDeviceIndex(m_index);
+    });
 }
 
 } // PulseAudioQt

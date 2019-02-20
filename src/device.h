@@ -107,6 +107,8 @@ public:
      */
     [[nodiscard]] QVariantMap pulseProperties() const;
 
+    virtual Q_INVOKABLE void switchStreams() = 0;
+
 Q_SIGNALS:
     void stateChanged();
     void descriptionChanged();
