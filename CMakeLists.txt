@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 set(KF5_VERSION "5.45.0") # handled by release scripts
-project(PulseAudioQt VERSION ${KF5_VERSION})
+project(PulseAudioQt VERSION 1.0.0)
 
 include(FeatureSummary)
 find_package(ECM 5.44.0  NO_MODULE)
