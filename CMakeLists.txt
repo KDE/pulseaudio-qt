@@ -67,11 +67,6 @@ configure_package_config_file(
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
-    CoreAddons
-    DocTools
-    I18n
-)
 find_package(PulseAudio 5.0.0 REQUIRED)
 find_package(GLIB2 REQUIRED)
 
