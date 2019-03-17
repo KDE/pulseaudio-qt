@@ -49,7 +49,7 @@ set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5PulseAudioQt")
 if (BUILD_QCH)
     ecm_install_qch_export(
         TARGETS KF5PulseAudioQt_QCH
-        FILE KF5PulseAudioQtTargets.cmake
+        FILE KF5PulseAudioQtQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )

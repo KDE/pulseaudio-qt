@@ -71,3 +71,24 @@ install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kf5pulseaudioqt_export.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KF5PulseAudioQt/PulseAudioQt COMPONENT Devel
 )
+
+if(BUILD_QCH)
+    ecm_add_qch(
+        KF5PulseAudioQt_QCH
+        NAME PulseAudioQt
+        BASE_NAME KF5PulseAudioQt
+        VERSION ${KF5_VERSION}
+        ORG_DOMAIN org.kde
+        SOURCES
+            ${PulseAudioQt_HEADERS}
+        LINK_QCHS
+            Qt5Gui_QCH
+        BLANK_MACROS
+            PulseAudioQt_EXPORT
+            PulseAudioQt_DEPRECATED
+            PulseAudioQt_DEPRECATED_EXPORT
+        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        COMPONENT Devel
+    )
+endif()
