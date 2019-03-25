@@ -77,7 +77,7 @@ if(BUILD_QCH)
         KF5PulseAudioQt_QCH
         NAME PulseAudioQt
         BASE_NAME KF5PulseAudioQt
-        VERSION ${KF5_VERSION}
+        VERSION ${PULSEAUDIOQT_VERSION_STRING}
         ORG_DOMAIN org.kde
         SOURCES
             ${PulseAudioQt_HEADERS}
