@@ -30,7 +30,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PULSEAUDIOQT
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfigVersion.cmake"
                         SOVERSION 1)
 
-set(REQUIRED_QT_VERSION 5.7.0)
+set(REQUIRED_QT_VERSION 5.10.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
 
 find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG)
