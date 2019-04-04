@@ -28,7 +28,7 @@ struct pa_sink_input_info;
 namespace PulseAudioQt
 {
 
-class SinkInput : public Stream
+class KF5PULSEAUDIOQT_EXPORT SinkInput : public Stream
 {
     Q_OBJECT
 

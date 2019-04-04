@@ -59,6 +59,7 @@ ecm_generate_headers(PulseAudioQt_HEADERS
         SinkInput
         Source
         SourceOutput
+        Stream
         StreamRestore
         VolumeObject
     REQUIRED_HEADERS PulseAudioQt_HEADERS
