@@ -118,8 +118,9 @@ qint64 StreamRestore::volume() const
 void StreamRestore::setVolume(qint64 volume)
 {
     pa_cvolume vol = d->m_cache.valid ? d->m_cache.volume : d->m_volume;
-    vol.channels = 1;
-    vol.values[0] = volume;
+    for (int i = 0; i < vol.channels; ++i) {
+        vol.values[i] = volume;
+    }
 
     if (d->m_cache.valid) {
         d->writeChanges(vol, d->m_cache.muted, d->m_cache.device);
@@ -202,8 +203,7 @@ void StreamRestorePrivate::writeChanges(const pa_cvolume &volume, bool muted, co
 
     pa_ext_stream_restore_info info;
     info.name = nameData.constData();
-    info.channel_map.channels = 1;
-    info.channel_map.map[0] = PA_CHANNEL_POSITION_MONO;
+    info.channel_map = m_channelMap;
     info.volume = volume;
     info.device = deviceData.isEmpty() ? nullptr : deviceData.constData();
     info.mute = muted;
