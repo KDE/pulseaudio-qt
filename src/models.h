@@ -45,10 +45,10 @@ public:
     };
 
     ~AbstractModel() override;
-    QHash<int, QByteArray> roleNames() const final;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const final;
+    QHash<int, QByteArray> roleNames() const final override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const final override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) final;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) final override;
 
     int role(const QByteArray &roleName) const;
 
