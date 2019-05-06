@@ -22,7 +22,9 @@
 
 #include "card.h"
 #include "profile.h"
+#include "cardport.h"
 #include <QVector>
+#include <QHash>
 #include <pulse/introspect.h>
 
 namespace PulseAudioQt
@@ -40,9 +42,9 @@ public:
     void update(const pa_card_info *info);
 
     QString m_name;
-    QVector<Profile*> m_profiles;
+    QHash<QString, Profile*> m_profiles;
     quint32 m_activeProfileIndex;
-    QVector<Port*> m_ports;
+    QHash<QString, CardPort*> m_ports;
 };
 }
 

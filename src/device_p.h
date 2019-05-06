@@ -23,6 +23,7 @@
 #include <pulse/proplist.h>
 
 #include <QVector>
+#include <QHash>
 
 #include "device.h"
 #include "port.h"
@@ -44,7 +45,7 @@ public:
     QString m_description;
     QString m_formFactor;
     quint32 m_cardIndex = -1;
-    QVector<Port*> m_ports;
+    QHash<QString, Port*> m_ports;
     quint32 m_activePortIndex = -1;
     Device::State m_state = Device::UnknownState;
 
@@ -75,20 +76,27 @@ public:
         m_cardIndex = info->card;
         Q_EMIT q->cardIndexChanged();
 
-        // TODO: this rebuilds the entire port list on every update. would be
-        // nicer if it actually removed what needs removing updates what needs
-        // updating and adds what needs adding. Alas, this is a tad more
-        // involved.
-        qDeleteAll(m_ports);
-        m_ports.clear();
-        for (auto **ports = info->ports; ports && *ports != nullptr; ++ports) {
-            Port *port = new Port(q);
-            port->d->setInfo(*ports);
-            m_ports.append(port);
-            if (info->active_port == *ports) {
-                m_activePortIndex = m_ports.length() - 1;
+        QStringList newPorts;
+        for (auto **it = info->ports; it && *it != nullptr; ++it) {
+            const QString name = QString::fromUtf8((*it)->name);
+            newPorts << name;
+            if (!m_ports.contains(name)) {
+                m_ports[name] = new Port(q);
+            }
+            Port *port = m_ports[name];
+            port->d->setInfo(*it);
+            if (info->active_port == *it) {
+                m_activePortIndex = m_ports.size() - 1;
             }
         }
+
+        const QList<QString> keys = m_ports.keys();
+        for (const QString &portKey : keys) {
+            if (!newPorts.contains(portKey)) {
+                delete m_ports.take(portKey);
+            }
+        }
+
         Q_EMIT q->portsChanged();
         Q_EMIT q->activePortIndexChanged();
 

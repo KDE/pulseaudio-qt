@@ -50,7 +50,7 @@ quint32 Device::cardIndex() const
 
 QVector<Port*> Device::ports() const
 {
-    return d->m_ports;
+    return QVector<Port*>::fromList(d->m_ports.values());
 }
 
 quint32 Device::activePortIndex() const

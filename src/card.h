@@ -28,7 +28,7 @@ struct pa_card_info;
 namespace PulseAudioQt
 {
 
-class Port;
+class CardPort;
 class Profile;
 
 class Card : public PulseObject
@@ -37,7 +37,7 @@ class Card : public PulseObject
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QVector<Profile*> profiles READ profiles NOTIFY profilesChanged)
     Q_PROPERTY(quint32 activeProfileIndex READ activeProfileIndex WRITE setActiveProfileIndex NOTIFY activeProfileIndexChanged)
-    Q_PROPERTY(QVector<Port*> ports READ ports NOTIFY portsChanged)
+    Q_PROPERTY(QVector<CardPort*> ports READ ports NOTIFY portsChanged)
 
 public:
     ~Card();
@@ -46,7 +46,7 @@ public:
     QVector<Profile*> profiles() const;
     quint32 activeProfileIndex() const;
     void setActiveProfileIndex(quint32 profileIndex);
-    QVector<Port*> ports() const;
+    QVector<CardPort*> ports() const;
 
 Q_SIGNALS:
     void nameChanged();

@@ -60,26 +60,48 @@ void CardPrivate::update(const pa_card_info *info)
         Q_EMIT q->nameChanged();
     }
 
-    qDeleteAll(m_profiles);
-    m_profiles.clear();
+    QStringList newProfiles;
     for (auto **it = info->profiles2; it && *it != nullptr; ++it) {
-        Profile *profile = new Profile(q);
+        const QString name = QString::fromUtf8((*it)->name);
+        newProfiles << name;
+        if (!m_profiles.contains(name)) {
+             m_profiles[name] = new Profile(q);
+        }
+        Profile *profile = m_profiles[name];
         profile->d->setInfo(*it);
-        m_profiles.append(profile);
         if (info->active_profile2 == *it) {
-            m_activeProfileIndex = m_profiles.length() - 1;
+            m_activeProfileIndex = m_profiles.size() - 1;
         }
     }
+
+    const QList<QString> profileKeys = m_profiles.keys();
+    for (const QString &profileKey : profileKeys) {
+        if (!newProfiles.contains(profileKey)) {
+            delete m_profiles.take(profileKey);
+        }
+    }
+
     Q_EMIT q->profilesChanged();
     Q_EMIT q->activeProfileIndexChanged();
 
-    qDeleteAll(m_ports);
-    m_ports.clear();
+    QStringList newPorts;
     for (auto **it = info->ports; it && *it != nullptr; ++it) {
-        CardPort *port = new CardPort(q);
+        const QString name = QString::fromUtf8((*it)->name);
+        newPorts << name;
+        if (!m_ports.contains(name)) {
+             m_ports[name] = new CardPort(q);
+        }
+        CardPort *port = m_ports[name];
         port->update(*it);
-        m_ports.append(port);
     }
+
+    const QList<QString> portKeys = m_ports.keys();
+    for (const QString &portKey : profileKeys) {
+        if (!newPorts.contains(portKey)) {
+            delete m_ports.take(portKey);
+        }
+    }
+
     Q_EMIT q->portsChanged();
 }
 
@@ -90,7 +112,7 @@ QString Card::name() const
 
 QVector<Profile*> Card::profiles() const
 {
-    return d->m_profiles;
+    return QVector<Profile*>::fromList(d->m_profiles.values());
 }
 
 quint32 Card::activeProfileIndex() const
@@ -104,9 +126,9 @@ void Card::setActiveProfileIndex(quint32 profileIndex)
     context()->setCardProfile(index(), profile->name());
 }
 
-QVector<Port*> Card::ports() const
+QVector<CardPort*> Card::ports() const
 {
-    return d->m_ports;
+    return QVector<CardPort*>::fromList(d->m_ports.values());
 }
 
 } // PulseAudioQt
