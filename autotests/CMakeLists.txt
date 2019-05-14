@@ -1,5 +1,7 @@
 include(ECMAddTests)
 
+include_directories(${PULSEAUDIO_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR})
+
 ecm_add_test(
     ${CMAKE_SOURCE_DIR}/src/maps.h
     ${CMAKE_SOURCE_DIR}/src/module.cpp
