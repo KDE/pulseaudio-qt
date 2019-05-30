@@ -133,7 +133,7 @@ bool AbstractModel::setData(const QModelIndex &index, const QVariant &value, int
 
 int AbstractModel::role(const QByteArray &roleName) const
 {
-    qCDebug(PULSEAUDIOQT) << roleName << d->m_roles.key(roleName, -1);
+    qDebug() << roleName << d->m_roles.key(roleName, -1);
     return d->m_roles.key(roleName, -1);
 }
 

@@ -39,7 +39,7 @@ class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(QString formFactor READ formFactor NOTIFY formFactorChanged)
     Q_PROPERTY(quint32 cardIndex READ cardIndex NOTIFY cardIndexChanged)
-    Q_PROPERTY(QVector<Port*> ports READ ports NOTIFY portsChanged)
+    Q_PROPERTY(QList<QObject*> ports READ portsQml NOTIFY portsChanged)
     Q_PROPERTY(quint32 activePortIndex READ activePortIndex WRITE setActivePortIndex NOTIFY activePortIndexChanged)
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
 
@@ -61,6 +61,7 @@ public:
     QString formFactor() const;
     quint32 cardIndex() const;
     QVector<Port*> ports() const;
+    QList<QObject*> portsQml() const;
     quint32 activePortIndex() const;
     virtual void setActivePortIndex(quint32 port_index) = 0;
     virtual bool isDefault() const = 0;

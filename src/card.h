@@ -35,18 +35,20 @@ class Card : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-    Q_PROPERTY(QVector<Profile*> profiles READ profiles NOTIFY profilesChanged)
+    Q_PROPERTY(QList<QObject*> profiles READ profilesQml NOTIFY profilesChanged)
     Q_PROPERTY(quint32 activeProfileIndex READ activeProfileIndex WRITE setActiveProfileIndex NOTIFY activeProfileIndexChanged)
-    Q_PROPERTY(QVector<CardPort*> ports READ ports NOTIFY portsChanged)
+    Q_PROPERTY(QList<QObject*> ports READ portsQml NOTIFY portsChanged)
 
 public:
     ~Card();
 
     QString name() const;
     QVector<Profile*> profiles() const;
+    QList<QObject*> profilesQml() const;
     quint32 activeProfileIndex() const;
     void setActiveProfileIndex(quint32 profileIndex);
     QVector<CardPort*> ports() const;
+    QList<QObject*> portsQml() const;
 
 Q_SIGNALS:
     void nameChanged();
