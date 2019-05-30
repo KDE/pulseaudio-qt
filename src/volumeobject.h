@@ -35,6 +35,7 @@ class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
     Q_PROPERTY(bool volumeWritable READ isVolumeWritable NOTIFY isVolumeWritableChanged)
     Q_PROPERTY(QVector<QString> channels READ channels NOTIFY channelsChanged)
     Q_PROPERTY(QVector<qreal> channelVolumes READ channelVolumes NOTIFY channelVolumesChanged)
+    Q_PROPERTY(QStringList rawChannels READ rawChannels NOTIFY rawChannelsChanged)
 
 public:
     ~VolumeObject();
@@ -49,6 +50,7 @@ public:
     bool isVolumeWritable() const;
 
     QVector<QString> channels() const;
+    QStringList rawChannels() const;
     QVector<qreal> channelVolumes() const;
     virtual void setChannelVolume(int channel, qint64 volume) = 0;
 
@@ -58,6 +60,7 @@ Q_SIGNALS:
     void hasVolumeChanged();
     void isVolumeWritableChanged();
     void channelsChanged();
+    void rawChannelsChanged();
     void channelVolumesChanged();
 
 protected:

@@ -75,6 +75,11 @@ QVector<QString> VolumeObject::channels() const
     return d->m_channels;
 }
 
+QStringList VolumeObject::rawChannels() const
+{
+    return d->m_rawChannels;
+}
+
 QVector<qreal> VolumeObject::channelVolumes() const
 {
     QVector<qreal> ret;

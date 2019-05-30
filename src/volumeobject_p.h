@@ -38,6 +38,7 @@ public:
     bool m_hasVolume;
     bool m_volumeWritable;
     QVector<QString> m_channels;
+    QStringList m_rawChannels;
 
     pa_cvolume cvolume() const;
 
@@ -62,6 +63,16 @@ public:
         if (m_channels != infoChannels) {
             m_channels = infoChannels;
             Q_EMIT q->channelsChanged();
+        }
+
+        QStringList infoRawChannels;
+        infoRawChannels.reserve(info->channel_map.channels);
+        for (int i = 0; i < info->channel_map.channels; ++i) {
+            infoRawChannels << QString::fromUtf8(pa_channel_position_to_string(info->channel_map.map[i]));
+        }
+        if (m_rawChannels != infoRawChannels) {
+            m_rawChannels = infoRawChannels;
+            Q_EMIT q->rawChannelsChanged();
         }
     }
 
