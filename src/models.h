@@ -50,7 +50,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) final override;
 
-    Q_SCRIPTABLE int role(const QByteArray &roleName) const;
+    int role(const QByteArray &roleName) const;
 
 protected:
     AbstractModel(const MapBaseQObject *map, QObject *parent);

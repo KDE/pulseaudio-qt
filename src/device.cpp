@@ -53,18 +53,6 @@ QVector<Port*> Device::ports() const
     return QVector<Port*>::fromList(d->m_ports.values());
 }
 
-QList<QObject*> Device::portsQml() const
-{
-    QList<QObject*> out;
-    out.reserve(d->m_ports.size());
-
-    for (Port* port : d->m_ports.values()) {
-        out.append(static_cast<QObject*>(port));
-    }
-
-    return out;
-}
-
 quint32 Device::activePortIndex() const
 {
     return d->m_activePortIndex;

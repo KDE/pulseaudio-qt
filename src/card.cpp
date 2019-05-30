@@ -115,18 +115,6 @@ QVector<Profile*> Card::profiles() const
     return QVector<Profile*>::fromList(d->m_profiles.values());
 }
 
-QList<QObject*> Card::profilesQml() const
-{
-    QList<QObject*> out;
-    out.reserve(d->m_profiles.size());
-
-    for (Profile* profile : d->m_profiles.values()) {
-        out.append(static_cast<QObject*>(profile));
-    }
-
-    return out;
-}
-
 quint32 Card::activeProfileIndex() const
 {
     return d->m_activeProfileIndex;
@@ -141,18 +129,6 @@ void Card::setActiveProfileIndex(quint32 profileIndex)
 QVector<CardPort*> Card::ports() const
 {
     return QVector<CardPort*>::fromList(d->m_ports.values());
-}
-
-QList<QObject*> Card::portsQml() const
-{
-    QList<QObject*> out;
-    out.reserve(d->m_ports.size());
-
-    for (CardPort* port : d->m_ports.values()) {
-        out.append(static_cast<QObject*>(port));
-    }
-
-    return out;
 }
 
 } // PulseAudioQt
