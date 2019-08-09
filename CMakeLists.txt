@@ -45,15 +45,6 @@ set_package_properties(Qt5Quick PROPERTIES DESCRIPTION "Tests for PulseAudioQt" 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5PulseAudioQt")
 
-if (BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS KF5PulseAudioQt_QCH
-        FILE KF5PulseAudioQtQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5PulseAudioQtQchTargets.cmake\")")
-endif()
 
 install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfig.cmake"
                "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfigVersion.cmake"
@@ -80,6 +71,16 @@ if (BUILD_TESTING)
     if(Qt5Test_FOUND)
         add_subdirectory(autotests)
     endif()
+endif()
+
+if (BUILD_QCH)
+    ecm_install_qch_export(
+        TARGETS KF5PulseAudioQt_QCH
+        FILE KF5PulseAudioQtQchTargets.cmake
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT Devel
+    )
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5PulseAudioQtQchTargets.cmake\")")
 endif()
 
 install(EXPORT KF5PulseAudioQtTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5PulseAudioQtTargets.cmake NAMESPACE KF5:: )
