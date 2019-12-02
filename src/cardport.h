@@ -22,13 +22,12 @@
 
 #include "port.h"
 
-#include <QObject>
 #include "debug.h"
+#include <QObject>
 #include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
-
 class CardPort : public Port
 {
     Q_OBJECT

@@ -22,26 +22,26 @@
 #include "card_p.h"
 #include "debug.h"
 
+#include "cardport.h"
 #include "context.h"
+#include "profile_p.h"
 #include "pulseobject.h"
 #include "pulseobject_p.h"
-#include "cardport.h"
-#include "profile_p.h"
 
 namespace PulseAudioQt
 {
-
 Card::Card(QObject *parent)
     : PulseObject(parent)
     , d(new CardPrivate(this))
 {
 }
 
-Card::~Card(){
+Card::~Card()
+{
     delete d;
 }
 
-CardPrivate::CardPrivate(Card* q)
+CardPrivate::CardPrivate(Card *q)
     : q(q)
 {
 }
@@ -65,7 +65,7 @@ void CardPrivate::update(const pa_card_info *info)
         const QString name = QString::fromUtf8((*it)->name);
         newProfiles << name;
         if (!m_profiles.contains(name)) {
-             m_profiles[name] = new Profile(q);
+            m_profiles[name] = new Profile(q);
         }
         Profile *profile = m_profiles[name];
         profile->d->setInfo(*it);
@@ -89,7 +89,7 @@ void CardPrivate::update(const pa_card_info *info)
         const QString name = QString::fromUtf8((*it)->name);
         newPorts << name;
         if (!m_ports.contains(name)) {
-             m_ports[name] = new CardPort(q);
+            m_ports[name] = new CardPort(q);
         }
         CardPort *port = m_ports[name];
         port->update(*it);
@@ -110,9 +110,9 @@ QString Card::name() const
     return d->m_name;
 }
 
-QVector<Profile*> Card::profiles() const
+QVector<Profile *> Card::profiles() const
 {
-    return QVector<Profile*>::fromList(d->m_profiles.values());
+    return QVector<Profile *>::fromList(d->m_profiles.values());
 }
 
 quint32 Card::activeProfileIndex() const
@@ -126,9 +126,9 @@ void Card::setActiveProfileIndex(quint32 profileIndex)
     context()->setCardProfile(index(), profile->name());
 }
 
-QVector<CardPort*> Card::ports() const
+QVector<CardPort *> Card::ports() const
 {
-    return QVector<CardPort*>::fromList(d->m_ports.values());
+    return QVector<CardPort *>::fromList(d->m_ports.values());
 }
 
 } // PulseAudioQt

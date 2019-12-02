@@ -22,7 +22,6 @@
 
 namespace PulseAudioQt
 {
-
 CardPort::CardPort(QObject *parent)
     : Port(parent)
 {
@@ -34,7 +33,6 @@ CardPort::~CardPort()
 
 void CardPort::update(const pa_card_port_info *info)
 {
-
     Port::d->setInfo(info);
 
     m_properties.clear();
@@ -50,7 +48,7 @@ void CardPort::update(const pa_card_port_info *info)
         Q_ASSERT(value);
         m_properties.insert(QString::fromUtf8(key), QString::fromUtf8(value));
     }
-        Q_EMIT propertiesChanged();
+    Q_EMIT propertiesChanged();
 }
 
 QVariantMap CardPort::properties() const
@@ -58,4 +56,4 @@ QVariantMap CardPort::properties() const
     return m_properties;
 }
 
-} //PulseAudioQt
+} // PulseAudioQt

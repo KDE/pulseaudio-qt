@@ -21,26 +21,25 @@
 
 #pragma once
 
-#include <QSet>
 #include <QHash>
-#include <QVector>
 #include <QObject>
+#include <QSet>
+#include <QVector>
 
-#include <pulse/pulseaudio.h>
 #include <pulse/ext-stream-restore.h>
+#include <pulse/pulseaudio.h>
 
-#include "sink_p.h"
-#include "source_p.h"
 #include "card_p.h"
-#include "sinkinput_p.h"
-#include "sourceoutput_p.h"
 #include "client_p.h"
-#include "streamrestore_p.h"
 #include "module_p.h"
+#include "sink_p.h"
+#include "sinkinput_p.h"
+#include "source_p.h"
+#include "sourceoutput_p.h"
+#include "streamrestore_p.h"
 
 namespace PulseAudioQt
 {
-
 // Used for typedefs.
 class Card;
 class Client;
@@ -78,13 +77,17 @@ Q_SIGNALS:
  * serialized list index. Namely it enables us to translate a discrete list
  * index to a pulse index to an object, and any permutation thereof.
  */
-template<typename Type, typename PAInfo>
-class MapBase : public MapBaseQObject
+template<typename Type, typename PAInfo> class MapBase : public MapBaseQObject
 {
 public:
-    virtual ~MapBase() {}
+    virtual ~MapBase()
+    {
+    }
 
-    const QVector<Type*> &data() const { return m_data; }
+    const QVector<Type *> &data() const
+    {
+        return m_data;
+    }
 
     int count() const override
     {
@@ -93,7 +96,7 @@ public:
 
     int indexOfObject(QObject *object) const override
     {
-        return m_data.indexOf(static_cast<Type*>(object));
+        return m_data.indexOf(static_cast<Type *>(object));
     }
 
     QObject *objectAt(int index) const override
@@ -151,15 +154,15 @@ public:
             const int modelIndex = m_data.indexOf(m_hash.value(index));
             Q_EMIT aboutToBeRemoved(modelIndex);
             m_data.removeAt(modelIndex);
-            auto object =  m_hash.take(index);
+            auto object = m_hash.take(index);
             Q_EMIT removed(modelIndex, object);
             delete object;
         }
     }
 
 protected:
-    QVector<Type*> m_data;
-    QHash<quint32, Type*> m_hash;
+    QVector<Type *> m_data;
+    QHash<quint32, Type *> m_hash;
     QSet<quint32> m_pendingRemovals;
 };
 

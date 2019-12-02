@@ -25,7 +25,6 @@
 
 namespace PulseAudioQt
 {
-
 class StreamPrivate
 {
 public:
@@ -40,9 +39,7 @@ public:
     bool m_virtualStream;
     bool m_corked;
 
-
-    template <typename PAInfo>
-    void updateStream(const PAInfo *info)
+    template<typename PAInfo> void updateStream(const PAInfo *info)
     {
         q->VolumeObject::d->updateVolumeObject(info);
 
@@ -71,7 +68,6 @@ public:
             Q_EMIT q->corkedChanged();
         }
     }
-
 };
 }
 #endif

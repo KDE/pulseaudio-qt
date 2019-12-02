@@ -21,8 +21,8 @@
 #include "device.h"
 #include "device_p.h"
 
-namespace PulseAudioQt {
-
+namespace PulseAudioQt
+{
 Device::State Device::state() const
 {
     return d->m_state;
@@ -48,9 +48,9 @@ quint32 Device::cardIndex() const
     return d->m_cardIndex;
 }
 
-QVector<Port*> Device::ports() const
+QVector<Port *> Device::ports() const
 {
-    return QVector<Port*>::fromList(d->m_ports.values());
+    return QVector<Port *>::fromList(d->m_ports.values());
 }
 
 quint32 Device::activePortIndex() const
@@ -74,18 +74,19 @@ Device::State DevicePrivate::stateFromPaState(int value) const
     switch (value) {
     case -1: // PA_X_INVALID_STATE
         return Device::InvalidState;
-    case 0:  // PA_X_RUNNING
+    case 0: // PA_X_RUNNING
         return Device::RunningState;
-    case 1:  // PA_X_IDLE
+    case 1: // PA_X_IDLE
         return Device::IdleState;
-    case 2:  // PA_X_SUSPENDED
+    case 2: // PA_X_SUSPENDED
         return Device::SuspendedState;
     default:
         return Device::UnknownState;
     }
 }
 
-Device::~Device(){
+Device::~Device()
+{
     delete d;
 }
 

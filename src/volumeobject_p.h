@@ -22,12 +22,13 @@
 
 #include <pulse/volume.h>
 
-#include "volumeobject.h"
 #include "pulseobject_p.h"
+#include "volumeobject.h"
 
-namespace PulseAudioQt {
-
-class VolumeObjectPrivate {
+namespace PulseAudioQt
+{
+class VolumeObjectPrivate
+{
 public:
     explicit VolumeObjectPrivate(VolumeObject *q);
 
@@ -42,8 +43,7 @@ public:
 
     pa_cvolume cvolume() const;
 
-    template <typename PAInfo>
-    void updateVolumeObject(PAInfo *info)
+    template<typename PAInfo> void updateVolumeObject(PAInfo *info)
     {
         q->PulseObject::d->updatePulseObject(info);
         if (m_muted != info->mute) {
@@ -75,7 +75,6 @@ public:
             Q_EMIT q->rawChannelsChanged();
         }
     }
-
 };
 }
 #endif

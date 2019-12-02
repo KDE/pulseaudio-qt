@@ -27,7 +27,6 @@
 
 namespace PulseAudioQt
 {
-
 PulseObject::PulseObject(QObject *parent)
     : QObject(parent)
     , d(new PulseObjectPrivate(this))

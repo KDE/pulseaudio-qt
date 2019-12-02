@@ -20,12 +20,11 @@
 #ifndef SOURCE_P_H
 #define SOURCE_P_H
 
-#include <pulse/introspect.h>
 #include "source.h"
+#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
-
 class SourcePrivate
 {
 public:

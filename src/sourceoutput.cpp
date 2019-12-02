@@ -27,7 +27,6 @@
 
 namespace PulseAudioQt
 {
-
 SourceOutput::SourceOutput(QObject *parent)
     : Stream(parent)
     , d(new SourceOutputPrivate(this))

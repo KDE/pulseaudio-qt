@@ -21,12 +21,11 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QObject>
 #include "kf5pulseaudioqt_export.h"
+#include <QObject>
 
 namespace PulseAudioQt
 {
-
 class Sink;
 class Source;
 class Context;
@@ -43,7 +42,6 @@ public:
 
     Source *defaultSource() const;
     void setDefaultSource(Source *source);
-
 
 Q_SIGNALS:
     void defaultSinkChanged(PulseAudioQt::Sink *sink);

@@ -25,10 +25,8 @@
 
 namespace PulseAudioQt
 {
-
 class ModulePrivate
 {
-
 public:
     explicit ModulePrivate(Module *q);
     virtual ~ModulePrivate();
@@ -39,7 +37,6 @@ public:
 
     QString m_name;
     QString m_argument;
-
 };
 
 } // PulseAudioQt

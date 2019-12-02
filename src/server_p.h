@@ -23,10 +23,8 @@
 
 namespace PulseAudioQt
 {
-
 class ServerPrivate
 {
-
 public:
     explicit ServerPrivate(Server *q);
     virtual ~ServerPrivate();

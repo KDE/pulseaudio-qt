@@ -30,7 +30,6 @@
 
 namespace PulseAudioQt
 {
-
 class StreamPrivate;
 
 class KF5PULSEAUDIOQT_EXPORT Stream : public VolumeObject

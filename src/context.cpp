@@ -21,28 +21,27 @@
 #include "context.h"
 #include "server.h"
 
-#include <QAbstractEventDispatcher>
 #include "debug.h"
-#include <QTimer>
-#include <QDBusServiceWatcher>
+#include <QAbstractEventDispatcher>
 #include <QDBusConnection>
+#include <QDBusServiceWatcher>
+#include <QTimer>
 
 #include "card.h"
 #include "client.h"
+#include "module.h"
 #include "sink.h"
 #include "sinkinput.h"
 #include "source.h"
 #include "sourceoutput.h"
 #include "streamrestore.h"
-#include "module.h"
 
 #include "context_p.h"
-#include "streamrestore_p.h"
 #include "server_p.h"
+#include "streamrestore_p.h"
 
 namespace PulseAudioQt
 {
-
 Context *s_context = nullptr;
 
 qint64 normalVolume()
@@ -82,7 +81,7 @@ static void sink_cb(pa_context *context, const pa_sink_info *info, int eol, void
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->sinkCallback(info);
+    static_cast<ContextPrivate *>(data)->sinkCallback(info);
 }
 
 static void sink_input_callback(pa_context *context, const pa_sink_input_info *info, int eol, void *data)
@@ -101,7 +100,7 @@ static void sink_input_callback(pa_context *context, const pa_sink_input_info *i
     }
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->sinkInputCallback(info);
+    static_cast<ContextPrivate *>(data)->sinkInputCallback(info);
 }
 
 static void source_cb(pa_context *context, const pa_source_info *info, int eol, void *data)
@@ -113,7 +112,7 @@ static void source_cb(pa_context *context, const pa_source_info *info, int eol, 
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->sourceCallback(info);
+    static_cast<ContextPrivate *>(data)->sourceCallback(info);
 }
 
 static void source_output_cb(pa_context *context, const pa_source_output_info *info, int eol, void *data)
@@ -122,14 +121,12 @@ static void source_output_cb(pa_context *context, const pa_source_output_info *i
         return;
     // FIXME: This forces excluding these apps
     if (const char *app = pa_proplist_gets(info->proplist, PA_PROP_APPLICATION_ID)) {
-        if (strcmp(app, "org.PulseAudio.pavucontrol") == 0
-                || strcmp(app, "org.gnome.VolumeControl") == 0
-                || strcmp(app, "org.kde.kmixd") == 0)
+        if (strcmp(app, "org.PulseAudio.pavucontrol") == 0 || strcmp(app, "org.gnome.VolumeControl") == 0 || strcmp(app, "org.kde.kmixd") == 0)
             return;
     }
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->sourceOutputCallback(info);
+    static_cast<ContextPrivate *>(data)->sourceOutputCallback(info);
 }
 
 static void client_cb(pa_context *context, const pa_client_info *info, int eol, void *data)
@@ -138,7 +135,7 @@ static void client_cb(pa_context *context, const pa_client_info *info, int eol, 
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->clientCallback(info);
+    static_cast<ContextPrivate *>(data)->clientCallback(info);
 }
 
 static void card_cb(pa_context *context, const pa_card_info *info, int eol, void *data)
@@ -147,7 +144,7 @@ static void card_cb(pa_context *context, const pa_card_info *info, int eol, void
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->cardCallback(info);
+    static_cast<ContextPrivate *>(data)->cardCallback(info);
 }
 
 static void module_info_list_cb(pa_context *context, const pa_module_info *info, int eol, void *data)
@@ -156,26 +153,26 @@ static void module_info_list_cb(pa_context *context, const pa_module_info *info,
         return;
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->moduleCallback(info);
+    static_cast<ContextPrivate *>(data)->moduleCallback(info);
 }
 
 static void server_cb(pa_context *context, const pa_server_info *info, void *data)
 {
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->serverCallback(info);
+    static_cast<ContextPrivate *>(data)->serverCallback(info);
 }
 
 static void context_state_callback(pa_context *context, void *data)
 {
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->contextStateCallback(context);
+    static_cast<ContextPrivate *>(data)->contextStateCallback(context);
 }
 
 static void subscribe_cb(pa_context *context, pa_subscription_event_type_t type, uint32_t index, void *data)
 {
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->subscribeCallback(context, type, index);
+    static_cast<ContextPrivate *>(data)->subscribeCallback(context, type, index);
 }
 
 static void ext_stream_restore_read_cb(pa_context *context, const pa_ext_stream_restore_info *info, int eol, void *data)
@@ -185,7 +182,7 @@ static void ext_stream_restore_read_cb(pa_context *context, const pa_ext_stream_
     }
     Q_ASSERT(context);
     Q_ASSERT(data);
-    static_cast<ContextPrivate*>(data)->streamRestoreCallback(info);
+    static_cast<ContextPrivate *>(data)->streamRestoreCallback(info);
 }
 
 static void ext_stream_restore_subscribe_cb(pa_context *context, void *data)
@@ -205,7 +202,7 @@ static void ext_stream_restore_change_sink_cb(pa_context *context, const pa_ext_
     Q_ASSERT(context);
     Q_ASSERT(data);
     if (qstrncmp(info->name, "sink-input-by", 13) == 0) {
-        ContextPrivate *contextp = static_cast<ContextPrivate*>(data);
+        ContextPrivate *contextp = static_cast<ContextPrivate *>(data);
         const QByteArray deviceData = contextp->m_newDefaultSink.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
@@ -225,7 +222,7 @@ static void ext_stream_restore_change_source_cb(pa_context *context, const pa_ex
     Q_ASSERT(context);
     Q_ASSERT(data);
     if (qstrncmp(info->name, "source-output-by", 16) == 0) {
-        ContextPrivate *contextp = static_cast<ContextPrivate*>(data);
+        ContextPrivate *contextp = static_cast<ContextPrivate *>(data);
         const QByteArray deviceData = contextp->m_newDefaultSource.toUtf8();
         pa_ext_stream_restore_info newinfo;
         newinfo.name = info->name;
@@ -250,73 +247,36 @@ Context::Context(QObject *parent)
 
     d->connectToDaemon();
 
-    QDBusServiceWatcher* watcher = new QDBusServiceWatcher(QStringLiteral("org.pulseaudio.Server"),
-                                                           QDBusConnection::sessionBus(),
-                                                           QDBusServiceWatcher::WatchForRegistration,
-                                                           this);
-    connect(watcher, &QDBusServiceWatcher::serviceRegistered, this, [this]{
-        d->connectToDaemon();
-    });
+    QDBusServiceWatcher *watcher = new QDBusServiceWatcher(QStringLiteral("org.pulseaudio.Server"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForRegistration, this);
+    connect(watcher, &QDBusServiceWatcher::serviceRegistered, this, [this] { d->connectToDaemon(); });
 
-    connect(&d->m_sinks, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT sinkAdded(static_cast<Sink*>(object));
-    });
-    connect(&d->m_sinks, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT sinkRemoved(static_cast<Sink*>(object));
-    });
+    connect(&d->m_sinks, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sinkAdded(static_cast<Sink *>(object)); });
+    connect(&d->m_sinks, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sinkRemoved(static_cast<Sink *>(object)); });
 
-    connect(&d->m_sinkInputs, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT sinkInputAdded(static_cast<SinkInput*>(object));
-    });
-    connect(&d->m_sinkInputs, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT sinkInputRemoved(static_cast<SinkInput*>(object));
-    });
+    connect(&d->m_sinkInputs, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sinkInputAdded(static_cast<SinkInput *>(object)); });
+    connect(&d->m_sinkInputs, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sinkInputRemoved(static_cast<SinkInput *>(object)); });
 
-    connect(&d->m_sources, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT sourceAdded(static_cast<Source*>(object));
-    });
-    connect(&d->m_sources, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT sourceRemoved(static_cast<Source*>(object));
-    });
+    connect(&d->m_sources, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sourceAdded(static_cast<Source *>(object)); });
+    connect(&d->m_sources, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sourceRemoved(static_cast<Source *>(object)); });
 
-    connect(&d->m_sourceOutputs, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT sourceOutputAdded(static_cast<SourceOutput*>(object));
-    });
-    connect(&d->m_sourceOutputs, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT sourceOutputRemoved(static_cast<SourceOutput*>(object));
-    });
+    connect(&d->m_sourceOutputs, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sourceOutputAdded(static_cast<SourceOutput *>(object)); });
+    connect(&d->m_sourceOutputs, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sourceOutputRemoved(static_cast<SourceOutput *>(object)); });
 
-    connect(&d->m_clients, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT clientAdded(static_cast<Client*>(object));
-    });
-    connect(&d->m_clients, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT clientRemoved(static_cast<Client*>(object));
-    });
+    connect(&d->m_clients, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT clientAdded(static_cast<Client *>(object)); });
+    connect(&d->m_clients, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT clientRemoved(static_cast<Client *>(object)); });
 
-    connect(&d->m_cards, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT cardAdded(static_cast<Card*>(object));
-    });
-    connect(&d->m_cards, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT cardRemoved(static_cast<Card*>(object));
-    });
+    connect(&d->m_cards, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT cardAdded(static_cast<Card *>(object)); });
+    connect(&d->m_cards, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT cardRemoved(static_cast<Card *>(object)); });
 
-    connect(&d->m_modules, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT moduleAdded(static_cast<Module*>(object));
-    });
-    connect(&d->m_modules, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT moduleRemoved(static_cast<Module*>(object));
-    });
+    connect(&d->m_modules, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT moduleAdded(static_cast<Module *>(object)); });
+    connect(&d->m_modules, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT moduleRemoved(static_cast<Module *>(object)); });
 
-    connect(&d->m_streamRestores, &MapBaseQObject::added, this, [this](int, QObject *object) {
-        Q_EMIT streamRestoreAdded(static_cast<StreamRestore*>(object));
-    });
-    connect(&d->m_streamRestores, &MapBaseQObject::removed, this, [this](int, QObject *object) {
-        Q_EMIT streamRestoreRemoved(static_cast<StreamRestore*>(object));
-    });
+    connect(&d->m_streamRestores, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT streamRestoreAdded(static_cast<StreamRestore *>(object)); });
+    connect(&d->m_streamRestores, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT streamRestoreRemoved(static_cast<StreamRestore *>(object)); });
 }
 
 ContextPrivate::ContextPrivate(Context *q)
-    :q(q)
+    : q(q)
 {
 }
 
@@ -443,14 +403,12 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
         }
         break;
 
-
     case PA_SUBSCRIPTION_EVENT_SERVER:
         if (!PAOperation(pa_context_get_server_info(context, server_cb, this))) {
             qCWarning(PULSEAUDIOQT) << "pa_context_get_server_info() failed";
             return;
         }
         break;
-
     }
 }
 
@@ -465,15 +423,11 @@ void ContextPrivate::contextStateCallback(pa_context *c)
         if (m_context == c) {
             pa_context_set_subscribe_callback(c, subscribe_cb, this);
 
-            if (!PAOperation(pa_context_subscribe(c, (pa_subscription_mask_t)
-                                           (PA_SUBSCRIPTION_MASK_SINK|
-                                            PA_SUBSCRIPTION_MASK_SOURCE|
-                                            PA_SUBSCRIPTION_MASK_CLIENT|
-                                            PA_SUBSCRIPTION_MASK_SINK_INPUT|
-                                            PA_SUBSCRIPTION_MASK_SOURCE_OUTPUT|
-                                            PA_SUBSCRIPTION_MASK_CARD|
-                                            PA_SUBSCRIPTION_MASK_MODULE|
-                                            PA_SUBSCRIPTION_MASK_SERVER), nullptr, nullptr))) {
+            if (!PAOperation(pa_context_subscribe(c,
+                                                  (pa_subscription_mask_t)(PA_SUBSCRIPTION_MASK_SINK | PA_SUBSCRIPTION_MASK_SOURCE | PA_SUBSCRIPTION_MASK_CLIENT | PA_SUBSCRIPTION_MASK_SINK_INPUT | PA_SUBSCRIPTION_MASK_SOURCE_OUTPUT |
+                                                                           PA_SUBSCRIPTION_MASK_CARD | PA_SUBSCRIPTION_MASK_MODULE | PA_SUBSCRIPTION_MASK_SERVER),
+                                                  nullptr,
+                                                  nullptr))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_subscribe() failed";
                 return;
             }
@@ -532,9 +486,7 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             m_context = nullptr;
         }
         reset();
-        QTimer::singleShot(1000, q, [this]{
-            connectToDaemon();
-        });
+        QTimer::singleShot(1000, q, [this] { connectToDaemon(); });
     }
 }
 
@@ -585,8 +537,7 @@ void ContextPrivate::streamRestoreCallback(const pa_ext_stream_restore_info *inf
 
     if (!obj) {
         QVariantMap props;
-        props.insert(QStringLiteral("application.icon_name"),
-                     QStringLiteral("preferences-desktop-notification"));
+        props.insert(QStringLiteral("application.icon_name"), QStringLiteral("preferences-desktop-notification"));
         obj = new StreamRestore(eventRoleIndex, props, q);
         obj->d->update(info);
         m_streamRestores.insert(obj);
@@ -606,10 +557,7 @@ void Context::setCardProfile(quint32 index, const QString &profile)
         return;
     }
     qCDebug(PULSEAUDIOQT) << index << profile;
-    if (!PAOperation(pa_context_set_card_profile_by_index(d->m_context,
-                                                          index,
-                                                          profile.toUtf8().constData(),
-                                                          nullptr, nullptr))) {
+    if (!PAOperation(pa_context_set_card_profile_by_index(d->m_context, index, profile.toUtf8().constData(), nullptr, nullptr))) {
         qCWarning(PULSEAUDIOQT) << "pa_context_set_card_profile_by_index failed";
         return;
     }
@@ -621,18 +569,13 @@ void Context::setDefaultSink(const QString &name)
         return;
     }
     const QByteArray nameData = name.toUtf8();
-    if (!PAOperation(pa_context_set_default_sink(d->m_context,
-                                                 nameData.constData(),
-                                                 nullptr,
-                                                 nullptr))) {
+    if (!PAOperation(pa_context_set_default_sink(d->m_context, nameData.constData(), nullptr, nullptr))) {
         qCWarning(PULSEAUDIOQT) << "pa_context_set_default_sink failed";
     }
 
     // Change device for all entries in stream-restore database
     d->m_newDefaultSink = name;
-    if (!PAOperation(pa_ext_stream_restore_read(d->m_context,
-                                                ext_stream_restore_change_sink_cb,
-                                                d))) {
+    if (!PAOperation(pa_ext_stream_restore_read(d->m_context, ext_stream_restore_change_sink_cb, d))) {
         qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }
@@ -643,18 +586,13 @@ void Context::setDefaultSource(const QString &name)
         return;
     }
     const QByteArray nameData = name.toUtf8();
-    if (!PAOperation(pa_context_set_default_source(d->m_context,
-                                                 nameData.constData(),
-                                                 nullptr,
-                                                 nullptr))) {
+    if (!PAOperation(pa_context_set_default_source(d->m_context, nameData.constData(), nullptr, nullptr))) {
         qCWarning(PULSEAUDIOQT) << "pa_context_set_default_source failed";
     }
 
     // Change device for all entries in stream-restore database
     d->m_newDefaultSource = name;
-    if (!PAOperation(pa_ext_stream_restore_read(d->m_context,
-                                                ext_stream_restore_change_source_cb,
-                                                d))) {
+    if (!PAOperation(pa_ext_stream_restore_read(d->m_context, ext_stream_restore_change_source_cb, d))) {
         qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }
@@ -664,13 +602,7 @@ void ContextPrivate::streamRestoreWrite(const pa_ext_stream_restore_info *info)
     if (!m_context) {
         return;
     }
-    if (!PAOperation(pa_ext_stream_restore_write(m_context,
-                                                 PA_UPDATE_REPLACE,
-                                                 info,
-                                                 1,
-                                                 true,
-                                                 nullptr,
-                                                 nullptr))) {
+    if (!PAOperation(pa_ext_stream_restore_write(m_context, PA_UPDATE_REPLACE, info, 1, true, nullptr, nullptr))) {
         qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_write failed";
     }
 }
@@ -687,7 +619,7 @@ void ContextPrivate::connectToDaemon()
         return;
     }
 
-    qCDebug(PULSEAUDIOQT) <<  "Attempting connection to PulseAudio sound daemon";
+    qCDebug(PULSEAUDIOQT) << "Attempting connection to PulseAudio sound daemon";
     if (!m_mainloop) {
         m_mainloop = pa_glib_mainloop_new(nullptr);
         Q_ASSERT(m_mainloop);
@@ -726,42 +658,42 @@ bool Context::isValid()
     return d->m_context && d->m_mainloop;
 }
 
-QVector<Sink*> Context::sinks() const
+QVector<Sink *> Context::sinks() const
 {
     return d->m_sinks.data();
 }
 
-QVector<SinkInput*> Context::sinkInputs() const
+QVector<SinkInput *> Context::sinkInputs() const
 {
     return d->m_sinkInputs.data();
 }
 
-QVector<Source*> Context::sources() const
+QVector<Source *> Context::sources() const
 {
     return d->m_sources.data();
 }
 
-QVector<SourceOutput*> Context::sourceOutputs() const
+QVector<SourceOutput *> Context::sourceOutputs() const
 {
     return d->m_sourceOutputs.data();
 }
 
-QVector<Client*> Context::clients() const
+QVector<Client *> Context::clients() const
 {
     return d->m_clients.data();
 }
 
-QVector<Card*> Context::cards() const
+QVector<Card *> Context::cards() const
 {
     return d->m_cards.data();
 }
 
-QVector<Module*> Context::modules() const
+QVector<Module *> Context::modules() const
 {
     return d->m_modules.data();
 }
 
-QVector<StreamRestore*> Context::streamRestores() const
+QVector<StreamRestore *> Context::streamRestores() const
 {
     return d->m_streamRestores.data();
 }
@@ -771,7 +703,7 @@ Server *Context::server() const
     return d->m_server;
 }
 
-void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolume, pa_cvolume cVolume, const std::function<pa_operation*(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)>& pa_set_volume)
+void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolume, pa_cvolume cVolume, const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &pa_set_volume)
 {
     if (!m_context) {
         return;
@@ -788,23 +720,23 @@ void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolu
         newCVolume.values[channel] = newVolume;
     }
     if (!pa_set_volume(m_context, index, &newCVolume, nullptr, nullptr)) {
-        qCWarning(PULSEAUDIOQT) <<  "pa_set_volume failed";
+        qCWarning(PULSEAUDIOQT) << "pa_set_volume failed";
         return;
     }
 }
 
-void ContextPrivate::setGenericMute(quint32 index, bool mute, const std::function<pa_operation*(pa_context *, uint32_t, int, pa_context_success_cb_t, void *)>& pa_set_mute)
+void ContextPrivate::setGenericMute(quint32 index, bool mute, const std::function<pa_operation *(pa_context *, uint32_t, int, pa_context_success_cb_t, void *)> &pa_set_mute)
 {
     if (!m_context) {
         return;
     }
     if (!PAOperation(pa_set_mute(m_context, index, mute, nullptr, nullptr))) {
-        qCWarning(PULSEAUDIOQT) <<  "pa_set_mute failed";
+        qCWarning(PULSEAUDIOQT) << "pa_set_mute failed";
         return;
     }
 }
 
-void ContextPrivate::setGenericPort(quint32 index, const QString &portName, const std::function<pa_operation*(pa_context *, uint32_t, const char*, pa_context_success_cb_t, void *)>& pa_set_port)
+void ContextPrivate::setGenericPort(quint32 index, const QString &portName, const std::function<pa_operation *(pa_context *, uint32_t, const char *, pa_context_success_cb_t, void *)> &pa_set_port)
 {
     if (!m_context) {
         return;
@@ -815,7 +747,7 @@ void ContextPrivate::setGenericPort(quint32 index, const QString &portName, cons
     }
 }
 
-void ContextPrivate::setGenericDeviceForStream(quint32 streamIndex, quint32 deviceIndex, const std::function<pa_operation*(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)>& pa_move_stream_to_device)
+void ContextPrivate::setGenericDeviceForStream(quint32 streamIndex, quint32 deviceIndex, const std::function<pa_operation *(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)> &pa_move_stream_to_device)
 {
     if (!m_context) {
         return;

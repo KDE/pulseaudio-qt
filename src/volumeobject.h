@@ -25,7 +25,6 @@
 
 namespace PulseAudioQt
 {
-
 class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
 {
     Q_OBJECT

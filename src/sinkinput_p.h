@@ -25,17 +25,14 @@
 
 namespace PulseAudioQt
 {
-
 class SinkInputPrivate
 {
-
 public:
     explicit SinkInputPrivate(SinkInput *q);
 
     SinkInput *q;
 
     void update(const pa_sink_input_info *info);
-
 };
 }
 

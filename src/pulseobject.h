@@ -27,7 +27,6 @@
 
 namespace PulseAudioQt
 {
-
 class Context;
 
 template<typename Type, typename PAInfo> class MapBase;

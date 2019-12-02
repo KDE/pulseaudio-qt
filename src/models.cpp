@@ -21,41 +21,36 @@
 
 #include "models.h"
 
-#include "maps.h"
-#include "debug.h"
 #include "card.h"
+#include "context.h"
+#include "context_p.h"
+#include "debug.h"
+#include "maps.h"
+#include "module.h"
+#include "server.h"
 #include "sink.h"
 #include "sinkinput.h"
 #include "source.h"
 #include "sourceoutput.h"
-#include "server.h"
 #include "streamrestore.h"
-#include "module.h"
-#include "context.h"
-#include "context_p.h"
 
-#include <QMetaEnum>
 #include "models_p.h"
+#include <QMetaEnum>
 
 namespace PulseAudioQt
 {
-
 AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
     : QAbstractListModel(parent)
     , d(new AbstractModelPrivate(this, map))
 {
     Context::instance()->ref();
 
-    connect(d->m_map, &MapBaseQObject::aboutToBeAdded, this, [this](int index) {
-        beginInsertRows(QModelIndex(), index, index);
-    });
+    connect(d->m_map, &MapBaseQObject::aboutToBeAdded, this, [this](int index) { beginInsertRows(QModelIndex(), index, index); });
     connect(d->m_map, &MapBaseQObject::added, this, [this](int index) {
         onDataAdded(index);
         endInsertRows();
     });
-    connect(d->m_map, &MapBaseQObject::aboutToBeRemoved, this, [this](int index) {
-        beginRemoveRows(QModelIndex(), index, index);
-    });
+    connect(d->m_map, &MapBaseQObject::aboutToBeRemoved, this, [this](int index) { beginRemoveRows(QModelIndex(), index, index); });
     connect(d->m_map, &MapBaseQObject::removed, this, [this](int index) {
         Q_UNUSED(index);
         endRemoveRows();
@@ -64,8 +59,8 @@ AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
 
 AbstractModel::~AbstractModel()
 {
-    //deref context after we've deleted this object
-    //see https://bugs.kde.org/show_bug.cgi?id=371215
+    // deref context after we've deleted this object
+    // see https://bugs.kde.org/show_bug.cgi?id=371215
     Context::instance()->unref();
     delete d;
 }
@@ -108,7 +103,7 @@ QVariant AbstractModel::data(const QModelIndex &index, int role) const
     if (role == PulseObjectRole) {
         return QVariant::fromValue(data);
     } else if (role == Qt::DisplayRole) {
-        return static_cast<PulseObject*>(data)->properties().value(QStringLiteral("name")).toString();
+        return static_cast<PulseObject *>(data)->properties().value(QStringLiteral("name")).toString();
     }
     int property = d->m_objectProperties.value(role, -1);
     if (property == -1) {
@@ -255,7 +250,6 @@ SinkModel::~SinkModel()
     delete d;
 }
 
-
 SinkModelPrivate::SinkModelPrivate(SinkModel *q)
     : q(q)
     , m_preferredSink(nullptr)
@@ -265,7 +259,6 @@ SinkModelPrivate::SinkModelPrivate(SinkModel *q)
 SinkModelPrivate::~SinkModelPrivate()
 {
 }
-
 
 Sink *SinkModel::defaultSink() const
 {

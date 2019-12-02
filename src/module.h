@@ -21,14 +21,13 @@
 #ifndef MODULE_H
 #define MODULE_H
 
-#include "pulseobject.h"
 #include "kf5pulseaudioqt_export.h"
+#include "pulseobject.h"
 
 struct pa_module_info;
 
 namespace PulseAudioQt
 {
-
 class KF5PULSEAUDIOQT_EXPORT Module : public PulseObject
 {
     Q_OBJECT

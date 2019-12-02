@@ -23,8 +23,8 @@
 #include "maps.h"
 #include "module.h"
 
-#include <QtTest/QTest>
 #include <QtTest/QSignalSpy>
+#include <QtTest/QTest>
 
 using namespace PulseAudioQt;
 
@@ -38,7 +38,7 @@ void MapsTest::cleanupTestCase()
 
 static pa_module_info *module_info_new()
 {
-    pa_module_info *info = (pa_module_info*) calloc(1, sizeof(pa_module_info));
+    pa_module_info *info = (pa_module_info *)calloc(1, sizeof(pa_module_info));
     info->name = "name";
     info->argument = "arg";
     info->n_used = PA_INVALID_INDEX;

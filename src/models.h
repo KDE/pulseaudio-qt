@@ -28,7 +28,6 @@
 
 namespace PulseAudioQt
 {
-
 class Context;
 class MapBaseQObject;
 class Sink;
@@ -40,9 +39,7 @@ class KF5PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    enum ItemRole {
-        PulseObjectRole = Qt::UserRole + 1
-    };
+    enum ItemRole { PulseObjectRole = Qt::UserRole + 1 };
 
     ~AbstractModel() override;
     QHash<int, QByteArray> roleNames() const final override;
@@ -69,7 +66,9 @@ private:
 
     // Prevent leaf-classes from default constructing as we want to enforce
     // them passing us a context or explicit nullptrs.
-    AbstractModel() {}
+    AbstractModel()
+    {
+    }
 };
 
 class KF5PULSEAUDIOQT_EXPORT CardModel : public AbstractModel
@@ -77,6 +76,7 @@ class KF5PULSEAUDIOQT_EXPORT CardModel : public AbstractModel
     Q_OBJECT
 public:
     CardModel(QObject *parent = nullptr);
+
 private:
     void *d;
 };
@@ -87,9 +87,7 @@ class KF5PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
     Q_PROPERTY(PulseAudioQt::Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
     Q_PROPERTY(PulseAudioQt::Sink *preferredSink READ preferredSink NOTIFY preferredSinkChanged)
 public:
-    enum ItemRole {
-        SortByDefaultRole = PulseObjectRole + 1
-    };
+    enum ItemRole { SortByDefaultRole = PulseObjectRole + 1 };
     Q_ENUM(ItemRole)
 
     SinkModel(QObject *parent = nullptr);
@@ -115,6 +113,7 @@ class KF5PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
     Q_OBJECT
 public:
     SinkInputModel(QObject *parent = nullptr);
+
 private:
     void *d;
 };
@@ -124,9 +123,7 @@ class KF5PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
     Q_OBJECT
     Q_PROPERTY(PulseAudioQt::Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
 public:
-    enum ItemRole {
-        SortByDefaultRole = PulseObjectRole + 1
-    };
+    enum ItemRole { SortByDefaultRole = PulseObjectRole + 1 };
     Q_ENUM(ItemRole)
 
     SourceModel(QObject *parent = nullptr);
@@ -145,6 +142,7 @@ class KF5PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
     Q_OBJECT
 public:
     SourceOutputModel(QObject *parent = nullptr);
+
 private:
     void *d;
 };
@@ -154,6 +152,7 @@ class KF5PULSEAUDIOQT_EXPORT StreamRestoreModel : public AbstractModel
     Q_OBJECT
 public:
     StreamRestoreModel(QObject *parent = nullptr);
+
 private:
     void *d;
 };
@@ -163,6 +162,7 @@ class KF5PULSEAUDIOQT_EXPORT ModuleModel : public AbstractModel
     Q_OBJECT
 public:
     ModuleModel(QObject *parent = nullptr);
+
 private:
     void *d;
 };

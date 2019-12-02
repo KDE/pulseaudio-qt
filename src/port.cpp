@@ -22,7 +22,6 @@
 #include "port_p.h"
 namespace PulseAudioQt
 {
-
 Port::Port(QObject *parent)
     : Profile(parent)
     , d(new PortPrivate(this))

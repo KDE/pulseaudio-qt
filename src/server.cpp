@@ -23,13 +23,12 @@
 
 #include "context.h"
 #include "context_p.h"
+#include "debug.h"
 #include "sink.h"
 #include "source.h"
-#include "debug.h"
 
 namespace PulseAudioQt
 {
-
 Server::Server(Context *context)
     : QObject(context)
     , d(new ServerPrivate(this))
@@ -100,8 +99,7 @@ void ServerPrivate::update(const pa_server_info *info)
     q->updateDefaultDevices();
 }
 
-template <typename Type, typename Vector>
-static Type *findByName(const Vector &vector, const QString &name)
+template<typename Type, typename Vector> static Type *findByName(const Vector &vector, const QString &name)
 {
     Type *out = nullptr;
     if (name.isEmpty()) {

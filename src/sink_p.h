@@ -20,13 +20,11 @@
 #ifndef SINK_P_H
 #define SINK_P_H
 
-#include "sink.h"
 #include "pulse/introspect.h"
-
+#include "sink.h"
 
 namespace PulseAudioQt
 {
-
 class SinkPrivate
 {
 public:
@@ -38,4 +36,3 @@ public:
 };
 }
 #endif
-

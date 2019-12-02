@@ -24,8 +24,6 @@
 
 namespace PulseAudioQt
 {
-
-
 class ProfilePrivate
 {
 public:
@@ -39,14 +37,12 @@ public:
     quint32 m_priority;
     Profile::Availability m_availability;
 
-    template<typename PAInfo>
-    void setInfo(const PAInfo *info)
+    template<typename PAInfo> void setInfo(const PAInfo *info)
     {
         setCommonInfo(info, info->available ? Profile::Available : Profile::Unavailable);
     }
 
-    template<typename PAInfo>
-    void setCommonInfo(const PAInfo *info, Profile::Availability newAvailability)
+    template<typename PAInfo> void setCommonInfo(const PAInfo *info, Profile::Availability newAvailability)
     {
         // Description is optional. Name not so much as we need some ID.
         Q_ASSERT(info->name);

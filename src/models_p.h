@@ -22,11 +22,9 @@
 
 namespace PulseAudioQt
 {
-
 class AbstractModelPrivate
 {
 public:
-
     explicit AbstractModelPrivate(AbstractModel *q, const MapBaseQObject *map);
     virtual ~AbstractModelPrivate();
 
@@ -35,7 +33,6 @@ public:
     QHash<int, QByteArray> m_roles;
     QHash<int, int> m_objectProperties;
     QHash<int, int> m_signalIndexToProperties;
-
 };
 
 class SinkModelPrivate
@@ -46,6 +43,5 @@ public:
 
     SinkModel *q;
     Sink *m_preferredSink;
-
 };
 }

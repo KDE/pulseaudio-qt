@@ -27,7 +27,6 @@
 
 namespace PulseAudioQt
 {
-
 SinkInput::SinkInput(QObject *parent)
     : Stream(parent)
     , d(new SinkInputPrivate(this))

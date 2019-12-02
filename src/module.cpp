@@ -19,15 +19,14 @@
 */
 
 #include "module.h"
-#include "module_p.h"
 #include "debug.h"
+#include "module_p.h"
 
 #include "context.h"
 #include "pulseobject_p.h"
 
 namespace PulseAudioQt
 {
-
 Module::Module(QObject *parent)
     : PulseObject(parent)
     , d(new ModulePrivate(this))

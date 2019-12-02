@@ -21,18 +21,16 @@
 #define CARD_P_H
 
 #include "card.h"
-#include "profile.h"
 #include "cardport.h"
-#include <QVector>
+#include "profile.h"
 #include <QHash>
+#include <QVector>
 #include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
-
 class CardPrivate
 {
-
 public:
     explicit CardPrivate(Card *q);
     virtual ~CardPrivate();
@@ -42,9 +40,9 @@ public:
     void update(const pa_card_info *info);
 
     QString m_name;
-    QHash<QString, Profile*> m_profiles;
+    QHash<QString, Profile *> m_profiles;
     quint32 m_activeProfileIndex;
-    QHash<QString, CardPort*> m_ports;
+    QHash<QString, CardPort *> m_ports;
 };
 }
 

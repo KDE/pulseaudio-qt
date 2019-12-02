@@ -27,7 +27,6 @@ struct pa_source_output_info;
 
 namespace PulseAudioQt
 {
-
 class SourceOutput : public Stream
 {
     Q_OBJECT

@@ -30,7 +30,6 @@
 
 namespace PulseAudioQt
 {
-
 Sink::Sink(QObject *parent)
     : Device(parent)
     , d(new SinkPrivate(this))

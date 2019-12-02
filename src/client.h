@@ -28,7 +28,6 @@ struct pa_client_info;
 
 namespace PulseAudioQt
 {
-
 class KF5PULSEAUDIOQT_EXPORT Client : public PulseObject
 {
     Q_OBJECT

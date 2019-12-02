@@ -26,10 +26,8 @@
 
 namespace PulseAudioQt
 {
-
 class StreamRestorePrivate
 {
-
 public:
     explicit StreamRestorePrivate(StreamRestore *q);
     virtual ~StreamRestorePrivate();
@@ -51,8 +49,6 @@ public:
         bool muted;
         QString device;
     } m_cache;
-
-
 };
 
 }

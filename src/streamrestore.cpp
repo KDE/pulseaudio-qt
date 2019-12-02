@@ -19,16 +19,15 @@
 */
 
 #include "streamrestore.h"
-#include "streamrestore_p.h"
 #include "context.h"
 #include "context_p.h"
+#include "streamrestore_p.h"
 
 #include "debug.h"
 #include "pulseobject_p.h"
 
 namespace PulseAudioQt
 {
-
 StreamRestore::StreamRestore(quint32 index, const QVariantMap &properties, QObject *parent)
     : PulseObject(parent)
     , d(new StreamRestorePrivate(this))
@@ -46,7 +45,7 @@ StreamRestore::~StreamRestore()
 }
 
 StreamRestorePrivate::StreamRestorePrivate(StreamRestore *q)
-    :q(q)
+    : q(q)
 {
 }
 

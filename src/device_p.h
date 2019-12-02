@@ -22,8 +22,8 @@
 
 #include <pulse/proplist.h>
 
-#include <QVector>
 #include <QHash>
+#include <QVector>
 
 #include "device.h"
 #include "port.h"
@@ -32,10 +32,8 @@
 
 namespace PulseAudioQt
 {
-
 class DevicePrivate
 {
-
 public:
     explicit DevicePrivate(Device *q);
 
@@ -45,14 +43,13 @@ public:
     QString m_description;
     QString m_formFactor;
     quint32 m_cardIndex = -1;
-    QHash<QString, Port*> m_ports;
+    QHash<QString, Port *> m_ports;
     quint32 m_activePortIndex = -1;
     Device::State m_state = Device::UnknownState;
 
     Device::State stateFromPaState(int value) const;
 
-    template <typename PAInfo>
-    void updateDevice(const PAInfo *info)
+    template<typename PAInfo> void updateDevice(const PAInfo *info)
     {
         q->VolumeObject::d->updateVolumeObject(info);
 
@@ -106,8 +103,7 @@ public:
             Q_EMIT q->stateChanged();
         }
     }
-
-    };
+};
 
 } // namespace PulseAudioQt
 

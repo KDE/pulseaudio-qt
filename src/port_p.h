@@ -26,7 +26,6 @@
 
 namespace PulseAudioQt
 {
-
 class PortPrivate
 {
 public:
@@ -35,21 +34,20 @@ public:
 
     Port *q;
 
-    template<typename PAInfo>
-    void setInfo(const PAInfo *info)
+    template<typename PAInfo> void setInfo(const PAInfo *info)
     {
         Profile::Availability newAvailability;
-            switch (info->available) {
-            case PA_PORT_AVAILABLE_NO:
-                newAvailability = Profile::Unavailable;
-                break;
-            case PA_PORT_AVAILABLE_YES:
-                newAvailability = Profile::Available;
-                break;
-            default:
-                newAvailability = Profile::Unknown;
-            }
-            q->Profile::d->setCommonInfo(info, newAvailability);
+        switch (info->available) {
+        case PA_PORT_AVAILABLE_NO:
+            newAvailability = Profile::Unavailable;
+            break;
+        case PA_PORT_AVAILABLE_YES:
+            newAvailability = Profile::Available;
+            break;
+        default:
+            newAvailability = Profile::Unknown;
+        }
+        q->Profile::d->setCommonInfo(info, newAvailability);
     }
 };
 }

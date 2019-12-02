@@ -27,7 +27,6 @@ struct pa_ext_stream_restore_info;
 
 namespace PulseAudioQt
 {
-
 class KF5PULSEAUDIOQT_EXPORT StreamRestore : public PulseObject
 {
     Q_OBJECT

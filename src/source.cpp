@@ -23,13 +23,12 @@
 
 #include "context.h"
 #include "context_p.h"
-#include "server.h"
 #include "device_p.h"
+#include "server.h"
 #include "volumeobject_p.h"
 
 namespace PulseAudioQt
 {
-
 Source::Source(QObject *parent)
     : Device(parent)
     , d(new SourcePrivate(this))
@@ -38,7 +37,7 @@ Source::Source(QObject *parent)
 }
 
 SourcePrivate::SourcePrivate(Source *q)
-    :q(q)
+    : q(q)
 {
 }
 

@@ -19,13 +19,12 @@
 */
 
 #include "stream.h"
+#include "context_p.h"
 #include "stream_p.h"
 #include "volumeobject_p.h"
-#include "context_p.h"
 
 namespace PulseAudioQt
 {
-
 Stream::Stream(QObject *parent)
     : VolumeObject(parent)
     , d(new StreamPrivate(this))

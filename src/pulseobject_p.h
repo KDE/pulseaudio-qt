@@ -30,7 +30,6 @@
 
 namespace PulseAudioQt
 {
-
 class PulseObjectPrivate
 {
 public:
@@ -41,8 +40,7 @@ public:
     quint32 m_index;
     QVariantMap m_properties;
 
-    template <typename PAInfo>
-    void updatePulseObject(PAInfo *info)
+    template<typename PAInfo> void updatePulseObject(PAInfo *info)
     {
         m_index = info->index;
 
