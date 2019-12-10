@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(PulseAudioQt VERSION 1.1.0)
+project(PulseAudioQt VERSION 1.2.0)
 
 include(FeatureSummary)
 find_package(ECM 5.44.0  NO_MODULE)
