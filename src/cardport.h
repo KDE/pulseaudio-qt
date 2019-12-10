@@ -28,7 +28,7 @@
 
 namespace PulseAudioQt
 {
-class CardPort : public Port
+class KF5PULSEAUDIOQT_EXPORT CardPort : public Port
 {
     Q_OBJECT
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)

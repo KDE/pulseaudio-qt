@@ -30,7 +30,7 @@ namespace PulseAudioQt
 class CardPort;
 class Profile;
 
-class Card : public PulseObject
+class KF5PULSEAUDIOQT_EXPORT Card : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
