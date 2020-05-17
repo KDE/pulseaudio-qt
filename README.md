@@ -1,15 +1,8 @@
 # KF5 PulseAudio Qt Bindings - libpulse bindings for Qt
 
-PulseaudioQt allows programs using the Qt library to control volume and react to changes on systems which use PulseAudio.
+pulseaudio-qt is a Qt-style wrapper for [libpulse](https://freedesktop.org/software/pulseaudio/doxygen/). 
 
-If you are reading this on GitHub, you should know that this repository is a mirror of the official KDE repository found [here](https://cgit.kde.org/pulseaudio-qt.git/)
+It allows querying and manipulation of various PulseAudio objects such as Sinks, Sources and Streams. It does not wrap the full feature set of libpulse. If you are missing a certain feature please [file a report](https://bugs.kde.org/enter_bug.cgi?product=pulseaudio-qt) or send a patch using [KDE's GitLab](https://invent.kde.org/libraries/pulseaudio-qt/).
 
 ## Building
 This is a cmake project, so you should be able to simply run `cmake` (with the proper command-line flags for your system setup), then `make`, then `make install` if desired.
-
-## Contributing
-Contributions to this project are welcome!
-
-Bugs are tracked on the [KDE bug tracker](https://bugs.kde.org/enter_bug.cgi?product=pulseaudio-qt)
-
-Patches can be submitted on Phabricator using the `arc` command-line tool. Documentation and setup instrctions can be found [here](https://community.kde.org/Infrastructure/Phabricator#Using_Arcanist_to_post_patches)
