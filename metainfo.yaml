@@ -1,0 +1,15 @@
+fancyname: PulseAudio Qt Bindings
+description: libpulse bindings for Qt
+platforms:
+    - name: Linux
+    - name: FreeBSD
+#    - name: Windows
+#    - name: MacOSX
+#    - name: Android
+release: true
+public_lib: true
+libraries:
+    - cmake: "KF5::PulseAudioQt"
+cmakename: KF5PulseAudioQt
+irc: kde-devel
+mailinglist: kde-core-devel
