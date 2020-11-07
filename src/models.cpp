@@ -31,12 +31,16 @@ AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
 {
     Context::instance()->ref();
 
-    connect(d->m_map, &MapBaseQObject::aboutToBeAdded, this, [this](int index) { beginInsertRows(QModelIndex(), index, index); });
+    connect(d->m_map, &MapBaseQObject::aboutToBeAdded, this, [this](int index) {
+        beginInsertRows(QModelIndex(), index, index);
+    });
     connect(d->m_map, &MapBaseQObject::added, this, [this](int index) {
         onDataAdded(index);
         endInsertRows();
     });
-    connect(d->m_map, &MapBaseQObject::aboutToBeRemoved, this, [this](int index) { beginRemoveRows(QModelIndex(), index, index); });
+    connect(d->m_map, &MapBaseQObject::aboutToBeRemoved, this, [this](int index) {
+        beginRemoveRows(QModelIndex(), index, index);
+    });
     connect(d->m_map, &MapBaseQObject::removed, this, [this](int index) {
         Q_UNUSED(index);
         endRemoveRows();

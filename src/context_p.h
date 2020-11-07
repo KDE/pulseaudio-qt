@@ -17,7 +17,6 @@
 
 namespace PulseAudioQt
 {
-
 class Server;
 
 class ContextPrivate

@@ -234,31 +234,65 @@ Context::Context(QObject *parent)
     d->connectToDaemon();
 
     QDBusServiceWatcher *watcher = new QDBusServiceWatcher(QStringLiteral("org.pulseaudio.Server"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForRegistration, this);
-    connect(watcher, &QDBusServiceWatcher::serviceRegistered, this, [this] { d->connectToDaemon(); });
+    connect(watcher, &QDBusServiceWatcher::serviceRegistered, this, [this] {
+        d->connectToDaemon();
+    });
 
-    connect(&d->m_sinks, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sinkAdded(static_cast<Sink *>(object)); });
-    connect(&d->m_sinks, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sinkRemoved(static_cast<Sink *>(object)); });
+    connect(&d->m_sinks, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT sinkAdded(static_cast<Sink *>(object));
+    });
+    connect(&d->m_sinks, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT sinkRemoved(static_cast<Sink *>(object));
+    });
 
-    connect(&d->m_sinkInputs, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sinkInputAdded(static_cast<SinkInput *>(object)); });
-    connect(&d->m_sinkInputs, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sinkInputRemoved(static_cast<SinkInput *>(object)); });
+    connect(&d->m_sinkInputs, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT sinkInputAdded(static_cast<SinkInput *>(object));
+    });
+    connect(&d->m_sinkInputs, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT sinkInputRemoved(static_cast<SinkInput *>(object));
+    });
 
-    connect(&d->m_sources, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sourceAdded(static_cast<Source *>(object)); });
-    connect(&d->m_sources, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sourceRemoved(static_cast<Source *>(object)); });
+    connect(&d->m_sources, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT sourceAdded(static_cast<Source *>(object));
+    });
+    connect(&d->m_sources, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT sourceRemoved(static_cast<Source *>(object));
+    });
 
-    connect(&d->m_sourceOutputs, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT sourceOutputAdded(static_cast<SourceOutput *>(object)); });
-    connect(&d->m_sourceOutputs, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT sourceOutputRemoved(static_cast<SourceOutput *>(object)); });
+    connect(&d->m_sourceOutputs, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT sourceOutputAdded(static_cast<SourceOutput *>(object));
+    });
+    connect(&d->m_sourceOutputs, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT sourceOutputRemoved(static_cast<SourceOutput *>(object));
+    });
 
-    connect(&d->m_clients, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT clientAdded(static_cast<Client *>(object)); });
-    connect(&d->m_clients, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT clientRemoved(static_cast<Client *>(object)); });
+    connect(&d->m_clients, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT clientAdded(static_cast<Client *>(object));
+    });
+    connect(&d->m_clients, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT clientRemoved(static_cast<Client *>(object));
+    });
 
-    connect(&d->m_cards, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT cardAdded(static_cast<Card *>(object)); });
-    connect(&d->m_cards, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT cardRemoved(static_cast<Card *>(object)); });
+    connect(&d->m_cards, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT cardAdded(static_cast<Card *>(object));
+    });
+    connect(&d->m_cards, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT cardRemoved(static_cast<Card *>(object));
+    });
 
-    connect(&d->m_modules, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT moduleAdded(static_cast<Module *>(object)); });
-    connect(&d->m_modules, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT moduleRemoved(static_cast<Module *>(object)); });
+    connect(&d->m_modules, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT moduleAdded(static_cast<Module *>(object));
+    });
+    connect(&d->m_modules, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT moduleRemoved(static_cast<Module *>(object));
+    });
 
-    connect(&d->m_streamRestores, &MapBaseQObject::added, this, [this](int, QObject *object) { Q_EMIT streamRestoreAdded(static_cast<StreamRestore *>(object)); });
-    connect(&d->m_streamRestores, &MapBaseQObject::removed, this, [this](int, QObject *object) { Q_EMIT streamRestoreRemoved(static_cast<StreamRestore *>(object)); });
+    connect(&d->m_streamRestores, &MapBaseQObject::added, this, [this](int, QObject *object) {
+        Q_EMIT streamRestoreAdded(static_cast<StreamRestore *>(object));
+    });
+    connect(&d->m_streamRestores, &MapBaseQObject::removed, this, [this](int, QObject *object) {
+        Q_EMIT streamRestoreRemoved(static_cast<StreamRestore *>(object));
+    });
 }
 
 ContextPrivate::ContextPrivate(Context *q)
@@ -472,7 +506,9 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             m_context = nullptr;
         }
         reset();
-        QTimer::singleShot(1000, q, [this] { connectToDaemon(); });
+        QTimer::singleShot(1000, q, [this] {
+            connectToDaemon();
+        });
     }
 }
 
