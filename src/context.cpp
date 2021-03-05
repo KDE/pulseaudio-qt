@@ -49,6 +49,8 @@ qint64 maximumUIVolume()
     return PA_VOLUME_UI_MAX;
 }
 
+#ifndef K_DOXYGEN
+
 static bool isGoodState(int eol)
 {
     if (eol < 0) {
@@ -224,6 +226,8 @@ static void ext_stream_restore_change_source_cb(pa_context *context, const pa_ex
         contextp->streamRestoreWrite(&newinfo);
     }
 }
+
+#endif
 
 // --------------------------
 
