@@ -16,6 +16,9 @@ namespace PulseAudioQt
 class Port;
 class DevicePrivate;
 
+/**
+ * A PulseAudio device. Can be either a Sink or Source.
+ */
 class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
 {
     Q_OBJECT
@@ -29,20 +32,71 @@ class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
 
 public:
-    enum State { InvalidState = 0, RunningState, IdleState, SuspendedState, UnknownState };
+    enum State {
+        /** This state is used when the server does not support sink/source state introspection. */
+        InvalidState = 0,
+        /** Running, sink/source is playing/recording and used by at least one non-corked sink-input/source-output.  */
+        RunningState,
+        /** When idle, the sink/source is playing/recording but there is no non-corked sink-input/source-output attached to it. */
+        IdleState,
+        /** When suspended, actual sink/source access can be closed, for instance. */
+        SuspendedState,
+        UnknownState,
+    };
     Q_ENUM(State);
 
     ~Device();
 
+    /**
+     * The state of this device.
+     */
     State state() const;
+
+    /**
+     * The human readable name of this device.
+     */
     QString name() const;
+
+    /**
+     * A human readable description of this device.
+     */
     QString description() const;
+
+    /**
+     * The device's form factor.
+     * One of "internal", "speaker", "handset", "tv", "webcam", "microphone", "headset", "headphone", "hands-free", "car", "hifi", "computer", "portable".
+     * This is based on PA_PROP_DEVICE_FORM_FACTOR.
+     */
     QString formFactor() const;
+
+    /**
+     * Index of the card that owns this device.
+     */
     quint32 cardIndex() const;
+
+    /**
+     * The ports associated with this device.
+     */
     QVector<Port *> ports() const;
+
+    /**
+     * The currently active port, by index.
+     */
     quint32 activePortIndex() const;
+
+    /**
+     * Set the currently active port, by index.
+     */
     virtual void setActivePortIndex(quint32 port_index) = 0;
+
+    /**
+     * Whether this is the default device.
+     */
     virtual bool isDefault() const = 0;
+
+    /**
+     * Set whether this is the default device.
+     */
     virtual void setDefault(bool enable) = 0;
 
 Q_SIGNALS:

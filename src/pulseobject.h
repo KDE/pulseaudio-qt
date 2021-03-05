@@ -17,6 +17,9 @@ class Context;
 
 template<typename Type, typename PAInfo> class MapBase;
 
+/**
+ * Base class for most PulseAudio objects.
+ */
 class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
 {
     Q_OBJECT
@@ -27,11 +30,26 @@ class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
 public:
     ~PulseObject();
 
+    /**
+     * Index of this object.
+     */
     quint32 index() const;
+
+    /**
+     * A freedesktop.org icon name that fits this object.
+     */
     QString iconName() const;
+
+    /**
+     * A map of properties associated with this object.
+     * The set of available properties depends on the type of object.
+     */
     QVariantMap properties() const;
 
 Q_SIGNALS:
+    /**
+     * Emitted when any of the \ref properties changed.
+     */
     void propertiesChanged();
 
 protected:

@@ -10,6 +10,9 @@
 #include "kf5pulseaudioqt_export.h"
 #include <QObject>
 
+/**
+ * The primary namespace of PulseAudioQt.
+ */
 namespace PulseAudioQt
 {
 class Card;

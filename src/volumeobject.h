@@ -11,6 +11,9 @@
 
 namespace PulseAudioQt
 {
+/**
+ * An PulseObject that has a volume. Can be a Device or a Stream.
+ */
 class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
 {
     Q_OBJECT
@@ -24,10 +27,24 @@ class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
 public:
     ~VolumeObject();
 
+    /**
+     * This device's volume
+     */
     qint64 volume() const;
+
+    /**
+     * Set this device's volume
+     */
     virtual void setVolume(qint64 volume) = 0;
 
+    /**
+     * Whether this device is muted.
+     */
     bool isMuted() const;
+
+    /**
+     * Set whether this device is muted.
+     */
     virtual void setMuted(bool muted) = 0;
 
     bool isVolumeWritable() const;
