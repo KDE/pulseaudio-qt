@@ -20,7 +20,6 @@ public:
     Stream *q;
 
     quint32 m_deviceIndex;
-    QString m_name;
     quint32 m_clientIndex;
     bool m_virtualStream;
     bool m_corked;
@@ -30,10 +29,6 @@ public:
     {
         q->VolumeObject::d->updateVolumeObject(info);
 
-        if (m_name != QString::fromUtf8(info->name)) {
-            m_name = QString::fromUtf8(info->name);
-            Q_EMIT q->nameChanged();
-        }
         if (m_hasVolume != info->has_volume) {
             m_hasVolume = info->has_volume;
             Q_EMIT q->hasVolumeChanged();

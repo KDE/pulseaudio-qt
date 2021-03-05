@@ -22,7 +22,6 @@ public:
     void update(const pa_ext_stream_restore_info *info);
 
     StreamRestore *q;
-    QString m_name;
     QString m_device;
     pa_cvolume m_volume;
     pa_channel_map m_channelMap;

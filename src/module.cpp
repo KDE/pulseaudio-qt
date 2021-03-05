@@ -32,11 +32,6 @@ void ModulePrivate::update(const pa_module_info *info)
 {
     q->PulseObject::d->updatePulseObject(info);
 
-    const QString infoName = QString::fromUtf8(info->name);
-    if (m_name != infoName) {
-        m_name = infoName;
-        Q_EMIT q->nameChanged();
-    }
     const QString infoArgument = QString::fromUtf8(info->argument);
     if (m_argument != infoArgument) {
         m_argument = infoArgument;
@@ -47,11 +42,6 @@ void ModulePrivate::update(const pa_module_info *info)
 Module::~Module()
 {
     delete d;
-}
-
-QString Module::name() const
-{
-    return d->m_name;
 }
 
 QString Module::argument() const

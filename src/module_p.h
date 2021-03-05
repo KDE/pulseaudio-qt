@@ -21,7 +21,6 @@ public:
 
     Module *q;
 
-    QString m_name;
     QString m_argument;
 };
 

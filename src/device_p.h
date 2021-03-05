@@ -25,7 +25,6 @@ public:
 
     Device *q;
 
-    QString m_name;
     QString m_description;
     QString m_formFactor;
     quint32 m_cardIndex = -1;
@@ -39,10 +38,6 @@ public:
     {
         q->VolumeObject::d->updateVolumeObject(info);
 
-        if (m_name != info->name) {
-            m_name = info->name;
-            Q_EMIT q->nameChanged();
-        }
         if (m_description != info->description) {
             m_description = info->description;
             Q_EMIT q->descriptionChanged();

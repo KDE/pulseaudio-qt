@@ -40,12 +40,6 @@ void CardPrivate::update(const pa_card_info *info)
 {
     q->PulseObject::d->updatePulseObject(info);
 
-    QString infoName = QString::fromUtf8(info->name);
-    if (m_name != infoName) {
-        m_name = infoName;
-        Q_EMIT q->nameChanged();
-    }
-
     QStringList newProfiles;
     for (auto **it = info->profiles2; it && *it != nullptr; ++it) {
         const QString name = QString::fromUtf8((*it)->name);
@@ -89,11 +83,6 @@ void CardPrivate::update(const pa_card_info *info)
     }
 
     Q_EMIT q->portsChanged();
-}
-
-QString Card::name() const
-{
-    return d->m_name;
 }
 
 QVector<Profile *> Card::profiles() const

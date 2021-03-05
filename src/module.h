@@ -17,17 +17,14 @@ namespace PulseAudioQt
 class KF5PULSEAUDIOQT_EXPORT Module : public PulseObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QString argument READ argument NOTIFY argumentChanged)
 
 public:
     ~Module();
 
-    QString name() const;
     QString argument() const;
 
 Q_SIGNALS:
-    void nameChanged();
     void argumentChanged();
 
 private:

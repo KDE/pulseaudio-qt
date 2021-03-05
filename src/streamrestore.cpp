@@ -42,11 +42,7 @@ StreamRestorePrivate::~StreamRestorePrivate()
 void StreamRestorePrivate::update(const pa_ext_stream_restore_info *info)
 {
     m_cache.valid = false;
-    const QString infoName = QString::fromUtf8(info->name);
-    if (m_name != infoName) {
-        m_name = infoName;
-        Q_EMIT q->nameChanged();
-    }
+
     const QString infoDevice = QString::fromUtf8(info->device);
     if (m_device != infoDevice) {
         m_device = infoDevice;
@@ -70,11 +66,6 @@ void StreamRestorePrivate::update(const pa_ext_stream_restore_info *info)
         m_channelMap = info->channel_map;
         Q_EMIT q->channelsChanged();
     }
-}
-
-QString StreamRestore::name() const
-{
-    return d->m_name;
 }
 
 QString StreamRestore::device() const
@@ -183,7 +174,7 @@ void StreamRestore::setDeviceIndex(quint32 deviceIndex)
 
 void StreamRestorePrivate::writeChanges(const pa_cvolume &volume, bool muted, const QString &device)
 {
-    const QByteArray nameData = m_name.toUtf8();
+    const QByteArray nameData = q->name().toUtf8();
     const QByteArray deviceData = device.toUtf8();
 
     pa_ext_stream_restore_info info;

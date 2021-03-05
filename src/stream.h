@@ -21,7 +21,6 @@ class StreamPrivate;
 class KF5PULSEAUDIOQT_EXPORT Stream : public VolumeObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(PulseAudioQt::Client *client READ client NOTIFY clientChanged)
     Q_PROPERTY(bool virtualStream READ isVirtualStream NOTIFY virtualStreamChanged)
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
@@ -31,7 +30,6 @@ class KF5PULSEAUDIOQT_EXPORT Stream : public VolumeObject
 public:
     ~Stream();
 
-    QString name() const;
     Client *client() const;
     bool isVirtualStream() const;
     quint32 deviceIndex() const;
@@ -41,7 +39,6 @@ public:
     virtual void setDeviceIndex(quint32 deviceIndex) = 0;
 
 Q_SIGNALS:
-    void nameChanged();
     void clientChanged();
     void virtualStreamChanged();
     void deviceIndexChanged();

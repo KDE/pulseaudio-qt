@@ -25,10 +25,16 @@ public:
     PulseObject *q;
     quint32 m_index;
     QVariantMap m_properties;
+    QString m_name;
 
     template<typename PAInfo> void updatePulseObject(PAInfo *info)
     {
         m_index = info->index;
+
+        if (m_name != QString::fromUtf8(info->name)) {
+            m_name = QString::fromUtf8(info->name);
+            Q_EMIT q->nameChanged();
+        }
 
         m_properties.clear();
         void *it = nullptr;

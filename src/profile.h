@@ -17,7 +17,6 @@ namespace PulseAudioQt
 class KF5PULSEAUDIOQT_EXPORT Profile : public PulseObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(quint32 priority READ priority NOTIFY priorityChanged)
     Q_PROPERTY(Availability availability READ availability NOTIFY availabilityChanged)
@@ -28,13 +27,11 @@ public:
 
     ~Profile();
 
-    QString name() const;
     QString description() const;
     quint32 priority() const;
     Availability availability() const;
 
 Q_SIGNALS:
-    void nameChanged();
     void descriptionChanged();
     void priorityChanged();
     void availabilityChanged();

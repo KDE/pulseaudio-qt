@@ -17,15 +17,8 @@ namespace PulseAudioQt
 class KF5PULSEAUDIOQT_EXPORT Client : public PulseObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-
 public:
     ~Client();
-
-    QString name() const;
-
-Q_SIGNALS:
-    void nameChanged();
 
 private:
     explicit Client(QObject *parent);

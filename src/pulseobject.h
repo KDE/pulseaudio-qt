@@ -23,12 +23,15 @@ template<typename Type, typename PAInfo> class MapBase;
 class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(quint32 index READ index CONSTANT)
     Q_PROPERTY(QString iconName READ iconName CONSTANT)
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)
 
 public:
     ~PulseObject();
+
+    QString name() const;
 
     /**
      * Index of this object.
@@ -51,6 +54,8 @@ Q_SIGNALS:
      * Emitted when any of the \ref properties changed.
      */
     void propertiesChanged();
+
+    void nameChanged();
 
 protected:
     explicit PulseObject(QObject *parent);

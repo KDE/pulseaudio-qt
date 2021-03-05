@@ -32,16 +32,6 @@ void ClientPrivate::update(const pa_client_info *info)
 {
     q->PulseObject::d->updatePulseObject(info);
 
-    QString infoName = QString::fromUtf8(info->name);
-    if (m_name != infoName) {
-        m_name = infoName;
-        Q_EMIT q->nameChanged();
-    }
-}
-
-QString Client::name() const
-{
-    return d->m_name;
 }
 
 } // PulseAudioQt

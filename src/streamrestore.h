@@ -16,7 +16,6 @@ namespace PulseAudioQt
 class KF5PULSEAUDIOQT_EXPORT StreamRestore : public PulseObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QString device READ device WRITE setDevice NOTIFY deviceChanged)
     Q_PROPERTY(qint64 volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(bool muted READ isMuted WRITE setMuted NOTIFY mutedChanged)
@@ -28,8 +27,6 @@ class KF5PULSEAUDIOQT_EXPORT StreamRestore : public PulseObject
 
 public:
     ~StreamRestore();
-
-    QString name() const;
 
     QString device() const;
     void setDevice(const QString &device);
@@ -53,7 +50,6 @@ public:
     void setChannelVolume(int channel, qint64 volume);
 
 Q_SIGNALS:
-    void nameChanged();
     void deviceChanged();
     void volumeChanged();
     void mutedChanged();

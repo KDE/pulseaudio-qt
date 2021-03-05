@@ -14,11 +14,6 @@ Device::State Device::state() const
     return d->m_state;
 }
 
-QString Device::name() const
-{
-    return d->m_name;
-}
-
 QString Device::description() const
 {
     return d->m_description;

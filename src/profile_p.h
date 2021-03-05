@@ -18,7 +18,6 @@ public:
 
     Profile *q;
 
-    QString m_name;
     QString m_description;
     quint32 m_priority;
     Profile::Availability m_availability;
@@ -30,13 +29,6 @@ public:
 
     template<typename PAInfo> void setCommonInfo(const PAInfo *info, Profile::Availability newAvailability)
     {
-        // Description is optional. Name not so much as we need some ID.
-        Q_ASSERT(info->name);
-        QString infoName = QString::fromUtf8(info->name);
-        if (m_name != infoName) {
-            m_name = infoName;
-            Q_EMIT q->nameChanged();
-        }
         if (info->description) {
             QString infoDescription = QString::fromUtf8(info->description);
             if (m_description != infoDescription) {

@@ -21,7 +21,6 @@ Profile::~Profile()
 
 ProfilePrivate::ProfilePrivate(Profile *q)
     : q(q)
-    , m_name()
     , m_description()
     , m_priority(0)
     , m_availability(Profile::Unknown)
@@ -30,11 +29,6 @@ ProfilePrivate::ProfilePrivate(Profile *q)
 
 ProfilePrivate::~ProfilePrivate()
 {
-}
-
-QString Profile::name() const
-{
-    return d->m_name;
 }
 
 QString Profile::description() const

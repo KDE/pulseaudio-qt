@@ -23,7 +23,6 @@ class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
 {
     Q_OBJECT
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(QString formFactor READ formFactor NOTIFY formFactorChanged)
     Q_PROPERTY(quint32 cardIndex READ cardIndex NOTIFY cardIndexChanged)
@@ -51,11 +50,6 @@ public:
      * The state of this device.
      */
     State state() const;
-
-    /**
-     * The human readable name of this device.
-     */
-    QString name() const;
 
     /**
      * A human readable description of this device.
@@ -101,7 +95,6 @@ public:
 
 Q_SIGNALS:
     void stateChanged();
-    void nameChanged();
     void descriptionChanged();
     void formFactorChanged();
     void cardIndexChanged();

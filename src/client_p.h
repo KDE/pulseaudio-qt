@@ -19,7 +19,6 @@ public:
     void update(const pa_client_info *info);
 
     Client *q;
-    QString m_name;
 };
 
 } // PulseAudioQt

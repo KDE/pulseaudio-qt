@@ -36,11 +36,6 @@ StreamPrivate::~StreamPrivate()
 {
 }
 
-QString Stream::name() const
-{
-    return d->m_name;
-}
-
 Client *Stream::client() const
 {
     return Context::instance()->d->m_clients.data().value(d->m_clientIndex, nullptr);
