@@ -35,9 +35,6 @@ public:
 
     static Context *instance();
 
-    void ref();
-    void unref();
-
     bool isValid();
 
     /**

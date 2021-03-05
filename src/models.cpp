@@ -29,8 +29,6 @@ AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
     : QAbstractListModel(parent)
     , d(new AbstractModelPrivate(this, map))
 {
-    Context::instance()->ref();
-
     connect(d->m_map, &MapBaseQObject::aboutToBeAdded, this, [this](int index) {
         beginInsertRows(QModelIndex(), index, index);
     });
@@ -49,9 +47,6 @@ AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
 
 AbstractModel::~AbstractModel()
 {
-    // deref context after we've deleted this object
-    // see https://bugs.kde.org/show_bug.cgi?id=371215
-    Context::instance()->unref();
     delete d;
 }
 

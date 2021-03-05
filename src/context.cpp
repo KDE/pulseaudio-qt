@@ -28,7 +28,6 @@
 
 namespace PulseAudioQt
 {
-Context *s_context = nullptr;
 
 qint64 normalVolume()
 {
@@ -322,23 +321,8 @@ ContextPrivate::~ContextPrivate()
 
 Context *Context::instance()
 {
-    if (!s_context) {
-        s_context = new Context;
-    }
-    return s_context;
-}
-
-void Context::ref()
-{
-    ++d->m_references;
-}
-
-void Context::unref()
-{
-    if (--d->m_references == 0) {
-        delete this;
-        s_context = nullptr;
-    }
+    static std::unique_ptr<Context> context(new Context);
+    return context.get();
 }
 
 void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_event_type_t type, uint32_t index)
