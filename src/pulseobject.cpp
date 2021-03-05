@@ -26,7 +26,6 @@ PulseObject::~PulseObject()
 
 PulseObjectPrivate::PulseObjectPrivate(PulseObject *q)
     : q(q)
-    , m_index(0)
 {
 }
 

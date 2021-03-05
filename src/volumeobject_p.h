@@ -21,8 +21,8 @@ public:
     VolumeObject *q;
     pa_channel_map foo;
     pa_cvolume m_volume;
-    bool m_muted;
-    bool m_volumeWritable;
+    bool m_muted = true;
+    bool m_volumeWritable = true;
     QVector<QString> m_channels;
     QStringList m_rawChannels;
 

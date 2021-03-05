@@ -21,9 +21,6 @@ Profile::~Profile()
 
 ProfilePrivate::ProfilePrivate(Profile *q)
     : q(q)
-    , m_description()
-    , m_priority(0)
-    , m_availability(Profile::Unknown)
 {
 }
 

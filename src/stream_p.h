@@ -19,10 +19,10 @@ public:
 
     Stream *q;
 
-    quint32 m_deviceIndex;
-    quint32 m_clientIndex;
-    bool m_virtualStream;
-    bool m_corked;
+    quint32 m_deviceIndex = PA_INVALID_INDEX;
+    quint32 m_clientIndex = PA_INVALID_INDEX;
+    bool m_virtualStream = false;
+    bool m_corked = false;
     bool m_hasVolume = false;
 
     template<typename PAInfo> void updateStream(const PAInfo *info)

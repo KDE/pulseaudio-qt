@@ -19,8 +19,8 @@ public:
     Profile *q;
 
     QString m_description;
-    quint32 m_priority;
-    Profile::Availability m_availability;
+    quint32 m_priority = 0;
+    Profile::Availability m_availability = Profile::Unknown;
 
     template<typename PAInfo> void setInfo(const PAInfo *info)
     {

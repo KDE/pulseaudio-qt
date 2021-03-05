@@ -23,7 +23,7 @@ public:
     virtual ~PulseObjectPrivate();
 
     PulseObject *q;
-    quint32 m_index;
+    quint32 m_index = 0;
     QVariantMap m_properties;
     QString m_name;
 

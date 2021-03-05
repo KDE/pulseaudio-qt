@@ -19,8 +19,6 @@ VolumeObject::VolumeObject(QObject *parent)
 
 VolumeObjectPrivate::VolumeObjectPrivate(VolumeObject *q)
     : q(q)
-    , m_muted(true)
-    , m_volumeWritable(true)
 {
     pa_cvolume_init(&m_volume);
 }

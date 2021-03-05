@@ -26,7 +26,7 @@ public:
     pa_cvolume m_volume;
     pa_channel_map m_channelMap;
     QVector<QString> m_channels;
-    bool m_muted;
+    bool m_muted = false;
 
     struct {
         bool valid = false;

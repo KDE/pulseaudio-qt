@@ -25,10 +25,6 @@ Stream::~Stream()
 
 StreamPrivate::StreamPrivate(Stream *q)
     : q(q)
-    , m_deviceIndex(PA_INVALID_INDEX)
-    , m_clientIndex(PA_INVALID_INDEX)
-    , m_virtualStream(false)
-    , m_corked(false)
 {
 }
 
