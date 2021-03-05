@@ -20,7 +20,7 @@ Sink::Sink(QObject *parent)
     : Device(parent)
     , d(new SinkPrivate(this))
 {
-    connect(context()->server(), &Server::defaultSinkChanged, this, &Sink::defaultChanged);
+    connect(Context::instance()->server(), &Server::defaultSinkChanged, this, &Sink::defaultChanged);
 }
 
 SinkPrivate::SinkPrivate(Sink *q)
@@ -40,12 +40,12 @@ void SinkPrivate::update(const pa_sink_info *info)
 
 void Sink::setVolume(qint64 volume)
 {
-    context()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_volume_by_index);
+    Context::instance()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_volume_by_index);
 }
 
 void Sink::setMuted(bool muted)
 {
-    context()->d->setGenericMute(index(), muted, &pa_context_set_sink_mute_by_index);
+    Context::instance()->d->setGenericMute(index(), muted, &pa_context_set_sink_mute_by_index);
 }
 
 void Sink::setActivePortIndex(quint32 port_index)
@@ -55,23 +55,23 @@ void Sink::setActivePortIndex(quint32 port_index)
         qCWarning(PULSEAUDIOQT) << "invalid port set request" << port_index;
         return;
     }
-    context()->d->setGenericPort(index(), port->name(), &pa_context_set_sink_port_by_index);
+    Context::instance()->d->setGenericPort(index(), port->name(), &pa_context_set_sink_port_by_index);
 }
 
 void Sink::setChannelVolume(int channel, qint64 volume)
 {
-    context()->d->setGenericVolume(index(), channel, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_volume_by_index);
+    Context::instance()->d->setGenericVolume(index(), channel, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_volume_by_index);
 }
 
 bool Sink::isDefault() const
 {
-    return context()->server()->defaultSink() == this;
+    return Context::instance()->server()->defaultSink() == this;
 }
 
 void Sink::setDefault(bool enable)
 {
     if (!isDefault() && enable) {
-        context()->server()->setDefaultSink(this);
+        Context::instance()->server()->setDefaultSink(this);
     }
 }
 

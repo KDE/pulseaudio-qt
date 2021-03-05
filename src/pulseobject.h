@@ -31,8 +31,6 @@ public:
     QString iconName() const;
     QVariantMap properties() const;
 
-    Context *context() const;
-
 Q_SIGNALS:
     void propertiesChanged();
 

@@ -44,7 +44,7 @@ QString Stream::name() const
 
 Client *Stream::client() const
 {
-    return context()->d->m_clients.data().value(d->m_clientIndex, nullptr);
+    return Context::instance()->d->m_clients.data().value(d->m_clientIndex, nullptr);
 }
 
 bool Stream::isVirtualStream() const

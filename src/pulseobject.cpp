@@ -34,11 +34,6 @@ PulseObjectPrivate::~PulseObjectPrivate()
 {
 }
 
-Context *PulseObject::context() const
-{
-    return Context::instance();
-}
-
 uint32_t PulseObject::index() const
 {
     return d->m_index;

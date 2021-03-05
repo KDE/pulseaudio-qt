@@ -198,7 +198,7 @@ void StreamRestorePrivate::writeChanges(const pa_cvolume &volume, bool muted, co
     m_cache.muted = muted;
     m_cache.device = device;
 
-    q->context()->d->streamRestoreWrite(&info);
+    Context::instance()->d->streamRestoreWrite(&info);
 }
 
 } // PulseAudioQt

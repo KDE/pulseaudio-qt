@@ -109,7 +109,7 @@ quint32 Card::activeProfileIndex() const
 void Card::setActiveProfileIndex(quint32 profileIndex)
 {
     const Profile *profile = qobject_cast<Profile *>(profiles().at(profileIndex));
-    context()->setCardProfile(index(), profile->name());
+    Context::instance()->setCardProfile(index(), profile->name());
 }
 
 QVector<CardPort *> Card::ports() const
