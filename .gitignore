@@ -2,3 +2,4 @@ build/
 *.user
 .kdev4/
 pulseaudio-qt.kdev4
+.clang-format
