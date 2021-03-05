@@ -22,9 +22,24 @@ class StreamRestore;
 class Module;
 class Server;
 
+/**
+ * The normal volume (100%, 0 dB). Equivalent to PA_VOLUME_NORM.
+ */
 KF5PULSEAUDIOQT_EXPORT qint64 normalVolume();
+/**
+ * The minimum volume (0%). Equivalent to PA_VOLUME_MUTED.
+ */
 KF5PULSEAUDIOQT_EXPORT qint64 minimumVolume();
+/**
+ * The maximum volume PulseAudio can store. Equivalent to PA_VOLUME_MAX.
+ * \warning For UI elements like volume sliders use maximumUIVolume instead.
+ */
 KF5PULSEAUDIOQT_EXPORT qint64 maximumVolume();
+
+/**
+ * The maximum volume suitable to display in a UI. Equivalent to PA_VOLUME_UI_MAX.
+ */
+KF5PULSEAUDIOQT_EXPORT qint64 maximumUIVolume();
 
 class KF5PULSEAUDIOQT_EXPORT Context : public QObject
 {

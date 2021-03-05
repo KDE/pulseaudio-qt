@@ -36,13 +36,19 @@ qint64 normalVolume()
 
 qint64 minimumVolume()
 {
-    return 0;
+    return PA_VOLUME_MUTED;
 }
 
 qint64 maximumVolume()
 {
-    return (PA_VOLUME_NORM / 100.0) * 150;
+    return PA_VOLUME_MAX;
 }
+
+qint64 maximumUIVolume()
+{
+    return PA_VOLUME_UI_MAX;
+}
+
 static bool isGoodState(int eol)
 {
     if (eol < 0) {
