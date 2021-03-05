@@ -26,6 +26,7 @@ class KF5PULSEAUDIOQT_EXPORT Stream : public VolumeObject
     Q_PROPERTY(bool virtualStream READ isVirtualStream NOTIFY virtualStreamChanged)
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
     Q_PROPERTY(bool corked READ isCorked NOTIFY corkedChanged)
+    Q_PROPERTY(bool hasVolume READ hasVolume NOTIFY hasVolumeChanged)
 
 public:
     ~Stream();
@@ -35,6 +36,7 @@ public:
     bool isVirtualStream() const;
     quint32 deviceIndex() const;
     bool isCorked() const;
+    bool hasVolume() const;
 
     virtual void setDeviceIndex(quint32 deviceIndex) = 0;
 
@@ -44,6 +46,7 @@ Q_SIGNALS:
     void virtualStreamChanged();
     void deviceIndexChanged();
     void corkedChanged();
+    void hasVolumeChanged();
 
 protected:
     explicit Stream(QObject *parent);

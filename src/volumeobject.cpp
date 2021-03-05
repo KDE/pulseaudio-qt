@@ -20,7 +20,6 @@ VolumeObject::VolumeObject(QObject *parent)
 VolumeObjectPrivate::VolumeObjectPrivate(VolumeObject *q)
     : q(q)
     , m_muted(true)
-    , m_hasVolume(true)
     , m_volumeWritable(true)
 {
     pa_cvolume_init(&m_volume);
@@ -43,11 +42,6 @@ bool VolumeObject::isMuted() const
 pa_cvolume VolumeObjectPrivate::cvolume() const
 {
     return m_volume;
-}
-
-bool VolumeObject::hasVolume() const
-{
-    return d->m_hasVolume;
 }
 
 bool VolumeObject::isVolumeWritable() const

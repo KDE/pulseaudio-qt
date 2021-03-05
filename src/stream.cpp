@@ -16,7 +16,6 @@ Stream::Stream(QObject *parent)
     , d(new StreamPrivate(this))
 {
     VolumeObject::d->m_volumeWritable = false;
-    VolumeObject::d->m_hasVolume = false;
 }
 
 Stream::~Stream()
@@ -60,6 +59,11 @@ quint32 Stream::deviceIndex() const
 bool Stream::isCorked() const
 {
     return d->m_corked;
+}
+
+bool Stream::hasVolume() const
+{
+    return d->m_hasVolume;
 }
 
 } // PulseAudioQt

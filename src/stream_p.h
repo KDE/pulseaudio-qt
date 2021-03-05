@@ -24,6 +24,7 @@ public:
     quint32 m_clientIndex;
     bool m_virtualStream;
     bool m_corked;
+    bool m_hasVolume = false;
 
     template<typename PAInfo> void updateStream(const PAInfo *info)
     {
@@ -33,8 +34,8 @@ public:
             m_name = QString::fromUtf8(info->name);
             Q_EMIT q->nameChanged();
         }
-        if (q->VolumeObject::d->m_hasVolume != info->has_volume) {
-            q->VolumeObject::d->m_hasVolume = info->has_volume;
+        if (m_hasVolume != info->has_volume) {
+            m_hasVolume = info->has_volume;
             Q_EMIT q->hasVolumeChanged();
         }
         if (q->VolumeObject::d->m_volumeWritable != info->volume_writable) {

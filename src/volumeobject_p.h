@@ -22,7 +22,6 @@ public:
     pa_channel_map foo;
     pa_cvolume m_volume;
     bool m_muted;
-    bool m_hasVolume;
     bool m_volumeWritable;
     QVector<QString> m_channels;
     QStringList m_rawChannels;
