@@ -63,7 +63,8 @@ Q_SIGNALS:
  * serialized list index. Namely it enables us to translate a discrete list
  * index to a pulse index to an object, and any permutation thereof.
  */
-template<typename Type, typename PAInfo> class MapBase : public MapBaseQObject
+template<typename Type, typename PAInfo>
+class MapBase : public MapBaseQObject
 {
 public:
     virtual ~MapBase()

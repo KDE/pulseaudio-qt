@@ -32,7 +32,6 @@ void ClientPrivate::update(const pa_client_info *info)
 {
     q->IndexedPulseObject::d->updatePulseObject(info);
     q->PulseObject::d->updateProperties(info);
-
 }
 
 } // PulseAudioQt

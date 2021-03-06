@@ -11,7 +11,6 @@
 
 #include "debug.h"
 #include "pulseobject_p.h"
-#include "pulseobject_p.h"
 
 namespace PulseAudioQt
 {

@@ -23,12 +23,14 @@ public:
     quint32 m_priority = 0;
     Profile::Availability m_availability = Profile::Unknown;
 
-    template<typename PAInfo> void setInfo(const PAInfo *info)
+    template<typename PAInfo>
+    void setInfo(const PAInfo *info)
     {
         setCommonInfo(info, info->available ? Profile::Available : Profile::Unavailable);
     }
 
-    template<typename PAInfo> void setCommonInfo(const PAInfo *info, Profile::Availability newAvailability)
+    template<typename PAInfo>
+    void setCommonInfo(const PAInfo *info, Profile::Availability newAvailability)
     {
         if (info->description) {
             QString infoDescription = QString::fromUtf8(info->description);

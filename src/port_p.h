@@ -20,7 +20,8 @@ public:
 
     Port *q;
 
-    template<typename PAInfo> void setInfo(const PAInfo *info)
+    template<typename PAInfo>
+    void setInfo(const PAInfo *info)
     {
         Profile::Availability newAvailability;
         switch (info->available) {

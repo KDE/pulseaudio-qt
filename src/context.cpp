@@ -28,7 +28,6 @@
 
 namespace PulseAudioQt
 {
-
 qint64 normalVolume()
 {
     return PA_VOLUME_NORM;
@@ -242,7 +241,8 @@ Context::Context(QObject *parent)
 
     d->connectToDaemon();
 
-    QDBusServiceWatcher *watcher = new QDBusServiceWatcher(QStringLiteral("org.pulseaudio.Server"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForRegistration, this);
+    QDBusServiceWatcher *watcher =
+        new QDBusServiceWatcher(QStringLiteral("org.pulseaudio.Server"), QDBusConnection::sessionBus(), QDBusServiceWatcher::WatchForRegistration, this);
     connect(watcher, &QDBusServiceWatcher::serviceRegistered, this, [this] {
         d->connectToDaemon();
     });
@@ -437,11 +437,13 @@ void ContextPrivate::contextStateCallback(pa_context *c)
         if (m_context == c) {
             pa_context_set_subscribe_callback(c, subscribe_cb, this);
 
-            if (!PAOperation(pa_context_subscribe(c,
-                                                  (pa_subscription_mask_t)(PA_SUBSCRIPTION_MASK_SINK | PA_SUBSCRIPTION_MASK_SOURCE | PA_SUBSCRIPTION_MASK_CLIENT | PA_SUBSCRIPTION_MASK_SINK_INPUT | PA_SUBSCRIPTION_MASK_SOURCE_OUTPUT |
-                                                                           PA_SUBSCRIPTION_MASK_CARD | PA_SUBSCRIPTION_MASK_MODULE | PA_SUBSCRIPTION_MASK_SERVER),
-                                                  nullptr,
-                                                  nullptr))) {
+            if (!PAOperation(
+                    pa_context_subscribe(c,
+                                         (pa_subscription_mask_t)(PA_SUBSCRIPTION_MASK_SINK | PA_SUBSCRIPTION_MASK_SOURCE | PA_SUBSCRIPTION_MASK_CLIENT
+                                                                  | PA_SUBSCRIPTION_MASK_SINK_INPUT | PA_SUBSCRIPTION_MASK_SOURCE_OUTPUT
+                                                                  | PA_SUBSCRIPTION_MASK_CARD | PA_SUBSCRIPTION_MASK_MODULE | PA_SUBSCRIPTION_MASK_SERVER),
+                                         nullptr,
+                                         nullptr))) {
                 qCWarning(PULSEAUDIOQT) << "pa_context_subscribe() failed";
                 return;
             }
@@ -719,7 +721,12 @@ Server *Context::server() const
     return d->m_server;
 }
 
-void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolume, pa_cvolume cVolume, const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &pa_set_volume)
+void ContextPrivate::setGenericVolume(
+    quint32 index,
+    int channel,
+    qint64 newVolume,
+    pa_cvolume cVolume,
+    const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &pa_set_volume)
 {
     if (!m_context) {
         return;
@@ -741,7 +748,9 @@ void ContextPrivate::setGenericVolume(quint32 index, int channel, qint64 newVolu
     }
 }
 
-void ContextPrivate::setGenericMute(quint32 index, bool mute, const std::function<pa_operation *(pa_context *, uint32_t, int, pa_context_success_cb_t, void *)> &pa_set_mute)
+void ContextPrivate::setGenericMute(quint32 index,
+                                    bool mute,
+                                    const std::function<pa_operation *(pa_context *, uint32_t, int, pa_context_success_cb_t, void *)> &pa_set_mute)
 {
     if (!m_context) {
         return;
@@ -752,7 +761,9 @@ void ContextPrivate::setGenericMute(quint32 index, bool mute, const std::functio
     }
 }
 
-void ContextPrivate::setGenericPort(quint32 index, const QString &portName, const std::function<pa_operation *(pa_context *, uint32_t, const char *, pa_context_success_cb_t, void *)> &pa_set_port)
+void ContextPrivate::setGenericPort(quint32 index,
+                                    const QString &portName,
+                                    const std::function<pa_operation *(pa_context *, uint32_t, const char *, pa_context_success_cb_t, void *)> &pa_set_port)
 {
     if (!m_context) {
         return;
@@ -763,7 +774,10 @@ void ContextPrivate::setGenericPort(quint32 index, const QString &portName, cons
     }
 }
 
-void ContextPrivate::setGenericDeviceForStream(quint32 streamIndex, quint32 deviceIndex, const std::function<pa_operation *(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)> &pa_move_stream_to_device)
+void ContextPrivate::setGenericDeviceForStream(
+    quint32 streamIndex,
+    quint32 deviceIndex,
+    const std::function<pa_operation *(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)> &pa_move_stream_to_device)
 {
     if (!m_context) {
         return;

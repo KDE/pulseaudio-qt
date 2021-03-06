@@ -25,7 +25,8 @@ public:
     bool m_corked = false;
     bool m_hasVolume = false;
 
-    template<typename PAInfo> void updateStream(const PAInfo *info)
+    template<typename PAInfo>
+    void updateStream(const PAInfo *info)
     {
         q->VolumeObject::d->updateVolumeObject(info);
 

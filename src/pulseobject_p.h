@@ -26,7 +26,8 @@ public:
     QVariantMap m_properties;
     QString m_name;
 
-    template<typename PAInfo> void updatePulseObject(PAInfo *info)
+    template<typename PAInfo>
+    void updatePulseObject(PAInfo *info)
     {
         if (m_name != QString::fromUtf8(info->name)) {
             m_name = QString::fromUtf8(info->name);
@@ -34,7 +35,8 @@ public:
         }
     }
 
-    template<typename PAInfo> void updateProperties(PAInfo *info)
+    template<typename PAInfo>
+    void updateProperties(PAInfo *info)
     {
         m_properties.clear();
         void *it = nullptr;
@@ -50,7 +52,6 @@ public:
         }
         Q_EMIT q->propertiesChanged();
     }
-
 };
 }
 #endif

@@ -7,8 +7,8 @@
 #ifndef MODULE_H
 #define MODULE_H
 
-#include "kf5pulseaudioqt_export.h"
 #include "indexedpulseobject.h"
+#include "kf5pulseaudioqt_export.h"
 
 struct pa_module_info;
 

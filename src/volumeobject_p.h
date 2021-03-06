@@ -28,7 +28,8 @@ public:
 
     pa_cvolume cvolume() const;
 
-    template<typename PAInfo> void updateVolumeObject(PAInfo *info)
+    template<typename PAInfo>
+    void updateVolumeObject(PAInfo *info)
     {
         q->IndexedPulseObject::d->updatePulseObject(info);
         q->PulseObject::d->updateProperties(info);

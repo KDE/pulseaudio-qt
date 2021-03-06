@@ -34,7 +34,8 @@ public:
 
     Device::State stateFromPaState(int value) const;
 
-    template<typename PAInfo> void updateDevice(const PAInfo *info)
+    template<typename PAInfo>
+    void updateDevice(const PAInfo *info)
     {
         q->VolumeObject::d->updateVolumeObject(info);
 

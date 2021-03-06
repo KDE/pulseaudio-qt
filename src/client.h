@@ -7,8 +7,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "kf5pulseaudioqt_export.h"
 #include "indexedpulseobject.h"
+#include "kf5pulseaudioqt_export.h"
 
 struct pa_client_info;
 

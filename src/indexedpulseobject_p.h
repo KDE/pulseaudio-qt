@@ -23,7 +23,8 @@ public:
     PulseObject *q;
     quint32 m_index = 0;
 
-    template<typename PAInfo> void updatePulseObject(PAInfo *info)
+    template<typename PAInfo>
+    void updatePulseObject(PAInfo *info)
     {
         m_index = info->index;
 

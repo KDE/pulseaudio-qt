@@ -86,7 +86,8 @@ void ServerPrivate::update(const pa_server_info *info)
 }
 
 /** @private */
-template<typename Type, typename Vector> static Type *findByName(const Vector &vector, const QString &name)
+template<typename Type, typename Vector>
+static Type *findByName(const Vector &vector, const QString &name)
 {
     Type *out = nullptr;
     if (name.isEmpty()) {

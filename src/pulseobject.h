@@ -15,7 +15,8 @@ namespace PulseAudioQt
 {
 class Context;
 
-template<typename Type, typename PAInfo> class MapBase;
+template<typename Type, typename PAInfo>
+class MapBase;
 
 /**
  * Base class for most PulseAudio objects.

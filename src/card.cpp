@@ -10,9 +10,9 @@
 
 #include "cardport.h"
 #include "context.h"
-#include "profile_p.h"
 #include "indexedpulseobject_p.h"
 #include "port_p.h"
+#include "profile_p.h"
 
 namespace PulseAudioQt
 {

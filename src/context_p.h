@@ -56,10 +56,18 @@ public:
     void streamRestoreCallback(const pa_ext_stream_restore_info *info);
     void serverCallback(const pa_server_info *info);
     void streamRestoreWrite(const pa_ext_stream_restore_info *info);
-    void setGenericVolume(quint32 index, int channel, qint64 newVolume, pa_cvolume cVolume, const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &);
+    void setGenericVolume(quint32 index,
+                          int channel,
+                          qint64 newVolume,
+                          pa_cvolume cVolume,
+                          const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &);
     void setGenericMute(quint32 index, bool mute, const std::function<pa_operation *(pa_context *, uint32_t, int, pa_context_success_cb_t, void *)> &);
-    void setGenericPort(quint32 index, const QString &portName, const std::function<pa_operation *(pa_context *, uint32_t, const char *, pa_context_success_cb_t, void *)> &);
-    void setGenericDeviceForStream(quint32 streamIndex, quint32 deviceIndex, const std::function<pa_operation *(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)> &);
+    void setGenericPort(quint32 index,
+                        const QString &portName,
+                        const std::function<pa_operation *(pa_context *, uint32_t, const char *, pa_context_success_cb_t, void *)> &);
+    void setGenericDeviceForStream(quint32 streamIndex,
+                                   quint32 deviceIndex,
+                                   const std::function<pa_operation *(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)> &);
     void reset();
     void connectToDaemon();
 

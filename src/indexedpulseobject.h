@@ -14,7 +14,6 @@
 
 namespace PulseAudioQt
 {
-
 class KF5PULSEAUDIOQT_EXPORT IndexedPulseObject : public PulseObject
 {
     Q_OBJECT
