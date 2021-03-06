@@ -7,7 +7,9 @@
 #ifndef CARD_H
 #define CARD_H
 
+#include "cardport.h"
 #include "indexedpulseobject.h"
+#include "profile.h"
 
 struct pa_card_info;
 
