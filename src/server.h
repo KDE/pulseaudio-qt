@@ -7,7 +7,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "kf5pulseaudioqt_export.h"
+#include "pulseaudioqt_export.h"
 #include <QObject>
 
 namespace PulseAudioQt
@@ -16,7 +16,7 @@ class Sink;
 class Source;
 class Context;
 
-class KF5PULSEAUDIOQT_EXPORT Server : public QObject
+class PULSEAUDIOQT_EXPORT Server : public QObject
 {
     Q_OBJECT
 

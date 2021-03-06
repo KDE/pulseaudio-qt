@@ -13,7 +13,7 @@ struct pa_source_output_info;
 
 namespace PulseAudioQt
 {
-class KF5PULSEAUDIOQT_EXPORT SourceOutput : public Stream
+class PULSEAUDIOQT_EXPORT SourceOutput : public Stream
 {
     Q_OBJECT
 

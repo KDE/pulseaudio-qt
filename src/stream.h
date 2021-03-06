@@ -18,7 +18,7 @@ namespace PulseAudioQt
 {
 class StreamPrivate;
 
-class KF5PULSEAUDIOQT_EXPORT Stream : public VolumeObject
+class PULSEAUDIOQT_EXPORT Stream : public VolumeObject
 {
     Q_OBJECT
     Q_PROPERTY(PulseAudioQt::Client *client READ client NOTIFY clientChanged)

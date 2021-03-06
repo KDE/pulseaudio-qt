@@ -9,7 +9,7 @@
 
 #include <QObject>
 
-#include "kf5pulseaudioqt_export.h"
+#include "pulseaudioqt_export.h"
 
 namespace PulseAudioQt
 {
@@ -21,7 +21,7 @@ class MapBase;
 /**
  * Base class for most PulseAudio objects.
  */
-class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
+class PULSEAUDIOQT_EXPORT PulseObject : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)

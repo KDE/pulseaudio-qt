@@ -13,7 +13,7 @@
 
 namespace PulseAudioQt
 {
-class KF5PULSEAUDIOQT_EXPORT CardPort : public Port
+class PULSEAUDIOQT_EXPORT CardPort : public Port
 {
     Q_OBJECT
 

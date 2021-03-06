@@ -13,7 +13,7 @@ struct pa_source_info;
 
 namespace PulseAudioQt
 {
-class KF5PULSEAUDIOQT_EXPORT Source : public Device
+class PULSEAUDIOQT_EXPORT Source : public Device
 {
     Q_OBJECT
 

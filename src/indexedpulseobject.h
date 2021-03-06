@@ -9,12 +9,12 @@
 
 #include <QObject>
 
-#include "kf5pulseaudioqt_export.h"
+#include "pulseaudioqt_export.h"
 #include "pulseobject.h"
 
 namespace PulseAudioQt
 {
-class KF5PULSEAUDIOQT_EXPORT IndexedPulseObject : public PulseObject
+class PULSEAUDIOQT_EXPORT IndexedPulseObject : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(quint32 index READ index CONSTANT)

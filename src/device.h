@@ -19,7 +19,7 @@ class DevicePrivate;
 /**
  * A PulseAudio device. Can be either a Sink or Source.
  */
-class KF5PULSEAUDIOQT_EXPORT Device : public VolumeObject
+class PULSEAUDIOQT_EXPORT Device : public VolumeObject
 {
     Q_OBJECT
     Q_PROPERTY(State state READ state NOTIFY stateChanged)

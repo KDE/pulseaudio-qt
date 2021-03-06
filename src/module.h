@@ -8,13 +8,13 @@
 #define MODULE_H
 
 #include "indexedpulseobject.h"
-#include "kf5pulseaudioqt_export.h"
+#include "pulseaudioqt_export.h"
 
 struct pa_module_info;
 
 namespace PulseAudioQt
 {
-class KF5PULSEAUDIOQT_EXPORT Module : public IndexedPulseObject
+class PULSEAUDIOQT_EXPORT Module : public IndexedPulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString argument READ argument NOTIFY argumentChanged)

@@ -7,14 +7,14 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
-#include "kf5pulseaudioqt_export.h"
+#include "pulseaudioqt_export.h"
 #include "pulseobject.h"
 #include <QObject>
 #include <QString>
 
 namespace PulseAudioQt
 {
-class KF5PULSEAUDIOQT_EXPORT Profile : public PulseObject
+class PULSEAUDIOQT_EXPORT Profile : public PulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)

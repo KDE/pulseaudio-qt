@@ -67,12 +67,16 @@ ecm_generate_headers(PulseAudioQt_HEADERS
         VolumeObject
     REQUIRED_HEADERS PulseAudioQt_HEADERS
 )
-generate_export_header(KF5PulseAudioQt BASE_NAME KF5PulseAudioQt)
+ecm_generate_export_header(KF5PulseAudioQt
+    BASE_NAME PulseAudioQt
+    GROUP_BASE_NAME KF
+    VERSION ${PROJECT_VERSION}
+)
 
 install(TARGETS KF5PulseAudioQt EXPORT KF5PulseAudioQtTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES
     ${PulseAudioQt_HEADERS}
-    ${CMAKE_CURRENT_BINARY_DIR}/kf5pulseaudioqt_export.h
+    ${CMAKE_CURRENT_BINARY_DIR}/pulseaudioqt_export.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}/KF5PulseAudioQt/PulseAudioQt COMPONENT Devel
 )
 

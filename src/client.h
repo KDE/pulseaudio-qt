@@ -8,13 +8,13 @@
 #define CLIENT_H
 
 #include "indexedpulseobject.h"
-#include "kf5pulseaudioqt_export.h"
+#include "pulseaudioqt_export.h"
 
 struct pa_client_info;
 
 namespace PulseAudioQt
 {
-class KF5PULSEAUDIOQT_EXPORT Client : public IndexedPulseObject
+class PULSEAUDIOQT_EXPORT Client : public IndexedPulseObject
 {
     Q_OBJECT
 public:

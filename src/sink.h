@@ -16,7 +16,7 @@ namespace PulseAudioQt
 /**
  * A PulseAudio sink. This class is based on https://freedesktop.org/software/pulseaudio/doxygen/structpa__sink__info.html.
  */
-class KF5PULSEAUDIOQT_EXPORT Sink : public Device
+class PULSEAUDIOQT_EXPORT Sink : public Device
 {
     Q_OBJECT
 

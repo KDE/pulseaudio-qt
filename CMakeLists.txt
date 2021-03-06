@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(PulseAudioQt VERSION 1.2.0)
+set(PROJECT_VERSION 1.2.0)
+
+project(PulseAudioQt VERSION ${PROJECT_VERSION})
 
 include(FeatureSummary)
 find_package(ECM 5.44.0  NO_MODULE)
@@ -14,6 +16,7 @@ include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMGenerateExportHeader)
 include(ECMQtDeclareLoggingCategory)
 include(ECMAddQch)
 include(KDEClangFormat)

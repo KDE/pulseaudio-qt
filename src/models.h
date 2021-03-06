@@ -10,7 +10,7 @@
 
 #include <QAbstractListModel>
 
-#include "kf5pulseaudioqt_export.h"
+#include "pulseaudioqt_export.h"
 
 namespace PulseAudioQt
 {
@@ -21,7 +21,7 @@ class Source;
 class AbstractModelPrivate;
 class SinkModelPrivate;
 
-class KF5PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
+class PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
@@ -57,7 +57,7 @@ private:
     }
 };
 
-class KF5PULSEAUDIOQT_EXPORT CardModel : public AbstractModel
+class PULSEAUDIOQT_EXPORT CardModel : public AbstractModel
 {
     Q_OBJECT
 public:
@@ -67,7 +67,7 @@ private:
     void *d;
 };
 
-class KF5PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
+class PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
 {
     Q_OBJECT
     Q_PROPERTY(PulseAudioQt::Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
@@ -94,7 +94,7 @@ private:
     SinkModelPrivate *d;
 };
 
-class KF5PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
+class PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
 {
     Q_OBJECT
 public:
@@ -104,7 +104,7 @@ private:
     void *d;
 };
 
-class KF5PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
+class PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
 {
     Q_OBJECT
     Q_PROPERTY(PulseAudioQt::Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
@@ -123,7 +123,7 @@ private:
     void *d;
 };
 
-class KF5PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
+class PULSEAUDIOQT_EXPORT SourceOutputModel : public AbstractModel
 {
     Q_OBJECT
 public:
@@ -133,7 +133,7 @@ private:
     void *d;
 };
 
-class KF5PULSEAUDIOQT_EXPORT StreamRestoreModel : public AbstractModel
+class PULSEAUDIOQT_EXPORT StreamRestoreModel : public AbstractModel
 {
     Q_OBJECT
 public:
@@ -143,7 +143,7 @@ private:
     void *d;
 };
 
-class KF5PULSEAUDIOQT_EXPORT ModuleModel : public AbstractModel
+class PULSEAUDIOQT_EXPORT ModuleModel : public AbstractModel
 {
     Q_OBJECT
 public:
