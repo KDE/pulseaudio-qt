@@ -1,7 +1,12 @@
 <RCC>
   <qresource prefix="/">
       <file>main.qml</file>
-      <file>PaModelView.qml</file>
-      <file>PaModelHeader.qml</file>
+      <file>CardDelegate.qml</file>
+      <file>DeviceDelegate.qml</file>
+      <file>StreamDelegate.qml</file>
+      <file>ModuleDelegate.qml</file>
+      <file>Header.qml</file>
+      <file>PropertiesItem.qml</file>
+      <file>PAPage.qml</file>
   </qresource>
 </RCC>

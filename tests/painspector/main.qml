@@ -9,94 +9,54 @@ import QtQuick.Controls 2.2
 
 import org.kde.pulseaudioqt.tests 0.1 as PulseAudioQt
 
-ApplicationWindow {
-    visible: true
+import org.kde.kirigami 2.15 as Kirigami
 
-    ScrollView {
+Kirigami.ApplicationWindow {
+
+    Kirigami.SwipeNavigator {
         anchors.fill: parent
-        contentWidth: width
 
-        ColumnLayout {
-            width: parent.width
+        PAPage {
+            title: "Cards"
+            model: PulseAudioQt.CardModel {}
+            delegate: CardDelegate {}
+        }
 
-            PaModelHeader {
-                Layout.fillWidth: true
-                text: "Cards"
+        PAPage {
+            title: "Sinks"
+            model: PulseAudioQt.SinkModel {}
+            delegate: DeviceDelegate {}
+        }
+
+        PAPage {
+            title: "Sources"
+            model: PulseAudioQt.SourceModel {}
+            delegate: DeviceDelegate {}
+        }
+
+        PAPage {
+            title: "Sink Inputs"
+            model: PulseAudioQt.SinkInputModel {}
+            delegate: StreamDelegate {}
+        }
+
+        PAPage {
+            title: "Source Outputs"
+            model: PulseAudioQt.SourceOutputModel {}
+            delegate: StreamDelegate {}
+        }
+
+        PAPage {
+            title: "Stream Restores"
+            model: PulseAudioQt.StreamRestoreModel {}
+            delegate: StreamDelegate {}
+        }
+
+        PAPage {
+            title: "Modules"
+            model: PulseAudioQt.ModuleModel {}
+            delegate: ModuleDelegate {
             }
-
-            PaModelView {
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                model: PulseAudioQt.CardModel {}
-            }
-
-            PaModelHeader {
-                Layout.fillWidth: true
-                text: "Sinks"
-            }
-
-            PaModelView {
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                model: PulseAudioQt.SinkModel {}
-            }
-
-            PaModelHeader {
-                Layout.fillWidth: true
-                text: "Sink Inputs"
-            }
-
-            PaModelView {
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                model: PulseAudioQt.SinkInputModel {}
-            }
-
-            PaModelHeader {
-                Layout.fillWidth: true
-                text: "Sources"
-            }
-
-            PaModelView {
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                model: PulseAudioQt.SourceModel {}
-            }
-
-            PaModelHeader {
-                Layout.fillWidth: true
-                text: "Source Outputs"
-            }
-
-            PaModelView {
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                model: PulseAudioQt.SourceOutputModel {}
-            }
-
-            PaModelHeader {
-                Layout.fillWidth: true
-                text: "Stream Restores"
-            }
-
-            PaModelView {
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                model: PulseAudioQt.StreamRestoreModel {}
-            }
-
-            PaModelHeader {
-                Layout.fillWidth: true
-                text: "Modules"
-            }
-
-            PaModelView {
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                model: PulseAudioQt.ModuleModel {}
-            }
-
-            Item { Layout.fillHeight: true; }
         }
     }
 }
