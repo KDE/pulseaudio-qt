@@ -61,8 +61,10 @@ configure_package_config_file(
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
-find_package(PulseAudio 5.0.0 REQUIRED)
-find_package(GLIB2 REQUIRED)
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(LIBPULSE libpulse REQUIRED IMPORTED_TARGET)
+pkg_check_modules(LIBPULSE_MAINLOOP libpulse-mainloop-glib REQUIRED IMPORTED_TARGET)
 
 if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/po")
     ecm_install_po_files_as_qm(po)

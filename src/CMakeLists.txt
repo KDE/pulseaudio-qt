@@ -1,5 +1,3 @@
-include_directories(${PULSEAUDIO_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR})
-
 set(cpp_SRCS
     card.cpp
     cardport.cpp
@@ -33,8 +31,8 @@ target_link_libraries(KF5PulseAudioQt
     PRIVATE
         Qt5::Gui
         Qt5::DBus
-        ${PULSEAUDIO_LIBRARY}
-        ${PULSEAUDIO_MAINLOOP_LIBRARY}
+        PkgConfig::LIBPULSE
+        PkgConfig::LIBPULSE_MAINLOOP
 )
 
 target_include_directories(KF5PulseAudioQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KF5PulseAudioQt>" )
