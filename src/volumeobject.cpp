@@ -12,7 +12,7 @@
 namespace PulseAudioQt
 {
 VolumeObject::VolumeObject(QObject *parent)
-    : PulseObject(parent)
+    : IndexedPulseObject(parent)
     , d(new VolumeObjectPrivate(this))
 {
 }

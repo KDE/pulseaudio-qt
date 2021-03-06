@@ -27,6 +27,7 @@ public:
     pa_channel_map m_channelMap;
     QVector<QString> m_channels;
     bool m_muted = false;
+    quint32 m_index = 0;
 
     struct {
         bool valid = false;

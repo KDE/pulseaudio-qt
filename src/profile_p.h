@@ -7,6 +7,7 @@
 #pragma once
 
 #include "profile.h"
+#include "pulseobject_p.h"
 
 namespace PulseAudioQt
 {
@@ -45,6 +46,8 @@ public:
             m_availability = newAvailability;
             Q_EMIT q->availabilityChanged();
         }
+
+        q->PulseObject::d->updatePulseObject(info);
     }
 };
 }

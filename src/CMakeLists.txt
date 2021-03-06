@@ -21,6 +21,7 @@ set(cpp_SRCS
     server.cpp
     streamrestore.cpp
     module.cpp
+    indexedpulseobject.cpp
 )
 
 ecm_qt_declare_logging_category(cpp_SRCS HEADER debug.h IDENTIFIER PULSEAUDIOQT CATEGORY_NAME org.kde.pulseaudio)
@@ -46,9 +47,11 @@ set_target_properties(KF5PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_VERSION_
 ecm_generate_headers(PulseAudioQt_HEADERS
     HEADER_NAMES
         Card
+        CardPort
         Client
         Context
         Device
+        IndexedPulseObject
         Module
         Port
         Profile

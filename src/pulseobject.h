@@ -24,7 +24,6 @@ class KF5PULSEAUDIOQT_EXPORT PulseObject : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name NOTIFY nameChanged)
-    Q_PROPERTY(quint32 index READ index CONSTANT)
     Q_PROPERTY(QString iconName READ iconName CONSTANT)
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)
 
@@ -32,11 +31,6 @@ public:
     ~PulseObject();
 
     QString name() const;
-
-    /**
-     * Index of this object.
-     */
-    quint32 index() const;
 
     /**
      * A freedesktop.org icon name that fits this object.
@@ -65,10 +59,13 @@ protected:
 private:
     // Ensure that we get properly parented.
     PulseObject();
+    friend class IndexedPulseObjectPrivate;
     friend class ClientPrivate;
     friend class CardPrivate;
     friend class ModulePrivate;
     friend class VolumeObjectPrivate;
+    friend class ProfilePrivate;
+    friend class StreamRestorePrivate;
 };
 
 } // PulseAudioQt

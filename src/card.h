@@ -7,7 +7,7 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include "pulseobject.h"
+#include "indexedpulseobject.h"
 
 struct pa_card_info;
 
@@ -16,7 +16,7 @@ namespace PulseAudioQt
 class CardPort;
 class Profile;
 
-class KF5PULSEAUDIOQT_EXPORT Card : public PulseObject
+class KF5PULSEAUDIOQT_EXPORT Card : public IndexedPulseObject
 {
     Q_OBJECT
     Q_PROPERTY(QVector<Profile *> profiles READ profiles NOTIFY profilesChanged)

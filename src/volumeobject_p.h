@@ -8,7 +8,7 @@
 
 #include <pulse/volume.h>
 
-#include "pulseobject_p.h"
+#include "indexedpulseobject_p.h"
 #include "volumeobject.h"
 
 namespace PulseAudioQt
@@ -30,7 +30,8 @@ public:
 
     template<typename PAInfo> void updateVolumeObject(PAInfo *info)
     {
-        q->PulseObject::d->updatePulseObject(info);
+        q->IndexedPulseObject::d->updatePulseObject(info);
+        q->PulseObject::d->updateProperties(info);
         if (m_muted != info->mute) {
             m_muted = info->mute;
             Q_EMIT q->mutedChanged();

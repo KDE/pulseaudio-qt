@@ -11,13 +11,13 @@
 #include "cardport.h"
 #include "context.h"
 #include "profile_p.h"
-#include "pulseobject.h"
-#include "pulseobject_p.h"
+#include "indexedpulseobject_p.h"
+#include "port_p.h"
 
 namespace PulseAudioQt
 {
 Card::Card(QObject *parent)
-    : PulseObject(parent)
+    : IndexedPulseObject(parent)
     , d(new CardPrivate(this))
 {
 }
@@ -38,7 +38,8 @@ CardPrivate::~CardPrivate()
 
 void CardPrivate::update(const pa_card_info *info)
 {
-    q->PulseObject::d->updatePulseObject(info);
+    q->IndexedPulseObject::d->updatePulseObject(info);
+    q->PulseObject::d->updateProperties(info);
 
     QStringList newProfiles;
     for (auto **it = info->profiles2; it && *it != nullptr; ++it) {
@@ -72,7 +73,7 @@ void CardPrivate::update(const pa_card_info *info)
             m_ports[name] = new CardPort(q);
         }
         CardPort *port = m_ports[name];
-        port->update(*it);
+        port->d->setInfo(*it);
     }
 
     const QList<QString> portKeys = m_ports.keys();

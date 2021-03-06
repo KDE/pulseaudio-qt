@@ -23,19 +23,19 @@ public:
     virtual ~PulseObjectPrivate();
 
     PulseObject *q;
-    quint32 m_index = 0;
     QVariantMap m_properties;
     QString m_name;
 
     template<typename PAInfo> void updatePulseObject(PAInfo *info)
     {
-        m_index = info->index;
-
         if (m_name != QString::fromUtf8(info->name)) {
             m_name = QString::fromUtf8(info->name);
             Q_EMIT q->nameChanged();
         }
+    }
 
+    template<typename PAInfo> void updateProperties(PAInfo *info)
+    {
         m_properties.clear();
         void *it = nullptr;
         while (const char *key = pa_proplist_iterate(info->proplist, &it)) {
@@ -50,6 +50,7 @@ public:
         }
         Q_EMIT q->propertiesChanged();
     }
+
 };
 }
 #endif

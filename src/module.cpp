@@ -9,12 +9,12 @@
 #include "module_p.h"
 
 #include "context.h"
-#include "pulseobject_p.h"
+#include "indexedpulseobject_p.h"
 
 namespace PulseAudioQt
 {
 Module::Module(QObject *parent)
-    : PulseObject(parent)
+    : IndexedPulseObject(parent)
     , d(new ModulePrivate(this))
 {
 }
@@ -30,7 +30,8 @@ ModulePrivate::~ModulePrivate()
 
 void ModulePrivate::update(const pa_module_info *info)
 {
-    q->PulseObject::d->updatePulseObject(info);
+    q->IndexedPulseObject::d->updatePulseObject(info);
+    q->PulseObject::d->updateProperties(info);
 
     const QString infoArgument = QString::fromUtf8(info->argument);
     if (m_argument != infoArgument) {

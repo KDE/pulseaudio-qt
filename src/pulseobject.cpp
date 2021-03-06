@@ -38,11 +38,6 @@ QString PulseObject::name() const
     return d->m_name;
 }
 
-uint32_t PulseObject::index() const
-{
-    return d->m_index;
-}
-
 QString PulseObject::iconName() const
 {
     QString name = d->m_properties.value(QStringLiteral("device.icon_name")).toString();

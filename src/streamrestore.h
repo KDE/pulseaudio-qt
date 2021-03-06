@@ -24,6 +24,8 @@ class KF5PULSEAUDIOQT_EXPORT StreamRestore : public PulseObject
     Q_PROPERTY(QVector<QString> channels READ channels NOTIFY channelsChanged)
     Q_PROPERTY(QVector<qreal> channelVolumes READ channelVolumes NOTIFY channelVolumesChanged)
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
+    // Not a IndexedPulseObject since pa_ext_stream_restore_info does not have an index member
+    Q_PROPERTY(quint32 index READ index CONSTANT)
 
 public:
     ~StreamRestore();
@@ -43,6 +45,8 @@ public:
     QVector<QString> channels() const;
 
     QVector<qreal> channelVolumes() const;
+
+    quint32 index() const;
 
     quint32 deviceIndex() const;
     void setDeviceIndex(quint32 deviceIndex);

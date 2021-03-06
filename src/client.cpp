@@ -8,12 +8,12 @@
 #include "client_p.h"
 
 #include "debug.h"
-#include "pulseobject_p.h"
+#include "indexedpulseobject_p.h"
 
 namespace PulseAudioQt
 {
 Client::Client(QObject *parent)
-    : PulseObject(parent)
+    : IndexedPulseObject(parent)
     , d(new ClientPrivate(this))
 {
 }
@@ -30,7 +30,8 @@ Client::~Client()
 
 void ClientPrivate::update(const pa_client_info *info)
 {
-    q->PulseObject::d->updatePulseObject(info);
+    q->IndexedPulseObject::d->updatePulseObject(info);
+    q->PulseObject::d->updateProperties(info);
 
 }
 

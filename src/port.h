@@ -24,6 +24,7 @@ protected:
     class PortPrivate *const d;
 
     friend class DevicePrivate;
+    friend class CardPrivate;
 };
 
 } // PulseAudioQt

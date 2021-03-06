@@ -11,6 +11,7 @@
 
 #include "debug.h"
 #include "pulseobject_p.h"
+#include "pulseobject_p.h"
 
 namespace PulseAudioQt
 {
@@ -21,7 +22,7 @@ StreamRestore::StreamRestore(quint32 index, const QVariantMap &properties, QObje
     memset(&d->m_volume, 0, sizeof(d->m_volume));
     memset(&d->m_channelMap, 0, sizeof(d->m_channelMap));
 
-    PulseObject::d->m_index = index;
+    d->m_index = index;
     PulseObject::d->m_properties = properties;
 }
 
@@ -40,6 +41,7 @@ StreamRestorePrivate::~StreamRestorePrivate()
 
 void StreamRestorePrivate::update(const pa_ext_stream_restore_info *info)
 {
+    q->PulseObject::d->updatePulseObject(info);
     m_cache.valid = false;
 
     const QString infoDevice = QString::fromUtf8(info->device);
@@ -189,6 +191,11 @@ void StreamRestorePrivate::writeChanges(const pa_cvolume &volume, bool muted, co
     m_cache.device = device;
 
     Context::instance()->d->streamRestoreWrite(&info);
+}
+
+quint32 StreamRestore::index() const
+{
+    return d->m_index;
 }
 
 } // PulseAudioQt

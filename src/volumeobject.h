@@ -7,14 +7,14 @@
 #ifndef VOLUMEOBJECT_H
 #define VOLUMEOBJECT_H
 
-#include "pulseobject.h"
+#include "indexedpulseobject.h"
 
 namespace PulseAudioQt
 {
 /**
  * An PulseObject that has a volume. Can be a Device or a Stream.
  */
-class KF5PULSEAUDIOQT_EXPORT VolumeObject : public PulseObject
+class KF5PULSEAUDIOQT_EXPORT VolumeObject : public IndexedPulseObject
 {
     Q_OBJECT
     Q_PROPERTY(qint64 volume READ volume WRITE setVolume NOTIFY volumeChanged)
