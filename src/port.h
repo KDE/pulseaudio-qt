@@ -7,8 +7,8 @@
 #ifndef PORT_H
 #define PORT_H
 
-#include "pulseaudioqt_export.h"
 #include "profile.h"
+#include "pulseaudioqt_export.h"
 
 namespace PulseAudioQt
 {

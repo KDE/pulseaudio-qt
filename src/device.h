@@ -9,6 +9,7 @@
 
 #include <QString>
 
+#include "port.h"
 #include "volumeobject.h"
 
 namespace PulseAudioQt
