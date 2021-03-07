@@ -28,22 +28,24 @@ public:
     ~VolumeObject();
 
     /**
-     * This device's volume
+     * This object's volume
      */
     qint64 volume() const;
 
     /**
-     * Set this device's volume
+     * Set the volume for this object.
+     * This affects all channels.
+     * The volume must be between PulseAudioQt::minimumVolume() and PulseAudioQt::maximumVolume().
      */
     virtual void setVolume(qint64 volume) = 0;
 
     /**
-     * Whether this device is muted.
+     * Whether this object is muted.
      */
     bool isMuted() const;
 
     /**
-     * Set whether this device is muted.
+     * Set whether this object is muted.
      */
     virtual void setMuted(bool muted) = 0;
 
@@ -63,8 +65,9 @@ Q_SIGNALS:
     void channelVolumesChanged();
 
 protected:
+    /** @private */
     explicit VolumeObject(QObject *parent);
-
+    /** @private */
     class VolumeObjectPrivate *const d;
     friend class DevicePrivate;
     friend class StreamPrivate;

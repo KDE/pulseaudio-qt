@@ -28,8 +28,9 @@ public:
     quint32 index() const;
 
 protected:
+    /** @private */
     explicit IndexedPulseObject(QObject *parent);
-
+    /** @private */
     class IndexedPulseObjectPrivate *const d;
 
 private:

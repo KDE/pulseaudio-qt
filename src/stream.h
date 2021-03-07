@@ -46,8 +46,9 @@ Q_SIGNALS:
     void hasVolumeChanged();
 
 protected:
+    /** @private */
     explicit Stream(QObject *parent);
-
+    /** @private */
     class StreamPrivate *const d;
 
     friend class SinkInputPrivate;

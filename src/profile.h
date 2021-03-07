@@ -14,6 +14,9 @@
 
 namespace PulseAudioQt
 {
+/**
+ * A PulseAudio profile.
+ */
 class PULSEAUDIOQT_EXPORT Profile : public PulseObject
 {
     Q_OBJECT
@@ -27,17 +30,41 @@ public:
 
     ~Profile();
 
+    /**
+     * A human readable description.
+     */
     QString description() const;
+
+    /**
+     * This object's priority. A higher number means higher priority.
+     */
     quint32 priority() const;
+
+    /**
+     * Whether this object is available.
+     */
     Availability availability() const;
 
 Q_SIGNALS:
+    /**
+     * Emitted when the description changed.
+     */
     void descriptionChanged();
+
+    /**
+     * Emitted when the priority changed.
+     */
     void priorityChanged();
+
+    /**
+     * Emitted when the availability changed.
+     */
     void availabilityChanged();
 
 protected:
+    /** @private */
     explicit Profile(QObject *parent);
+    /** @private */
     class ProfilePrivate *const d;
 
     friend class Device;

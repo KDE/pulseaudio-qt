@@ -13,6 +13,9 @@ struct pa_source_info;
 
 namespace PulseAudioQt
 {
+/**
+ * A PulseAudio source. This class is based on https://freedesktop.org/software/pulseaudio/doxygen/structpa__source__info.html.
+ */
 class PULSEAUDIOQT_EXPORT Source : public Device
 {
     Q_OBJECT

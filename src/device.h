@@ -104,7 +104,9 @@ Q_SIGNALS:
     void defaultChanged();
 
 protected:
+    /** @private */
     explicit Device(QObject *parent);
+    /** @private */
     DevicePrivate *d;
 
 private:

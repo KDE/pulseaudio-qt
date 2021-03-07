@@ -53,8 +53,10 @@ Q_SIGNALS:
     void nameChanged();
 
 protected:
+    /** @private */
     explicit PulseObject(QObject *parent);
 
+    /** @private */
     class PulseObjectPrivate *const d;
 
 private:

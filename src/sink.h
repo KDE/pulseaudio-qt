@@ -23,34 +23,16 @@ class PULSEAUDIOQT_EXPORT Sink : public Device
 public:
     ~Sink();
 
-    /**
-     * Set the volume for this sink.
-     * This affects all channels.
-     * The volume must be between PulseAudioQt::minimumVolume() and PulseAudioQt::maximumVolume().
-     */
     void setVolume(qint64 volume) override;
 
-    /**
-     * Set whether this sink is muted.
-     */
     void setMuted(bool muted) override;
 
     void setActivePortIndex(quint32 port_index) override;
 
-    /**
-     * Set the volume for a specific channel of this sink.
-     * The volume must be between PulseAudioQt::minimumVolume() and PulseAudioQt::maximumVolume().
-     */
     void setChannelVolume(int channel, qint64 volume) override;
 
-    /**
-     * Whether this is the default sink.
-     */
     bool isDefault() const override;
 
-    /**
-     * Set whether this is the default sink.
-     */
     void setDefault(bool enable) override;
 
 private:

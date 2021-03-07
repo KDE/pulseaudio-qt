@@ -12,6 +12,9 @@
 
 namespace PulseAudioQt
 {
+/**
+ * A PulseAudio port.
+ */
 class PULSEAUDIOQT_EXPORT Port : public Profile
 {
     Q_OBJECT
@@ -20,7 +23,9 @@ public:
     ~Port();
 
 protected:
+    /** @private */
     explicit Port(QObject *parent);
+    /** @private */
     class PortPrivate *const d;
 
     friend class DevicePrivate;

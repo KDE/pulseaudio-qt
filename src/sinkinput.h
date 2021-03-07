@@ -13,14 +13,15 @@ struct pa_sink_input_info;
 
 namespace PulseAudioQt
 {
+/**
+ * A SinkInput stream.
+ */
 class PULSEAUDIOQT_EXPORT SinkInput : public Stream
 {
     Q_OBJECT
 
 public:
     ~SinkInput();
-
-    void setSinkIndex(quint32 sinkIndex);
 
     void setVolume(qint64 volume) override;
     void setMuted(bool muted) override;

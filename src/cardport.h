@@ -13,6 +13,9 @@
 
 namespace PulseAudioQt
 {
+/**
+ * A Port associated with a Card.
+ */
 class PULSEAUDIOQT_EXPORT CardPort : public Port
 {
     Q_OBJECT
