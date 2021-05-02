@@ -37,7 +37,7 @@ target_link_libraries(KF5PulseAudioQt
 
 target_include_directories(KF5PulseAudioQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KF5PulseAudioQt>" )
 
-set_target_properties(KF5PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_VERSION_STRING}
+set_target_properties(KF5PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_VERSION}
                                                    SOVERSION ${PULSEAUDIOQT_SOVERSION}
                                                    EXPORT_NAME PulseAudioQt
 )
@@ -83,7 +83,7 @@ if(BUILD_QCH)
         KF5PulseAudioQt_QCH
         NAME PulseAudioQt
         BASE_NAME KF5PulseAudioQt
-        VERSION ${PULSEAUDIOQT_VERSION_STRING}
+        VERSION ${PULSEAUDIOQT_VERSION}
         ORG_DOMAIN org.kde
         SOURCES
             ${PulseAudioQt_HEADERS}
