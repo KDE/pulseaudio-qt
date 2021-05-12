@@ -29,9 +29,9 @@ quint32 Device::cardIndex() const
     return d->m_cardIndex;
 }
 
-QVector<Port *> Device::ports() const
+QList<Port *> Device::ports() const
 {
-    return QVector<Port *>::fromList(d->m_ports.values());
+    return d->m_ports;
 }
 
 quint32 Device::activePortIndex() const

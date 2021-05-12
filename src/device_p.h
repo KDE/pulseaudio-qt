@@ -28,7 +28,7 @@ public:
     QString m_description;
     QString m_formFactor;
     quint32 m_cardIndex = -1;
-    QHash<QString, Port *> m_ports;
+    QList<Port *> m_ports;
     quint32 m_activePortIndex = -1;
     Device::State m_state = Device::UnknownState;
 
@@ -56,23 +56,42 @@ public:
         Q_EMIT q->cardIndexChanged();
 
         QStringList newPorts;
+        QStringList existingPorts;
+
+        // Build list of existing ports
+        for (const Port *port : qAsConst(m_ports)) {
+            existingPorts << port->name();
+        }
+
+        // Add new ports from the updated port list and re/set port info
         for (auto **it = info->ports; it && *it != nullptr; ++it) {
             const QString name = QString::fromUtf8((*it)->name);
             newPorts << name;
-            if (!m_ports.contains(name)) {
-                m_ports[name] = new Port(q);
+
+            Port *port = nullptr;
+
+            if (existingPorts.contains(name)) {
+                port = m_ports[existingPorts.indexOf(name)];
+            } else {
+                port = new Port(q);
+                m_ports << port;
             }
-            Port *port = m_ports[name];
+
             port->d->setInfo(*it);
-            if (info->active_port == *it) {
-                m_activePortIndex = m_ports.size() - 1;
+        }
+
+        // Remove ports that are not in the updated port list
+        for (Port *port : qAsConst(m_ports)) {
+            if (!newPorts.contains(port->name())) {
+                m_ports.removeOne(port);
+                delete port;
             }
         }
 
-        const QList<QString> keys = m_ports.keys();
-        for (const QString &portKey : keys) {
-            if (!newPorts.contains(portKey)) {
-                delete m_ports.take(portKey);
+        // Set active port
+        for (Port *port : qAsConst(m_ports)) {
+            if (info->active_port->name == port->name()) {
+                m_activePortIndex = m_ports.indexOf(port);
             }
         }
 

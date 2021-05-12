@@ -27,7 +27,7 @@ class PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(QString formFactor READ formFactor NOTIFY formFactorChanged)
     Q_PROPERTY(quint32 cardIndex READ cardIndex NOTIFY cardIndexChanged)
-    Q_PROPERTY(QVector<Port *> ports READ ports NOTIFY portsChanged)
+    Q_PROPERTY(QList<Port *> ports READ ports NOTIFY portsChanged)
     Q_PROPERTY(quint32 activePortIndex READ activePortIndex WRITE setActivePortIndex NOTIFY activePortIndexChanged)
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
 
@@ -72,7 +72,7 @@ public:
     /**
      * The ports associated with this device.
      */
-    QVector<Port *> ports() const;
+    QList<Port *> ports() const;
 
     /**
      * The currently active port, by index.
