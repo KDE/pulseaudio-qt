@@ -1,4 +1,6 @@
-set(cpp_SRCS
+add_library(KF5PulseAudioQt SHARED)
+
+target_sources(KF5PulseAudioQt PRIVATE
     card.cpp
     cardport.cpp
     client.cpp
@@ -22,9 +24,12 @@ set(cpp_SRCS
     indexedpulseobject.cpp
 )
 
-ecm_qt_declare_logging_category(cpp_SRCS HEADER debug.h IDENTIFIER PULSEAUDIOQT CATEGORY_NAME org.kde.pulseaudio)
+ecm_qt_declare_logging_category(KF5PulseAudioQt
+    HEADER debug.h
+    IDENTIFIER PULSEAUDIOQT
+    CATEGORY_NAME org.kde.pulseaudio
+)
 
-add_library(KF5PulseAudioQt SHARED ${cpp_SRCS})
 target_link_libraries(KF5PulseAudioQt
     PUBLIC
         Qt5::Core

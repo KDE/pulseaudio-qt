@@ -5,7 +5,7 @@ set(PROJECT_VERSION 1.2.0)
 project(PulseAudioQt VERSION ${PROJECT_VERSION})
 
 include(FeatureSummary)
-find_package(ECM 5.44.0  NO_MODULE)
+find_package(ECM 5.80.0  NO_MODULE)
 
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://kde.org/products/frameworks/")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
@@ -34,7 +34,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PULSEAUDIOQT
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfigVersion.cmake"
                         SOVERSION 3)
 
-set(REQUIRED_QT_VERSION 5.10.0)
+set(REQUIRED_QT_VERSION 5.15.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
 
 find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG)
