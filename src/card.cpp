@@ -84,7 +84,7 @@ void CardPrivate::update(const pa_card_info *info)
         const QString name = QString::fromUtf8((*it)->name);
         newPorts << name;
         CardPort *port = nullptr;
-        if (!existingPorts.contains(name)) {
+        if (existingPorts.contains(name)) {
             port = m_ports[existingPorts.indexOf(name)];
         } else {
             port = new CardPort(q);
