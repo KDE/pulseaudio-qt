@@ -59,15 +59,18 @@ void CardPrivate::update(const pa_card_info *info)
             m_profiles << profile;
         }
         profile->d->setInfo(*it);
-        if (info->active_profile2 == *it) {
-            m_activeProfileIndex = m_profiles.size() - 1;
-        }
     }
 
     for (Profile *profile : qAsConst(m_profiles)) {
         if (!newProfiles.contains(profile->name())) {
             m_profiles.removeOne(profile);
             delete profile;
+        }
+    }
+
+    for (Profile *profile : qAsConst(m_profiles)) {
+        if (info->active_profile2->name == profile->name()) {
+            m_activeProfileIndex = m_profiles.indexOf(profile);
         }
     }
 
