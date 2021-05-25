@@ -21,17 +21,17 @@ class Profile;
 class PULSEAUDIOQT_EXPORT Card : public IndexedPulseObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVector<Profile *> profiles READ profiles NOTIFY profilesChanged)
+    Q_PROPERTY(QList<Profile *> profiles READ profiles NOTIFY profilesChanged)
     Q_PROPERTY(quint32 activeProfileIndex READ activeProfileIndex WRITE setActiveProfileIndex NOTIFY activeProfileIndexChanged)
-    Q_PROPERTY(QVector<CardPort *> ports READ ports NOTIFY portsChanged)
+    Q_PROPERTY(QList<CardPort *> ports READ ports NOTIFY portsChanged)
 
 public:
     ~Card();
 
-    QVector<Profile *> profiles() const;
+    QList<Profile *> profiles() const;
     quint32 activeProfileIndex() const;
     void setActiveProfileIndex(quint32 profileIndex);
-    QVector<CardPort *> ports() const;
+    QList<CardPort *> ports() const;
 
 Q_SIGNALS:
     void profilesChanged();

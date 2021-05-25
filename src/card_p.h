@@ -25,9 +25,9 @@ public:
 
     void update(const pa_card_info *info);
 
-    QHash<QString, Profile *> m_profiles;
+    QList<Profile *> m_profiles;
     quint32 m_activeProfileIndex;
-    QHash<QString, CardPort *> m_ports;
+    QList<CardPort *> m_ports;
 };
 }
 

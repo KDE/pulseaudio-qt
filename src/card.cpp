@@ -42,23 +42,32 @@ void CardPrivate::update(const pa_card_info *info)
     q->PulseObject::d->updateProperties(info);
 
     QStringList newProfiles;
+    QStringList existingProfiles;
+
+    for (const Profile *profile : qAsConst(m_profiles)) {
+        existingProfiles << profile->name();
+    }
+
     for (auto **it = info->profiles2; it && *it != nullptr; ++it) {
         const QString name = QString::fromUtf8((*it)->name);
         newProfiles << name;
-        if (!m_profiles.contains(name)) {
-            m_profiles[name] = new Profile(q);
+        Profile *profile = nullptr;
+        if (existingProfiles.contains(name)) {
+            profile = m_profiles[existingProfiles.indexOf(name)];
+        } else {
+            profile = new Profile(q);
+            m_profiles << profile;
         }
-        Profile *profile = m_profiles[name];
         profile->d->setInfo(*it);
         if (info->active_profile2 == *it) {
             m_activeProfileIndex = m_profiles.size() - 1;
         }
     }
 
-    const QList<QString> profileKeys = m_profiles.keys();
-    for (const QString &profileKey : profileKeys) {
-        if (!newProfiles.contains(profileKey)) {
-            delete m_profiles.take(profileKey);
+    for (Profile *profile : qAsConst(m_profiles)) {
+        if (!newProfiles.contains(profile->name())) {
+            m_profiles.removeOne(profile);
+            delete profile;
         }
     }
 
@@ -66,29 +75,36 @@ void CardPrivate::update(const pa_card_info *info)
     Q_EMIT q->activeProfileIndexChanged();
 
     QStringList newPorts;
+    QStringList existingPorts;
+
+    for (const Port *port : qAsConst(m_ports)) {
+        existingPorts << port->name();
+    }
     for (auto **it = info->ports; it && *it != nullptr; ++it) {
         const QString name = QString::fromUtf8((*it)->name);
         newPorts << name;
-        if (!m_ports.contains(name)) {
-            m_ports[name] = new CardPort(q);
+        CardPort *port = nullptr;
+        if (!existingPorts.contains(name)) {
+            port = m_ports[existingPorts.indexOf(name)];
+        } else {
+            port = new CardPort(q);
         }
-        CardPort *port = m_ports[name];
         port->d->setInfo(*it);
     }
 
-    const QList<QString> portKeys = m_ports.keys();
-    for (const QString &portKey : profileKeys) {
-        if (!newPorts.contains(portKey)) {
-            delete m_ports.take(portKey);
+    for (CardPort *port : qAsConst(m_ports)) {
+        if (!newPorts.contains(port->name())) {
+            m_ports.removeOne(port);
+            delete port;
         }
     }
 
     Q_EMIT q->portsChanged();
 }
 
-QVector<Profile *> Card::profiles() const
+QList<Profile *> Card::profiles() const
 {
-    return QVector<Profile *>::fromList(d->m_profiles.values());
+    return d->m_profiles;
 }
 
 quint32 Card::activeProfileIndex() const
@@ -102,9 +118,9 @@ void Card::setActiveProfileIndex(quint32 profileIndex)
     Context::instance()->setCardProfile(index(), profile->name());
 }
 
-QVector<CardPort *> Card::ports() const
+QList<CardPort *> Card::ports() const
 {
-    return QVector<CardPort *>::fromList(d->m_ports.values());
+    return d->m_ports;
 }
 
 } // PulseAudioQt
