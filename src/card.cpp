@@ -88,6 +88,7 @@ void CardPrivate::update(const pa_card_info *info)
             port = m_ports[existingPorts.indexOf(name)];
         } else {
             port = new CardPort(q);
+            m_ports << port;
         }
         port->d->setInfo(*it);
     }
