@@ -31,4 +31,37 @@ Kirigami.FormLayout {
     }
 
     PropertiesItem {}
+
+    function availabilityToString(availability) {
+        if (availability === 0) {
+            return "Unknown"
+        }
+        if (availability === 1) {
+            return "Available"
+        }
+        if (availability === 2) {
+            return "Unavailable"
+        }
+    }
+
+    Column {
+        Kirigami.FormData.label: "Profiles:"
+        Repeater {
+            model: Profiles
+            delegate: Label {
+                text: modelData.name + ": " + modelData.description + ", Priority: " + modelData.priority + ", Availability: " + availabilityToString(modelData.availability)
+            }
+        }
+    }
+
+    Column {
+        Kirigami.FormData.label: "Ports:"
+        Repeater {
+            model: Ports
+            delegate: Label {
+                text: modelData.name + ": " + modelData.description + ", Priority: " + modelData.priority + ", Availability: " + availabilityToString(modelData.availability)
+            }
+        }
+    }
+
 }
