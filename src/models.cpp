@@ -88,7 +88,7 @@ QVariant AbstractModel::data(const QModelIndex &index, int role) const
     if (role == PulseObjectRole) {
         return QVariant::fromValue(data);
     } else if (role == Qt::DisplayRole) {
-        return static_cast<PulseObject *>(data)->properties().value(QStringLiteral("name")).toString();
+        return static_cast<PulseObject *>(data)->name();
     }
     int property = d->m_objectProperties.value(role, -1);
     if (property == -1) {
