@@ -20,6 +20,11 @@ Card::Card(QObject *parent)
     : IndexedPulseObject(parent)
     , d(new CardPrivate(this))
 {
+    connect(Context::instance(), &Context::sinkAdded, this, &Card::sinksChanged);
+    connect(Context::instance(), &Context::sinkRemoved, this, &Card::sinksChanged);
+
+    connect(Context::instance(), &Context::sourceAdded, this, &Card::sourcesChanged);
+    connect(Context::instance(), &Context::sourceRemoved, this, &Card::sourcesChanged);
 }
 
 Card::~Card()
@@ -125,6 +130,34 @@ void Card::setActiveProfileIndex(quint32 profileIndex)
 QList<CardPort *> Card::ports() const
 {
     return d->m_ports;
+}
+
+QList<Sink *> Card::sinks() const
+{
+    QList<Sink *> ret;
+
+    const auto allSinks = Context::instance()->sinks();
+    for (Sink *sink : allSinks) {
+        if (sink->cardIndex() == IndexedPulseObject::d->m_index) {
+            ret << sink;
+        }
+    }
+
+    return ret;
+}
+
+QList<Source *> Card::sources() const
+{
+    QList<Source *> ret;
+
+    const auto allSources = Context::instance()->sources();
+    for (Source *source : allSources) {
+        if (source->cardIndex() == IndexedPulseObject::d->m_index) {
+            ret << source;
+        }
+    }
+
+    return ret;
 }
 
 } // PulseAudioQt
