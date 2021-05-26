@@ -50,6 +50,7 @@ Kirigami.FormLayout {
         text: VolumeWritable
     }
 
+    PortsItem {}
 
     PropertiesItem {}
 }

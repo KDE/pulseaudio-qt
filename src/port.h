@@ -18,9 +18,42 @@ namespace PulseAudioQt
 class PULSEAUDIOQT_EXPORT Port : public Profile
 {
     Q_OBJECT
+    Q_PROPERTY(Type type READ type NOTIFY typeChanged)
 
 public:
     ~Port();
+
+    enum Type {
+        Unknown,
+        AUX,
+        Speaker,
+        Headphones,
+        Line,
+        Mic,
+        Headset,
+        Handset,
+        Earpiece,
+        SPDIF,
+        HDMI,
+        TV,
+        Radio,
+        Video,
+        USB,
+        Bluetooth,
+        Portable,
+        Handsfree,
+        Car,
+        HiFi,
+        Phone,
+        Network,
+        Analog,
+    };
+    Q_ENUM(Type)
+
+    Type type() const;
+
+Q_SIGNALS:
+    void typeChanged();
 
 protected:
     /** @private */

@@ -19,6 +19,7 @@ public:
     virtual ~PortPrivate();
 
     Port *q;
+    Port::Type m_type = Port::Type::Unknown;
 
     template<typename PAInfo>
     void setInfo(const PAInfo *info)
@@ -34,6 +35,12 @@ public:
         default:
             newAvailability = Profile::Unknown;
         }
+
+#if PA_CHECK_VERSION(14, 0, 0)
+        m_type = static_cast<Port::Type>(info->type);
+#endif
+        Q_EMIT q->typeChanged();
+
         q->Profile::d->setCommonInfo(info, newAvailability);
     }
 };

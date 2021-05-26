@@ -7,6 +7,20 @@
 #include <QQmlApplicationEngine>
 
 #include "models.h"
+#include "port.h"
+
+class Enums : public QObject
+{
+    Q_OBJECT
+public:
+    Q_INVOKABLE QString portTypeToString(int type)
+    {
+        QMetaObject metaObject = PulseAudioQt::Port::staticMetaObject;
+        QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
+
+        return QString(metaEnum.valueToKey(type));
+    }
+};
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +36,11 @@ int main(int argc, char *argv[])
     qmlRegisterType<PulseAudioQt::StreamRestoreModel>(uri, 0, 1, "StreamRestoreModel");
     qmlRegisterType<PulseAudioQt::ModuleModel>(uri, 0, 1, "ModuleModel");
 
+    Enums e;
+    qmlRegisterSingletonInstance("org.kde.pulseaudioqt.painspector", 1, 0, "Enums", &e);
+
     QQmlApplicationEngine engine(QUrl(QStringLiteral("qrc:/main.qml")));
     return app.exec();
 }
+
+#include "main.moc"

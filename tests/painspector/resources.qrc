@@ -7,6 +7,7 @@
       <file>ModuleDelegate.qml</file>
       <file>Header.qml</file>
       <file>PropertiesItem.qml</file>
+      <file>PortsItem.qml</file>
       <file>PAPage.qml</file>
   </qresource>
 </RCC>

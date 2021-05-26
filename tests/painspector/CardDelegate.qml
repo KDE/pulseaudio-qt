@@ -32,6 +32,8 @@ Kirigami.FormLayout {
 
     PropertiesItem {}
 
+    PortsItem {}
+
     function availabilityToString(availability) {
         if (availability === 0) {
             return "Unknown"
@@ -53,15 +55,4 @@ Kirigami.FormLayout {
             }
         }
     }
-
-    Column {
-        Kirigami.FormData.label: "Ports:"
-        Repeater {
-            model: Ports
-            delegate: Label {
-                text: modelData.name + ": " + modelData.description + ", Priority: " + modelData.priority + ", Availability: " + availabilityToString(modelData.availability)
-            }
-        }
-    }
-
 }

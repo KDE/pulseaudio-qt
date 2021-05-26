@@ -27,4 +27,9 @@ PortPrivate::~PortPrivate()
 {
 }
 
+Port::Type Port::type() const
+{
+    return d->m_type;
+}
+
 } // PulseAudioQt
