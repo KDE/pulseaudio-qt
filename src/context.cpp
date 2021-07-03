@@ -13,6 +13,8 @@
 #include <QDBusServiceWatcher>
 #include <QTimer>
 
+#include <memory>
+
 #include "card.h"
 #include "client.h"
 #include "module.h"
