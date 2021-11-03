@@ -20,6 +20,7 @@ include(ECMGenerateExportHeader)
 include(ECMQtDeclareLoggingCategory)
 include(ECMAddQch)
 include(KDEClangFormat)
+include(ECMGeneratePkgConfigFile)
 
 include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
