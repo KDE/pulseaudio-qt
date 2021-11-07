@@ -27,6 +27,8 @@ class PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
 public:
     enum ItemRole { PulseObjectRole = Qt::UserRole + 1 };
 
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+
     ~AbstractModel() override;
     QHash<int, QByteArray> roleNames() const final override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const final override;
@@ -34,6 +36,9 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role) final override;
 
     Q_INVOKABLE int role(const QByteArray &roleName) const;
+
+Q_SIGNALS:
+    void countChanged();
 
 protected:
     AbstractModel(const MapBaseQObject *map, QObject *parent);
