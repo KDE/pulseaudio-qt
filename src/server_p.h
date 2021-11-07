@@ -21,6 +21,7 @@ public:
     QString m_defaultSourceName;
     Sink *m_defaultSink;
     Source *m_defaultSource;
+    bool m_isPipeWire = false;
 
     void update(const pa_server_info *info);
 };

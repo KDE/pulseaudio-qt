@@ -29,9 +29,15 @@ public:
     Source *defaultSource() const;
     void setDefaultSource(Source *source);
 
+    /**
+     * Whether PulseAudio is provided via pipewire-pulse.
+     */
+    bool isPipeWire() const;
+
 Q_SIGNALS:
     void defaultSinkChanged(PulseAudioQt::Sink *sink);
     void defaultSourceChanged(PulseAudioQt::Source *source);
+    void isPipeWireChanged();
 
 private:
     explicit Server(Context *context);

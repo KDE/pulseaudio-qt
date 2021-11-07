@@ -82,6 +82,13 @@ void ServerPrivate::update(const pa_server_info *info)
     m_defaultSinkName = QString::fromUtf8(info->default_sink_name);
     m_defaultSourceName = QString::fromUtf8(info->default_source_name);
 
+    const bool isPw = QString::fromUtf8(info->server_name).contains("PipeWire");
+
+    if (isPw != m_isPipeWire) {
+        m_isPipeWire = isPw;
+        Q_EMIT q->isPipeWireChanged();
+    }
+
     q->updateDefaultDevices();
 }
 
@@ -120,5 +127,11 @@ void Server::updateDefaultDevices()
         Q_EMIT defaultSourceChanged(d->m_defaultSource);
     }
 }
+
+bool Server::isPipeWire() const
+{
+    return d->m_isPipeWire;
+}
+
 
 } // PulseAudioQt
