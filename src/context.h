@@ -53,6 +53,13 @@ public:
 
     static Context *instance();
 
+    /**
+     * Set the application id that is reported to PulseAudio.
+     * This needs to be called before accessing the context singleton the first time.
+     * If not set QGuiApplication::desktopFileName() is used.
+     */
+    static void setApplicationId(const QString &applicationId);
+
     bool isValid();
 
     /**

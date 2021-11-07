@@ -44,6 +44,8 @@ public:
 
     int m_references;
 
+    static QString s_applicationId;
+
     void subscribeCallback(pa_context *context, pa_subscription_event_type_t type, uint32_t index);
     void contextStateCallback(pa_context *context);
     void sinkCallback(const pa_sink_info *info);

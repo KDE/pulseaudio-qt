@@ -11,6 +11,8 @@
 #include <QAbstractEventDispatcher>
 #include <QDBusConnection>
 #include <QDBusServiceWatcher>
+#include <QGuiApplication>
+#include <QIcon>
 #include <QTimer>
 
 #include <memory>
@@ -49,6 +51,8 @@ qint64 maximumUIVolume()
 {
     return PA_VOLUME_UI_MAX;
 }
+
+QString ContextPrivate::s_applicationId;
 
 #ifndef K_DOXYGEN
 
@@ -647,7 +651,17 @@ void ContextPrivate::connectToDaemon()
 
     pa_mainloop_api *api = pa_glib_mainloop_get_api(m_mainloop);
     Q_ASSERT(api);
-    m_context = pa_context_new(api, "QPulse");
+
+    pa_proplist *proplist = pa_proplist_new();
+    pa_proplist_sets(proplist, PA_PROP_APPLICATION_NAME, QGuiApplication::applicationDisplayName().toUtf8().constData());
+    if (!s_applicationId.isEmpty()) {
+        pa_proplist_sets(proplist, PA_PROP_APPLICATION_ID, s_applicationId.toUtf8().constData());
+    } else {
+        pa_proplist_sets(proplist, PA_PROP_APPLICATION_ID, QGuiApplication::desktopFileName().toUtf8().constData());
+    }
+    pa_proplist_sets(proplist, PA_PROP_APPLICATION_ICON_NAME, QGuiApplication::windowIcon().name().toUtf8().constData());
+    m_context = pa_context_new_with_proplist(api, nullptr, proplist);
+    pa_proplist_free(proplist);
     Q_ASSERT(m_context);
 
     if (pa_context_connect(m_context, NULL, PA_CONTEXT_NOFAIL, nullptr) < 0) {
@@ -788,6 +802,11 @@ void ContextPrivate::setGenericDeviceForStream(
         qCWarning(PULSEAUDIOQT) << "pa_move_stream_to_device failed";
         return;
     }
+}
+
+void Context::setApplicationId(const QString &applicationId)
+{
+    ContextPrivate::s_applicationId = applicationId;
 }
 
 } // PulseAudioQt
