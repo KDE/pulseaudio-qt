@@ -54,7 +54,7 @@ public:
     QVector<QString> channels() const;
     QStringList rawChannels() const;
     QVector<qreal> channelVolumes() const;
-    virtual void setChannelVolume(int channel, qint64 volume) = 0;
+    Q_INVOKABLE virtual void setChannelVolume(int channel, qint64 volume) = 0;
 
 Q_SIGNALS:
     void volumeChanged();
