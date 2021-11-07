@@ -52,12 +52,12 @@ void StreamRestorePrivate::update(const pa_ext_stream_restore_info *info)
         m_muted = info->mute;
         Q_EMIT q->mutedChanged();
     }
-    if (memcmp(&m_volume, &info->volume, sizeof(pa_cvolume)) != 0) {
+    if (!pa_cvolume_equal(&m_volume, &info->volume)) {
         m_volume = info->volume;
         Q_EMIT q->volumeChanged();
         Q_EMIT q->channelVolumesChanged();
     }
-    if (memcmp(&m_channelMap, &info->channel_map, sizeof(pa_channel_map)) != 0) {
+    if (!pa_channel_map_equal(&m_channelMap, &info->channel_map)) {
         m_channels.clear();
         m_channels.reserve(info->channel_map.channels);
         for (int i = 0; i < info->channel_map.channels; ++i) {
