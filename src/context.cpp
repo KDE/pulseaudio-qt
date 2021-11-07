@@ -809,4 +809,9 @@ void Context::setApplicationId(const QString &applicationId)
     ContextPrivate::s_applicationId = applicationId;
 }
 
+pa_context *Context::context() const
+{
+    return d->m_context;
+}
+
 } // PulseAudioQt

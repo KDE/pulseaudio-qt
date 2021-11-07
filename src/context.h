@@ -10,6 +10,8 @@
 #include "pulseaudioqt_export.h"
 #include <QObject>
 
+struct pa_context;
+
 /**
  * The primary namespace of PulseAudioQt.
  */
@@ -119,6 +121,11 @@ public:
     QVector<StreamRestore *> streamRestores() const;
 
     Server *server() const;
+
+    /**
+     *  Returns a pointer to the raw PulseAudio context.
+     */
+    pa_context *context() const;
 
     void setCardProfile(quint32 index, const QString &profile);
     void setDefaultSink(const QString &name);
