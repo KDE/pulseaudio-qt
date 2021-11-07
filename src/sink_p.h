@@ -19,6 +19,7 @@ public:
     void update(const pa_sink_info *info);
 
     Sink *q;
+    quint32 m_monitorIndex = -1;
 };
 }
 #endif

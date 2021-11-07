@@ -35,6 +35,14 @@ public:
 
     void setDefault(bool enable) override;
 
+    /**
+     * Index of the monitor source for this sink.
+     */
+    quint32 monitorIndex() const;
+
+Q_SIGNALS:
+    void monitorIndexChanged();
+
 private:
     explicit Sink(QObject *parent);
 

@@ -36,6 +36,11 @@ Sink::~Sink()
 void SinkPrivate::update(const pa_sink_info *info)
 {
     q->Device::d->updateDevice(info);
+
+    if (m_monitorIndex != info->monitor_source) {
+        m_monitorIndex = info->monitor_source;
+        Q_EMIT q->monitorIndexChanged();
+    }
 }
 
 void Sink::setVolume(qint64 volume)
@@ -73,6 +78,11 @@ void Sink::setDefault(bool enable)
     if (!isDefault() && enable) {
         Context::instance()->server()->setDefaultSink(this);
     }
+}
+
+quint32 Sink::monitorIndex() const
+{
+    return d->m_monitorIndex;
 }
 
 } // PulseAudioQt
