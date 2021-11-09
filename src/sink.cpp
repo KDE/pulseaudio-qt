@@ -85,4 +85,9 @@ quint32 Sink::monitorIndex() const
     return d->m_monitorIndex;
 }
 
+void Sink::setChannelVolumes(const QVector<qint64> &channelVolumes)
+{
+    Context::instance()->d->setGenericVolumes(index(), channelVolumes, VolumeObject::d->m_volume, &pa_context_set_sink_volume_by_index);
+}
+
 } // PulseAudioQt

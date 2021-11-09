@@ -27,6 +27,7 @@ public:
     void setMuted(bool muted) override;
     void setChannelVolume(int channel, qint64 volume) override;
     void setDeviceIndex(quint32 deviceIndex) override;
+    void setChannelVolumes(const QVector<qint64> &channelVolumes) override;
 
 private:
     explicit SourceOutput(QObject *parent);

@@ -57,4 +57,9 @@ void SourceOutput::setChannelVolume(int channel, qint64 volume)
     Context::instance()->d->setGenericVolume(index(), channel, volume, VolumeObject::d->cvolume(), &pa_context_set_source_output_volume);
 }
 
+void SourceOutput::setChannelVolumes(const QVector<qint64> &channelVolumes)
+{
+    Context::instance()->d->setGenericVolumes(index(), channelVolumes, VolumeObject::d->m_volume, &pa_context_set_source_output_volume);
+}
+
 } // PulseAudioQt

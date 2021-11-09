@@ -69,6 +69,11 @@ void Source::setDefault(bool enable)
     }
 }
 
+void Source::setChannelVolumes(const QVector<qint64> &volumes)
+{
+    Context::instance()->d->setGenericVolumes(index(), volumes, VolumeObject::d->m_volume, &pa_context_set_source_volume_by_index);
+}
+
 Source::~Source()
 {
     delete d;

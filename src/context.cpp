@@ -807,6 +807,28 @@ void ContextPrivate::setGenericDeviceForStream(
     }
 }
 
+void ContextPrivate::setGenericVolumes(
+    quint32 index,
+    QVector<qint64> channelVolumes,
+    pa_cvolume cVolume,
+    const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &pa_set_volume)
+{
+    if (!m_context) {
+        return;
+    }
+    Q_ASSERT(channelVolumes.count() == cVolume.channels);
+
+    pa_cvolume newCVolume = cVolume;
+    for (int i = 0; i < channelVolumes.count(); ++i) {
+        newCVolume.values[i] = qBound<qint64>(0, channelVolumes.at(i), PA_VOLUME_MAX);
+    }
+
+    if (!PAOperation(pa_set_volume(m_context, index, &newCVolume, nullptr, nullptr))) {
+        qCWarning(PULSEAUDIOQT) << "pa_set_volume failed";
+        return;
+    }
+}
+
 void Context::setApplicationId(const QString &applicationId)
 {
     ContextPrivate::s_applicationId = applicationId;

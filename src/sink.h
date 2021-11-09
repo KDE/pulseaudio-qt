@@ -35,6 +35,8 @@ public:
 
     void setDefault(bool enable) override;
 
+    void setChannelVolumes(const QVector<qint64> &channelVolumes) override;
+
     /**
      * Index of the monitor source for this sink.
      */
