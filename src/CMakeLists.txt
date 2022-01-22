@@ -32,10 +32,10 @@ ecm_qt_declare_logging_category(KF5PulseAudioQt
 
 target_link_libraries(KF5PulseAudioQt
     PUBLIC
-        Qt5::Core
+        Qt${QT_MAJOR_VERSION}::Core
     PRIVATE
-        Qt5::Gui
-        Qt5::DBus
+        Qt${QT_MAJOR_VERSION}::Gui
+        Qt${QT_MAJOR_VERSION}::DBus
         PkgConfig::LIBPULSE
         PkgConfig::LIBPULSE_MAINLOOP
 )
@@ -98,7 +98,7 @@ if(BUILD_QCH)
         SOURCES
             ${PulseAudioQt_HEADERS}
         LINK_QCHS
-            Qt5Gui_QCH
+            Qt${QT_MAJOR_VERSION}Gui_QCH
         BLANK_MACROS
             PulseAudioQt_EXPORT
             PulseAudioQt_DEPRECATED

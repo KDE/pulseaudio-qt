@@ -36,15 +36,15 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX PULSEAUDIOQT
                         SOVERSION 3)
 
 set(REQUIRED_QT_VERSION 5.15.0)
-find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
+find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
 
-find_package(Qt5Test ${REQUIRED_QT_VERSION} CONFIG)
+find_package(Qt${QT_MAJOR_VERSION}Test ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5Test PROPERTIES DESCRIPTION "Autotests for PulseAudioQt" TYPE OPTIONAL)
 
-find_package(Qt5Qml ${REQUIRED_QT_VERSION} CONFIG)
+find_package(Qt${QT_MAJOR_VERSION}Qml ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
 
-find_package(Qt5Quick ${REQUIRED_QT_VERSION} CONFIG)
+find_package(Qt${QT_MAJOR_VERSION}Quick ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt5Quick PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
@@ -94,7 +94,7 @@ install(EXPORT KF5PulseAudioQtTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" F
 
 install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/pulseaudioqt_version.h
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5} COMPONENT Devel )
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF} COMPONENT Devel )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
