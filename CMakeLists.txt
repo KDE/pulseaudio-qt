@@ -5,8 +5,8 @@ set(PROJECT_VERSION 1.3.0)
 project(PulseAudioQt VERSION ${PROJECT_VERSION})
 
 include(FeatureSummary)
-find_package(ECM 5.80.0  NO_MODULE)
-
+find_package(ECM 5.90.0  NO_MODULE)
+set (KDE_COMPILERSETTINGS_LEVEL "5.82")
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://kde.org/products/frameworks/")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
@@ -39,13 +39,13 @@ set(REQUIRED_QT_VERSION 5.15.0)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)
 
 find_package(Qt${QT_MAJOR_VERSION}Test ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt5Test PROPERTIES DESCRIPTION "Autotests for PulseAudioQt" TYPE OPTIONAL)
+set_package_properties(Qt${QT_MAJOR_VERSION}Test PROPERTIES DESCRIPTION "Autotests for PulseAudioQt" TYPE OPTIONAL)
 
 find_package(Qt${QT_MAJOR_VERSION}Qml ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt5Qml PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
+set_package_properties(Qt${QT_MAJOR_VERSION}Qml PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
 
 find_package(Qt${QT_MAJOR_VERSION}Quick ${REQUIRED_QT_VERSION} CONFIG)
-set_package_properties(Qt5Quick PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
+set_package_properties(Qt${QT_MAJOR_VERSION}Quick PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5PulseAudioQt")
