@@ -8,7 +8,6 @@
 #include "card_p.h"
 #include "debug.h"
 
-#include "cardport.h"
 #include "context.h"
 #include "indexedpulseobject_p.h"
 #include "port_p.h"
