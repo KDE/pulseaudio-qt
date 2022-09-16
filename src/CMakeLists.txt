@@ -81,7 +81,7 @@ ecm_generate_pkgconfig_file(BASE_NAME KF5PulseAudioQt
       DEPS "Qt${QT_MAJOR_VERSION}Core"
     INSTALL)
 
-install(TARGETS KF5PulseAudioQt EXPORT KF5PulseAudioQtTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5PulseAudioQt EXPORT KF5PulseAudioQtTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES
     ${PulseAudioQt_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/pulseaudioqt_export.h
