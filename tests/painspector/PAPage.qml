@@ -16,6 +16,8 @@ Kirigami.ScrollablePage {
     property alias model: repeater.model
     property alias delegate: repeater.delegate
 
+    // Initially invisible, managed by NavigationTabBar's actions
+    visible: false
 
     ColumnLayout {
         Kirigami.FormLayout {

@@ -9,54 +9,97 @@ import QtQuick.Controls 2.2
 
 import org.kde.pulseaudioqt.tests 0.1 as PulseAudioQt
 
-import org.kde.kirigami 2.15 as Kirigami
+import org.kde.kirigami 2.20 as Kirigami
 
 Kirigami.ApplicationWindow {
+    id: root
 
-    Kirigami.SwipeNavigator {
-        anchors.fill: parent
+    pageStack.initialPage: pageCards
 
-        PAPage {
-            title: "Cards"
-            model: PulseAudioQt.CardModel {}
-            delegate: CardDelegate {}
+    PAPage {
+        id: pageCards
+        title: "Cards"
+        model: PulseAudioQt.CardModel {}
+        delegate: CardDelegate {}
+    }
+
+    PAPage {
+        id: pageSinks
+        title: "Sinks"
+        model: PulseAudioQt.SinkModel {}
+        delegate: DeviceDelegate {}
+    }
+
+    PAPage {
+        id: pageSources
+        title: "Sources"
+        model: PulseAudioQt.SourceModel {}
+        delegate: DeviceDelegate {}
+    }
+
+    PAPage {
+        id: pageSinkInputs
+        title: "Sink Inputs"
+        model: PulseAudioQt.SinkInputModel {}
+        delegate: StreamDelegate {}
+    }
+
+    PAPage {
+        id: pageSourceOutputs
+        title: "Source Outputs"
+        model: PulseAudioQt.SourceOutputModel {}
+        delegate: StreamDelegate {}
+    }
+
+    PAPage {
+        id: pageStreamRestores
+        title: "Stream Restores"
+        model: PulseAudioQt.StreamRestoreModel {}
+        delegate: StreamDelegate {}
+    }
+
+    PAPage {
+        id: pageModules
+        title: "Modules"
+        model: PulseAudioQt.ModuleModel {}
+        delegate: ModuleDelegate {}
+    }
+
+    component PageAction : Kirigami.Action {
+        required property PAPage page
+
+        text: page.title
+        checked: page.visible
+
+        onTriggered: {
+            root.pageStack.clear();
+            root.pageStack.push(page);
         }
+    }
 
-        PAPage {
-            title: "Sinks"
-            model: PulseAudioQt.SinkModel {}
-            delegate: DeviceDelegate {}
-        }
-
-        PAPage {
-            title: "Sources"
-            model: PulseAudioQt.SourceModel {}
-            delegate: DeviceDelegate {}
-        }
-
-        PAPage {
-            title: "Sink Inputs"
-            model: PulseAudioQt.SinkInputModel {}
-            delegate: StreamDelegate {}
-        }
-
-        PAPage {
-            title: "Source Outputs"
-            model: PulseAudioQt.SourceOutputModel {}
-            delegate: StreamDelegate {}
-        }
-
-        PAPage {
-            title: "Stream Restores"
-            model: PulseAudioQt.StreamRestoreModel {}
-            delegate: StreamDelegate {}
-        }
-
-        PAPage {
-            title: "Modules"
-            model: PulseAudioQt.ModuleModel {}
-            delegate: ModuleDelegate {
+    footer: Kirigami.NavigationTabBar {
+        actions: [
+            PageAction {
+                page: pageCards
+            },
+            PageAction {
+                page: pageSinks
+            },
+            PageAction {
+                page: pageSources
+            },
+            PageAction {
+                page: pageSinkInputs
+            },
+            PageAction {
+                page: pageSourceOutputs
+            },
+            PageAction {
+                page: pageStreamRestores
+            },
+            PageAction {
+                page: pageModules
             }
-        }
+        ]
     }
 }
