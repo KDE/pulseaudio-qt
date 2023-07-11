@@ -23,6 +23,8 @@ class PULSEAUDIOQT_EXPORT Profile : public PulseObject
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(quint32 priority READ priority NOTIFY priorityChanged)
     Q_PROPERTY(Availability availability READ availability NOTIFY availabilityChanged)
+    Q_PROPERTY(quint32 sinkCount READ sinkCount NOTIFY sinkCountChanged)
+    Q_PROPERTY(quint32 sourceCount READ sourceCount NOTIFY sourceCountChanged)
 
 public:
     enum Availability { Unknown, Available, Unavailable };
@@ -45,6 +47,16 @@ public:
      */
     Availability availability() const;
 
+    /**
+     * Number of sinks this profile would create.
+     */
+    quint32 sinkCount() const;
+
+    /**
+     * Number of sources this profile would create.
+     */
+    quint32 sourceCount() const;
+
 Q_SIGNALS:
     /**
      * Emitted when the description changed.
@@ -60,6 +72,16 @@ Q_SIGNALS:
      * Emitted when the availability changed.
      */
     void availabilityChanged();
+
+    /**
+     * Emitted when sink count is changed.
+     */
+    void sinkCountChanged();
+
+    /**
+     * Emitted when source count is changed.
+     */
+    void sourceCountChanged();
 
 protected:
     /** @private */

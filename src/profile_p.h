@@ -22,11 +22,23 @@ public:
     QString m_description;
     quint32 m_priority = 0;
     Profile::Availability m_availability = Profile::Unknown;
+    quint32 m_sinkCount = 0;
+    quint32 m_sourceCount = 0;
 
     template<typename PAInfo>
     void setInfo(const PAInfo *info)
     {
         setCommonInfo(info, info->available ? Profile::Available : Profile::Unavailable);
+
+        if (m_sinkCount != info->n_sinks) {
+            m_sinkCount = info->n_sinks;
+            Q_EMIT q->sinkCountChanged();
+        }
+
+        if (m_sourceCount != info->n_sources) {
+            m_sourceCount = info->n_sources;
+            Q_EMIT q->sourceCountChanged();
+        }
     }
 
     template<typename PAInfo>

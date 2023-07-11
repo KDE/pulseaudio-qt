@@ -43,4 +43,14 @@ Profile::Availability Profile::availability() const
     return d->m_availability;
 }
 
+quint32 Profile::sinkCount() const
+{
+    return d->m_sinkCount;
+}
+
+quint32 Profile::sourceCount() const
+{
+    return d->m_sourceCount;
+}
+
 } // PulseAudioQt
