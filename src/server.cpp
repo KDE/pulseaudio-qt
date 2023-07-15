@@ -133,5 +133,4 @@ bool Server::isPipeWire() const
     return d->m_isPipeWire;
 }
 
-
 } // PulseAudioQt
