@@ -10,5 +10,5 @@ add_executable(painspector ${painspector_SRCS})
 target_link_libraries(painspector
     Qt${QT_MAJOR_VERSION}::Qml
     Qt${QT_MAJOR_VERSION}::Quick
-    KF5PulseAudioQt
+    KF${QT_MAJOR_VERSION}PulseAudioQt
 )

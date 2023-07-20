@@ -33,7 +33,7 @@ add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt 
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX PULSEAUDIOQT
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/pulseaudioqt_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfigVersion.cmake"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF${QT_MAJOR_VERSION}PulseAudioQtConfigVersion.cmake"
                         SOVERSION 4)
 
 set(REQUIRED_QT_VERSION 5.15.0)
@@ -49,17 +49,17 @@ find_package(Qt${QT_MAJOR_VERSION}Quick ${REQUIRED_QT_VERSION} CONFIG)
 set_package_properties(Qt${QT_MAJOR_VERSION}Quick PROPERTIES DESCRIPTION "Tests for PulseAudioQt" TYPE OPTIONAL)
 
 # create a Config.cmake and a ConfigVersion.cmake file and install them
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5PulseAudioQt")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF${QT_MAJOR_VERSION}PulseAudioQt")
 
 
-install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfig.cmake"
-               "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfigVersion.cmake"
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF${QT_MAJOR_VERSION}PulseAudioQtConfig.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/KF${QT_MAJOR_VERSION}PulseAudioQtConfigVersion.cmake"
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel )
 
 configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/KF5PulseAudioQtConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5PulseAudioQtConfig.cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/KF${QT_MAJOR_VERSION}PulseAudioQtConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/KF${QT_MAJOR_VERSION}PulseAudioQtConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
@@ -76,22 +76,22 @@ add_subdirectory(src)
 
 if (BUILD_TESTING)
     add_subdirectory(tests)
-    if(Qt5Test_FOUND)
+    if(Qt${QT_MAJOR_VERSION}Test_FOUND)
         add_subdirectory(autotests)
     endif()
 endif()
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5PulseAudioQt_QCH
-        FILE KF5PulseAudioQtQchTargets.cmake
+        TARGETS KF${QT_MAJOR_VERSION}PulseAudioQt_QCH
+        FILE KF${QT_MAJOR_VERSION}PulseAudioQtQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5PulseAudioQtQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF${QT_MAJOR_VERSION}PulseAudioQtQchTargets.cmake\")")
 endif()
 
-install(EXPORT KF5PulseAudioQtTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5PulseAudioQtTargets.cmake NAMESPACE KF5:: )
+install(EXPORT PulseAudioQtTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF${QT_MAJOR_VERSION}PulseAudioQtTargets.cmake NAMESPACE KF${QT_MAJOR_VERSION}:: )
 
 install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/pulseaudioqt_version.h
