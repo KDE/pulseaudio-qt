@@ -29,6 +29,7 @@ Server::Server(Context *context)
 
 Server::~Server()
 {
+    delete d;
 }
 
 ServerPrivate::ServerPrivate(Server *q)

@@ -21,6 +21,7 @@ SourceOutput::SourceOutput(QObject *parent)
 
 SourceOutput::~SourceOutput()
 {
+    delete d;
 }
 
 SourceOutputPrivate::SourceOutputPrivate(SourceOutput *q)

@@ -25,6 +25,7 @@ VolumeObjectPrivate::VolumeObjectPrivate(VolumeObject *q)
 
 VolumeObject::~VolumeObject()
 {
+    delete d;
 }
 
 qint64 VolumeObject::volume() const
