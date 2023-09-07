@@ -262,6 +262,11 @@ Context::Context(QObject *parent)
         d->connectToDaemon();
     });
 
+    connect(&d->m_connectTimer, &QTimer::timeout, this, [this] {
+        d->connectToDaemon();
+        d->checkConnectTries();
+    });
+
     connect(&d->m_sinks, &MapBaseQObject::added, this, [this](int, QObject *object) {
         Q_EMIT sinkAdded(static_cast<Sink *>(object));
     });
@@ -446,7 +451,8 @@ void ContextPrivate::contextStateCallback(pa_context *c)
     qCDebug(PULSEAUDIOQT) << "state callback";
     pa_context_state_t state = pa_context_get_state(c);
     if (state == PA_CONTEXT_READY) {
-        qCDebug(PULSEAUDIOQT) << "ready";
+        qCDebug(PULSEAUDIOQT) << "ready, stopping connect timer";
+        m_connectTimer.stop();
 
         // 1. Register for the stream changes (except during probe)
         if (m_context == c) {
@@ -517,9 +523,8 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             m_context = nullptr;
         }
         reset();
-        QTimer::singleShot(1000, q, [this] {
-            connectToDaemon();
-        });
+        qCDebug(PULSEAUDIOQT) << "Starting connect timer";
+        m_connectTimer.start(std::chrono::seconds(5));
     }
 }
 
@@ -683,6 +688,14 @@ void ContextPrivate::connectToDaemon()
     pa_context_set_state_callback(m_context, &context_state_callback, this);
 }
 
+void ContextPrivate::checkConnectTries()
+{
+    if (++m_connectTries == 5) {
+        qCWarning(PULSEAUDIOQT) << "Giving up after" << m_connectTries << "tries to connect";
+        m_connectTimer.stop();
+    }
+}
+
 void ContextPrivate::reset()
 {
     m_sinks.reset();
@@ -694,6 +707,7 @@ void ContextPrivate::reset()
     m_modules.reset();
     m_streamRestores.reset();
     m_server->reset();
+    m_connectTries = 0;
 }
 
 bool Context::isValid()

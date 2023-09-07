@@ -8,6 +8,7 @@
 
 #include "maps.h"
 #include "operation.h"
+#include <QTimer>
 #include <functional>
 #include <pulse/context.h>
 #include <pulse/ext-stream-restore.h>
@@ -44,6 +45,9 @@ public:
 
     int m_references;
 
+    QTimer m_connectTimer;
+    int m_connectTries;
+
     static QString s_applicationId;
 
     void subscribeCallback(pa_context *context, pa_subscription_event_type_t type, uint32_t index);
@@ -77,6 +81,7 @@ public:
 
     void reset();
     void connectToDaemon();
+    void checkConnectTries();
 
     Context *q;
 };
