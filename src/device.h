@@ -30,6 +30,7 @@ class PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(QList<Port *> ports READ ports NOTIFY portsChanged)
     Q_PROPERTY(quint32 activePortIndex READ activePortIndex WRITE setActivePortIndex NOTIFY activePortIndexChanged)
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
+    Q_PROPERTY(qint64 baseVolume READ baseVolume NOTIFY baseVolumeChanged)
 
 public:
     enum State {
@@ -94,6 +95,11 @@ public:
      */
     virtual void setDefault(bool enable) = 0;
 
+    /**
+     * The base volume of this device, generally useful as a good default volume.
+     */
+    qint64 baseVolume() const;
+
 Q_SIGNALS:
     void stateChanged();
     void descriptionChanged();
@@ -102,6 +108,7 @@ Q_SIGNALS:
     void portsChanged();
     void activePortIndexChanged();
     void defaultChanged();
+    void baseVolumeChanged();
 
 protected:
     /** @private */

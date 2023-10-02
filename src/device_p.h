@@ -31,6 +31,7 @@ public:
     QList<Port *> m_ports;
     quint32 m_activePortIndex = -1;
     Device::State m_state = Device::UnknownState;
+    qint64 m_baseVolume = -1;
 
     Device::State stateFromPaState(int value) const;
 
@@ -102,6 +103,11 @@ public:
         if (infoState != m_state) {
             m_state = infoState;
             Q_EMIT q->stateChanged();
+        }
+
+        if (m_baseVolume != info->base_volume) {
+            m_baseVolume = info->base_volume;
+            Q_EMIT q->baseVolumeChanged();
         }
     }
 };

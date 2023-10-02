@@ -39,6 +39,12 @@ quint32 Device::activePortIndex() const
     return d->m_activePortIndex;
 }
 
+    
+qint64 Device::baseVolume() const
+{
+    return d->m_baseVolume;
+}
+
 Device::Device(QObject *parent)
     : VolumeObject(parent)
     , d(new DevicePrivate(this))
