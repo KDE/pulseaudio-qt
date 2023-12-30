@@ -65,9 +65,12 @@ void CardPrivate::update(const pa_card_info *info)
         profile->d->setInfo(*it);
     }
 
-    for (Profile *profile : qAsConst(m_profiles)) {
+    QMutableListIterator<Profile *> it(m_profiles);
+    while (it.hasNext()) {
+        Profile *profile = it.next();
+
         if (!newProfiles.contains(profile->name())) {
-            m_profiles.removeOne(profile);
+            it.remove();
             delete profile;
         }
     }
