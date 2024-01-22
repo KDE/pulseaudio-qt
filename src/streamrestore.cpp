@@ -89,7 +89,14 @@ void StreamRestore::setDevice(const QString &device)
 
 qint64 StreamRestore::volume() const
 {
-    return d->m_volume.values[0];
+    // FIXME: workaround for pipewire not supporting stream restore subscription
+    // revert when fix is released
+    // https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/3805
+    if (d->m_cache.valid) {
+        return d->m_cache.volume.values[0];
+    } else {
+        return d->m_volume.values[0];
+    }
 }
 
 void StreamRestore::setVolume(qint64 volume)
@@ -115,7 +122,14 @@ void StreamRestore::setVolume(qint64 volume)
 
 bool StreamRestore::isMuted() const
 {
-    return d->m_muted;
+    // FIXME: workaround for pipewire not supporting stream restore subscription
+    // revert when fix is released
+    // https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/3805
+    if (d->m_cache.valid) {
+        return d->m_cache.muted;
+    } else {
+        return d->m_muted;
+    }
 }
 
 void StreamRestore::setMuted(bool muted)
