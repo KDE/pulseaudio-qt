@@ -42,7 +42,7 @@ target_link_libraries(KF${QT_MAJOR_VERSION}PulseAudioQt
 
 target_include_directories(KF${QT_MAJOR_VERSION}PulseAudioQt INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KF${QT_MAJOR_VERSION}PulseAudioQt>" )
 
-set_target_properties(KF${QT_MAJOR_VERSION}PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_VERSION}
+set_target_properties(KF${QT_MAJOR_VERSION}PulseAudioQt PROPERTIES VERSION ${PULSEAUDIOQT_SOVERSION}.0.0
                                                    SOVERSION ${PULSEAUDIOQT_SOVERSION}
                                                    EXPORT_NAME PulseAudioQt
 )
