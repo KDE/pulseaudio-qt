@@ -8,6 +8,7 @@
 #define PA_DEVICE_H
 
 #include <QString>
+#include <QVariantMap>
 
 #include "port.h"
 #include "volumeobject.h"
@@ -31,6 +32,7 @@ class PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(quint32 activePortIndex READ activePortIndex WRITE setActivePortIndex NOTIFY activePortIndexChanged)
     Q_PROPERTY(bool default READ isDefault WRITE setDefault NOTIFY defaultChanged)
     Q_PROPERTY(qint64 baseVolume READ baseVolume NOTIFY baseVolumeChanged)
+    Q_PROPERTY(QVariantMap pulseProperties READ pulseProperties NOTIFY pulsePropertiesChanged)
 
 public:
     enum State {
@@ -100,6 +102,11 @@ public:
      */
     qint64 baseVolume() const;
 
+    /**
+     * @return QVariantMap the pulseaudio properties of this device (e.g. media.class, device.api, ...)
+     */
+    [[nodiscard]] QVariantMap pulseProperties() const;
+
 Q_SIGNALS:
     void stateChanged();
     void descriptionChanged();
@@ -109,6 +116,7 @@ Q_SIGNALS:
     void activePortIndexChanged();
     void defaultChanged();
     void baseVolumeChanged();
+    void pulsePropertiesChanged();
 
 protected:
     /** @private */

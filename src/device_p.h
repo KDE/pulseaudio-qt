@@ -32,8 +32,24 @@ public:
     quint32 m_activePortIndex = -1;
     Device::State m_state = Device::UnknownState;
     qint64 m_baseVolume = -1;
+    QVariantMap m_pulseProperties;
 
     Device::State stateFromPaState(int value) const;
+
+    template<typename PAInfo>
+    void updatePulseProperties(const PAInfo *info)
+    {
+        QVariantMap pulseProperties;
+        void *state = nullptr;
+        while (auto key = pa_proplist_iterate(info->proplist, &state)) {
+            const auto value = pa_proplist_gets(info->proplist, key);
+            pulseProperties.insert(key, QString::fromUtf8(value));
+        }
+        if (pulseProperties != m_pulseProperties) {
+            m_pulseProperties = pulseProperties;
+            Q_EMIT q->pulsePropertiesChanged();
+        }
+    }
 
     template<typename PAInfo>
     void updateDevice(const PAInfo *info)
@@ -55,6 +71,8 @@ public:
 
         m_cardIndex = info->card;
         Q_EMIT q->cardIndexChanged();
+
+        updatePulseProperties(info);
 
         QStringList newPorts;
         QStringList existingPorts;

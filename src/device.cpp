@@ -39,10 +39,14 @@ quint32 Device::activePortIndex() const
     return d->m_activePortIndex;
 }
 
-    
 qint64 Device::baseVolume() const
 {
     return d->m_baseVolume;
+}
+
+QVariantMap Device::pulseProperties() const
+{
+    return d->m_pulseProperties;
 }
 
 Device::Device(QObject *parent)
