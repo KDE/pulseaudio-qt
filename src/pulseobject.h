@@ -29,7 +29,7 @@ class PULSEAUDIOQT_EXPORT PulseObject : public QObject
     Q_PROPERTY(QVariantMap properties READ properties NOTIFY propertiesChanged)
 
 public:
-    ~PulseObject();
+    ~PulseObject() override;
 
     QString name() const;
 

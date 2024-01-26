@@ -21,7 +21,7 @@ class PULSEAUDIOQT_EXPORT SinkInput : public Stream
     Q_OBJECT
 
 public:
-    ~SinkInput();
+    ~SinkInput() override;
 
     void setVolume(qint64 volume) override;
     void setMuted(bool muted) override;

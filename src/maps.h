@@ -67,9 +67,7 @@ template<typename Type, typename PAInfo>
 class MapBase : public MapBaseQObject
 {
 public:
-    virtual ~MapBase()
-    {
-    }
+    ~MapBase() override = default;
 
     const QVector<Type *> &data() const
     {

@@ -20,7 +20,7 @@ class PULSEAUDIOQT_EXPORT IndexedPulseObject : public PulseObject
     Q_PROPERTY(quint32 index READ index CONSTANT)
 
 public:
-    ~IndexedPulseObject();
+    ~IndexedPulseObject() override;
 
     /**
      * Index of this object.

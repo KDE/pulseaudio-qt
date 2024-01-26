@@ -25,7 +25,7 @@ class PULSEAUDIOQT_EXPORT VolumeObject : public IndexedPulseObject
     Q_PROPERTY(QStringList rawChannels READ rawChannels NOTIFY rawChannelsChanged)
 
 public:
-    ~VolumeObject();
+    ~VolumeObject() override;
 
     /**
      * This object's volume

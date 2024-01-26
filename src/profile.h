@@ -30,7 +30,7 @@ public:
     enum Availability { Unknown, Available, Unavailable };
     Q_ENUM(Availability)
 
-    ~Profile();
+    ~Profile() override;
 
     /**
      * A human readable description.
