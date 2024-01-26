@@ -21,7 +21,7 @@ class PULSEAUDIOQT_EXPORT Source : public Device
     Q_OBJECT
 
 public:
-    ~Source();
+    ~Source() override;
 
     void setVolume(qint64 volume) override;
     void setMuted(bool muted) override;

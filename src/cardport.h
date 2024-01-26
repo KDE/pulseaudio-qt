@@ -21,7 +21,7 @@ class PULSEAUDIOQT_EXPORT CardPort : public Port
     Q_OBJECT
 
 public:
-    ~CardPort();
+    ~CardPort() override;
 
     void update(const pa_card_port_info *info);
 

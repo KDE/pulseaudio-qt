@@ -49,7 +49,7 @@ public:
     };
     Q_ENUM(State);
 
-    ~Device();
+    ~Device() override;
 
     /**
      * The state of this device.

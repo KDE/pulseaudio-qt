@@ -28,7 +28,7 @@ class PULSEAUDIOQT_EXPORT Stream : public VolumeObject
     Q_PROPERTY(bool hasVolume READ hasVolume NOTIFY hasVolumeChanged)
 
 public:
-    ~Stream();
+    ~Stream() override;
 
     Client *client() const;
     bool isVirtualStream() const;

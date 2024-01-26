@@ -28,7 +28,7 @@ class PULSEAUDIOQT_EXPORT StreamRestore : public PulseObject
     Q_PROPERTY(quint32 index READ index CONSTANT)
 
 public:
-    ~StreamRestore();
+    ~StreamRestore() override;
 
     QString device() const;
     void setDevice(const QString &device);

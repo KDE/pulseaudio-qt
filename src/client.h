@@ -18,7 +18,7 @@ class PULSEAUDIOQT_EXPORT Client : public IndexedPulseObject
 {
     Q_OBJECT
 public:
-    ~Client();
+    ~Client() override;
 
 private:
     explicit Client(QObject *parent);

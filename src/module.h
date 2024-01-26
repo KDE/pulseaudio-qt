@@ -20,7 +20,7 @@ class PULSEAUDIOQT_EXPORT Module : public IndexedPulseObject
     Q_PROPERTY(QString argument READ argument NOTIFY argumentChanged)
 
 public:
-    ~Module();
+    ~Module() override;
 
     QString argument() const;
 

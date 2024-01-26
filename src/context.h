@@ -51,7 +51,7 @@ class PULSEAUDIOQT_EXPORT Context : public QObject
     Q_OBJECT
 
 public:
-    ~Context();
+    ~Context() override;
 
     static Context *instance();
 

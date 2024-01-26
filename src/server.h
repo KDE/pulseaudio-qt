@@ -27,7 +27,7 @@ class PULSEAUDIOQT_EXPORT Server : public QObject
     /// Whether the connected Server is PipeWire (rather than PulseAudio)
     Q_PROPERTY(bool isPipeWire READ isPipeWire NOTIFY isPipeWireChanged)
 public:
-    ~Server();
+    ~Server() override;
 
     Sink *defaultSink() const;
     void setDefaultSink(Sink *sink);

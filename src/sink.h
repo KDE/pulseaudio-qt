@@ -21,7 +21,7 @@ class PULSEAUDIOQT_EXPORT Sink : public Device
     Q_OBJECT
 
 public:
-    ~Sink();
+    ~Sink() override;
 
     void setVolume(qint64 volume) override;
 

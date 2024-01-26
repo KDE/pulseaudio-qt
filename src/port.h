@@ -21,7 +21,7 @@ class PULSEAUDIOQT_EXPORT Port : public Profile
     Q_PROPERTY(Type type READ type NOTIFY typeChanged)
 
 public:
-    ~Port();
+    ~Port() override;
 
     enum Type {
         Unknown,
