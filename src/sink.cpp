@@ -93,10 +93,10 @@ void Sink::setChannelVolumes(const QVector<qint64> &channelVolumes)
 
 void Sink::switchStreams()
 {
-    auto data = context()->sinkInputs().data();
-    std::for_each(data.begin(), data.end(), [this](SinkInput* paObj) {
-        paObj->setDeviceIndex(m_index);
-    });
+    const auto sinkInputs = Context::instance()->sinkInputs();
+    for (const auto &sinkInput : sinkInputs) {
+        sinkInput->setDeviceIndex(index());
+    }
 }
 
 } // PulseAudioQt

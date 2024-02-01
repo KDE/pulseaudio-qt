@@ -71,10 +71,10 @@ void Source::setDefault(bool enable)
 
 void Source::switchStreams()
 {
-    auto data = context()->sourceOutputs().data();
-    std::for_each(data.begin(), data.end(), [this](SourceOutput* paObj) {
-        paObj->setDeviceIndex(m_index);
-    });
+    const auto sourceOutputs = Context::instance()->sourceOutputs();
+    for (const auto &sourceOutput : sourceOutputs) {
+        sourceOutput->setDeviceIndex(index());
+    }
 }
 
 void Source::setChannelVolumes(const QVector<qint64> &volumes)
