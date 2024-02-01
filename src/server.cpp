@@ -91,6 +91,8 @@ void ServerPrivate::update(const pa_server_info *info)
     }
 
     q->updateDefaultDevices();
+
+    Q_EMIT q->updated();
 }
 
 /** @private */

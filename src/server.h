@@ -38,6 +38,7 @@ Q_SIGNALS:
     void defaultSinkChanged(PulseAudioQt::Sink *sink);
     void defaultSourceChanged(PulseAudioQt::Source *source);
     void isPipeWireChanged();
+    void updated();
 
 private:
     explicit Server(Context *context);
