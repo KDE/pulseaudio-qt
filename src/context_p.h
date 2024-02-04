@@ -43,8 +43,6 @@ public:
     QString m_newDefaultSink;
     QString m_newDefaultSource;
 
-    int m_references;
-
     QTimer m_connectTimer;
     int m_connectTries;
 

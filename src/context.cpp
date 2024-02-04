@@ -252,7 +252,6 @@ Context::Context(QObject *parent)
     d->m_server = new Server(this);
     d->m_context = nullptr;
     d->m_mainloop = nullptr;
-    d->m_references = 0;
 
     d->connectToDaemon();
 
