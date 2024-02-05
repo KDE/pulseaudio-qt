@@ -34,7 +34,7 @@ add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt 
 ecm_setup_version(PROJECT VARIABLE_PREFIX PULSEAUDIOQT
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/pulseaudioqt_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF${QT_MAJOR_VERSION}PulseAudioQtConfigVersion.cmake"
-                        SOVERSION 4)
+                        SOVERSION 5)
 
 set(REQUIRED_QT_VERSION 5.15.0)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui DBus)

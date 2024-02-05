@@ -215,46 +215,8 @@ QMetaMethod AbstractModel::propertyChangedMetaMethod() const
 
 SinkModel::SinkModel(QObject *parent)
     : AbstractModel(&context()->d->m_sinks, parent)
-    , d(new SinkModelPrivate(this))
 {
     initRoleNames(Sink::staticMetaObject);
-
-    for (int i = 0; i < context()->d->m_sinks.count(); ++i) {
-        sinkAdded(i);
-    }
-
-    connect(&context()->d->m_sinks, &MapBaseQObject::added, this, &SinkModel::sinkAdded);
-    connect(&context()->d->m_sinks, &MapBaseQObject::removed, this, &SinkModel::sinkRemoved);
-
-    connect(context()->server(), &Server::defaultSinkChanged, this, [this]() {
-        updatePreferredSink();
-        Q_EMIT defaultSinkChanged();
-    });
-}
-
-SinkModel::~SinkModel()
-{
-    delete d;
-}
-
-SinkModelPrivate::SinkModelPrivate(SinkModel *q)
-    : q(q)
-    , m_preferredSink(nullptr)
-{
-}
-
-SinkModelPrivate::~SinkModelPrivate()
-{
-}
-
-Sink *SinkModel::defaultSink() const
-{
-    return context()->server()->defaultSink();
-}
-
-Sink *SinkModel::preferredSink() const
-{
-    return d->m_preferredSink;
 }
 
 QVariant SinkModel::data(const QModelIndex &index, int role) const
@@ -268,88 +230,10 @@ QVariant SinkModel::data(const QModelIndex &index, int role) const
     return AbstractModel::data(index, role);
 }
 
-void SinkModel::sinkAdded(int index)
-{
-    Q_ASSERT(qobject_cast<Sink *>(context()->d->m_sinks.objectAt(index)));
-    Sink *sink = static_cast<Sink *>(context()->d->m_sinks.objectAt(index));
-    connect(sink, &Sink::stateChanged, this, &SinkModel::updatePreferredSink);
-
-    updatePreferredSink();
-}
-
-void SinkModel::sinkRemoved(int index)
-{
-    Q_UNUSED(index);
-
-    updatePreferredSink();
-}
-
-void SinkModel::updatePreferredSink()
-{
-    Sink *sink = findPreferredSink();
-
-    if (sink != d->m_preferredSink) {
-        qCDebug(PULSEAUDIOQT) << "Changing preferred sink to" << sink << (sink ? sink->name() : "");
-        d->m_preferredSink = sink;
-        Q_EMIT preferredSinkChanged();
-    }
-}
-
-Sink *SinkModel::findPreferredSink() const
-{
-    const auto &sinks = context()->d->m_sinks;
-
-    // Only one sink is the preferred one
-    if (sinks.count() == 1) {
-        return static_cast<Sink *>(sinks.objectAt(0));
-    }
-
-    auto lookForState = [&](Device::State state) {
-        Sink *ret = nullptr;
-        const auto data = sinks.data();
-        for (Sink *sink : data) {
-            if (sink->state() != state) {
-                continue;
-            }
-            if (!ret) {
-                ret = sink;
-            } else if (sink == defaultSink()) {
-                ret = sink;
-                break;
-            }
-        }
-        return ret;
-    };
-
-    Sink *preferred = nullptr;
-
-    // Look for playing sinks + prefer default sink
-    preferred = lookForState(Device::RunningState);
-    if (preferred) {
-        return preferred;
-    }
-
-    // Look for idle sinks + prefer default sink
-    preferred = lookForState(Device::IdleState);
-    if (preferred) {
-        return preferred;
-    }
-
-    // Fallback to default sink
-    return defaultSink();
-}
-
 SourceModel::SourceModel(QObject *parent)
     : AbstractModel(&context()->d->m_sources, parent)
 {
     initRoleNames(Source::staticMetaObject);
-
-    connect(context()->server(), &Server::defaultSourceChanged, this, &SourceModel::defaultSourceChanged);
-}
-
-Source *SourceModel::defaultSource() const
-{
-    return context()->server()->defaultSource();
 }
 
 QVariant SourceModel::data(const QModelIndex &index, int role) const

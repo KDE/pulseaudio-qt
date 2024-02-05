@@ -20,14 +20,4 @@ public:
     QHash<int, int> m_objectProperties;
     QHash<int, int> m_signalIndexToProperties;
 };
-
-class SinkModelPrivate
-{
-public:
-    explicit SinkModelPrivate(SinkModel *q);
-    virtual ~SinkModelPrivate();
-
-    SinkModel *q;
-    Sink *m_preferredSink;
-};
 }

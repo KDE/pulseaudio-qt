@@ -75,28 +75,15 @@ private:
 class PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
 {
     Q_OBJECT
-    Q_PROPERTY(PulseAudioQt::Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
-    Q_PROPERTY(PulseAudioQt::Sink *preferredSink READ preferredSink NOTIFY preferredSinkChanged)
 public:
     enum ItemRole { SortByDefaultRole = PulseObjectRole + 1 };
     Q_ENUM(ItemRole)
 
     SinkModel(QObject *parent = nullptr);
-    virtual ~SinkModel();
-    Sink *defaultSink() const;
-    Sink *preferredSink() const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-Q_SIGNALS:
-    void defaultSinkChanged();
-    void preferredSinkChanged();
-
 private:
-    void sinkAdded(int index);
-    void sinkRemoved(int index);
-    void updatePreferredSink();
-    Sink *findPreferredSink() const;
-    SinkModelPrivate *d;
+    void *d;
 };
 
 class PULSEAUDIOQT_EXPORT SinkInputModel : public AbstractModel
@@ -112,17 +99,12 @@ private:
 class PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
 {
     Q_OBJECT
-    Q_PROPERTY(PulseAudioQt::Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
 public:
     enum ItemRole { SortByDefaultRole = PulseObjectRole + 1 };
     Q_ENUM(ItemRole)
 
     SourceModel(QObject *parent = nullptr);
-    Source *defaultSource() const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-Q_SIGNALS:
-    void defaultSourceChanged();
 
 private:
     void *d;
