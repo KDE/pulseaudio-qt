@@ -1,5 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2016 David Rosca <nowrep@gmail.com>
+    SPDX-FileCopyrightText: 2024 Harald Sitter <sitter@kde.org>
 
     SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
@@ -19,7 +20,12 @@ class Context;
 class PULSEAUDIOQT_EXPORT Server : public QObject
 {
     Q_OBJECT
-
+    /// The default Sink (SinkInputs that aren't otherwise assigned explicitly will use this Sink)
+    Q_PROPERTY(Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
+    /// The default Source (SourceOutputs that aren't otherwise assigned explicitly will use this Source)
+    Q_PROPERTY(Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
+    /// Whether the connected Server is PipeWire (rather than PulseAudio)
+    Q_PROPERTY(bool isPipeWire READ isPipeWire NOTIFY isPipeWireChanged)
 public:
     ~Server();
 
