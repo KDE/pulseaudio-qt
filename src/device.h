@@ -107,6 +107,12 @@ public:
      */
     [[nodiscard]] QVariantMap pulseProperties() const;
 
+    /**
+     * @brief Switch all streams onto this Device
+     * Iterates through all relevant streams for the Device type and assigns them to this Device.
+     * For example for a Sink device all SinkInputs known to the daemon will be explicitly switched
+     * onto this Sink. Useful for mass-rerouting of streams from different devices onto a specific target device.
+     */
     virtual Q_INVOKABLE void switchStreams() = 0;
 
 Q_SIGNALS:
