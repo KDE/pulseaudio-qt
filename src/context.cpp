@@ -783,7 +783,7 @@ void ContextPrivate::setGenericVolume(
         Q_ASSERT(newCVolume.channels > channel);
         newCVolume.values[channel] = newVolume;
     }
-    if (!pa_set_volume(m_context, index, &newCVolume, nullptr, nullptr)) {
+    if (!PAOperation(pa_set_volume(m_context, index, &newCVolume, nullptr, nullptr))) {
         qCWarning(PULSEAUDIOQT) << "pa_set_volume failed";
         return;
     }
