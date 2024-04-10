@@ -69,56 +69,56 @@ public:
      *
      * @return list of sinks
      */
-    QVector<Sink *> sinks() const;
+    QList<Sink *> sinks() const;
 
     /**
      * Returns a list of all sink inputs.
      *
      * @return list of sink inputs
      */
-    QVector<SinkInput *> sinkInputs() const;
+    QList<SinkInput *> sinkInputs() const;
 
     /**
      * Returns a list of all sources.
      *
      * @return list of sources
      */
-    QVector<Source *> sources() const;
+    QList<Source *> sources() const;
 
     /**
      * Returns a list of all source outputs.
      *
      * @return list of source outputs
      */
-    QVector<SourceOutput *> sourceOutputs() const;
+    QList<SourceOutput *> sourceOutputs() const;
 
     /**
      * Returns a list of all clients.
      *
      * @return list of clients
      */
-    QVector<Client *> clients() const;
+    QList<Client *> clients() const;
 
     /**
      * Returns a list of all cards.
      *
      * @return list of cards
      */
-    QVector<Card *> cards() const;
+    QList<Card *> cards() const;
 
     /**
      * Returns a list of all modules.
      *
      * @return list of modules
      */
-    QVector<Module *> modules() const;
+    QList<Module *> modules() const;
 
     /**
      * Returns a list of all stream restores.
      *
      * @return list of stream restores
      */
-    QVector<StreamRestore *> streamRestores() const;
+    QList<StreamRestore *> streamRestores() const;
 
     Server *server() const;
 

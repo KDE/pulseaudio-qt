@@ -21,8 +21,8 @@ class PULSEAUDIOQT_EXPORT StreamRestore : public PulseObject
     Q_PROPERTY(bool muted READ isMuted WRITE setMuted NOTIFY mutedChanged)
     Q_PROPERTY(bool hasVolume READ hasVolume CONSTANT)
     Q_PROPERTY(bool volumeWritable READ isVolumeWritable CONSTANT)
-    Q_PROPERTY(QVector<QString> channels READ channels NOTIFY channelsChanged)
-    Q_PROPERTY(QVector<qreal> channelVolumes READ channelVolumes NOTIFY channelVolumesChanged)
+    Q_PROPERTY(QList<QString> channels READ channels NOTIFY channelsChanged)
+    Q_PROPERTY(QList<qreal> channelVolumes READ channelVolumes NOTIFY channelVolumesChanged)
     Q_PROPERTY(quint32 deviceIndex READ deviceIndex WRITE setDeviceIndex NOTIFY deviceIndexChanged)
     // Not a IndexedPulseObject since pa_ext_stream_restore_info does not have an index member
     Q_PROPERTY(quint32 index READ index CONSTANT)
@@ -42,9 +42,9 @@ public:
     bool hasVolume() const;
     bool isVolumeWritable() const;
 
-    QVector<QString> channels() const;
+    QList<QString> channels() const;
 
-    QVector<qreal> channelVolumes() const;
+    QList<qreal> channelVolumes() const;
 
     quint32 index() const;
 

@@ -10,7 +10,7 @@
 #include "cardport.h"
 #include "profile.h"
 #include <QHash>
-#include <QVector>
+#include <QList>
 #include <pulse/introspect.h>
 
 namespace PulseAudioQt

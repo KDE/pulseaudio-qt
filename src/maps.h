@@ -8,9 +8,9 @@
 #pragma once
 
 #include <QHash>
+#include <QList>
 #include <QObject>
 #include <QSet>
-#include <QVector>
 
 #include <pulse/ext-stream-restore.h>
 #include <pulse/pulseaudio.h>
@@ -69,7 +69,7 @@ class MapBase : public MapBaseQObject
 public:
     ~MapBase() override = default;
 
-    const QVector<Type *> &data() const
+    const QList<Type *> &data() const
     {
         return m_data;
     }
@@ -146,7 +146,7 @@ public:
     }
 
 protected:
-    QVector<Type *> m_data;
+    QList<Type *> m_data;
     QHash<quint32, Type *> m_hash;
     QSet<quint32> m_pendingRemovals;
 };

@@ -7,7 +7,7 @@
 #define STREAMRESTORE_P_H
 
 #include "streamrestore.h"
-#include <QVector>
+#include <QList>
 #include <pulse/ext-stream-restore.h>
 
 namespace PulseAudioQt
@@ -25,7 +25,7 @@ public:
     QString m_device;
     pa_cvolume m_volume;
     pa_channel_map m_channelMap;
-    QVector<QString> m_channels;
+    QList<QString> m_channels;
     bool m_muted = false;
     quint32 m_index = 0;
 

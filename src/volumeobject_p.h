@@ -23,7 +23,7 @@ public:
     pa_cvolume m_volume;
     bool m_muted = true;
     bool m_volumeWritable = true;
-    QVector<QString> m_channels;
+    QList<QString> m_channels;
     QStringList m_rawChannels;
 
     pa_cvolume cvolume() const;
@@ -42,7 +42,7 @@ public:
             Q_EMIT q->volumeChanged();
             Q_EMIT q->channelVolumesChanged();
         }
-        QVector<QString> infoChannels;
+        QList<QString> infoChannels;
         infoChannels.reserve(info->channel_map.channels);
         for (int i = 0; i < info->channel_map.channels; ++i) {
             infoChannels << QString::fromUtf8(pa_channel_position_to_pretty_string(info->channel_map.map[i]));

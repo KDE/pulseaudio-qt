@@ -9,7 +9,7 @@
 #include <pulse/proplist.h>
 
 #include <QHash>
-#include <QVector>
+#include <QList>
 
 #include "device.h"
 #include "port.h"

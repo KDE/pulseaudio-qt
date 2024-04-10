@@ -73,7 +73,7 @@ public:
                                    quint32 deviceIndex,
                                    const std::function<pa_operation *(pa_context *, uint32_t, uint32_t, pa_context_success_cb_t, void *)> &);
     void setGenericVolumes(quint32 index,
-                           QVector<qint64> channelVolumes,
+                           QList<qint64> channelVolumes,
                            pa_cvolume cVolume,
                            const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &);
 

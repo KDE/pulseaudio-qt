@@ -714,42 +714,42 @@ bool Context::isValid()
     return d->m_context && d->m_mainloop;
 }
 
-QVector<Sink *> Context::sinks() const
+QList<Sink *> Context::sinks() const
 {
     return d->m_sinks.data();
 }
 
-QVector<SinkInput *> Context::sinkInputs() const
+QList<SinkInput *> Context::sinkInputs() const
 {
     return d->m_sinkInputs.data();
 }
 
-QVector<Source *> Context::sources() const
+QList<Source *> Context::sources() const
 {
     return d->m_sources.data();
 }
 
-QVector<SourceOutput *> Context::sourceOutputs() const
+QList<SourceOutput *> Context::sourceOutputs() const
 {
     return d->m_sourceOutputs.data();
 }
 
-QVector<Client *> Context::clients() const
+QList<Client *> Context::clients() const
 {
     return d->m_clients.data();
 }
 
-QVector<Card *> Context::cards() const
+QList<Card *> Context::cards() const
 {
     return d->m_cards.data();
 }
 
-QVector<Module *> Context::modules() const
+QList<Module *> Context::modules() const
 {
     return d->m_modules.data();
 }
 
-QVector<StreamRestore *> Context::streamRestores() const
+QList<StreamRestore *> Context::streamRestores() const
 {
     return d->m_streamRestores.data();
 }
@@ -831,7 +831,7 @@ void ContextPrivate::setGenericDeviceForStream(
 
 void ContextPrivate::setGenericVolumes(
     quint32 index,
-    QVector<qint64> channelVolumes,
+    QList<qint64> channelVolumes,
     pa_cvolume cVolume,
     const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &pa_set_volume)
 {

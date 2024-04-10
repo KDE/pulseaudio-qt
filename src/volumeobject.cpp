@@ -48,7 +48,7 @@ bool VolumeObject::isVolumeWritable() const
     return d->m_volumeWritable;
 }
 
-QVector<QString> VolumeObject::channels() const
+QList<QString> VolumeObject::channels() const
 {
     return d->m_channels;
 }
@@ -58,9 +58,9 @@ QStringList VolumeObject::rawChannels() const
     return d->m_rawChannels;
 }
 
-QVector<qint64> VolumeObject::channelVolumes() const
+QList<qint64> VolumeObject::channelVolumes() const
 {
-    QVector<qint64> ret;
+    QList<qint64> ret;
     ret.reserve(d->m_volume.channels);
     for (int i = 0; i < d->m_volume.channels; ++i) {
         ret << d->m_volume.values[i];
