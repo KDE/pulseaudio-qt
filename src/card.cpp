@@ -48,7 +48,7 @@ void CardPrivate::update(const pa_card_info *info)
     QStringList newProfiles;
     QStringList existingProfiles;
 
-    for (const Profile *profile : qAsConst(m_profiles)) {
+    for (const Profile *profile : std::as_const(m_profiles)) {
         existingProfiles << profile->name();
     }
 
@@ -75,7 +75,7 @@ void CardPrivate::update(const pa_card_info *info)
         }
     }
 
-    for (Profile *profile : qAsConst(m_profiles)) {
+    for (Profile *profile : std::as_const(m_profiles)) {
         if (info->active_profile2->name == profile->name()) {
             m_activeProfileIndex = m_profiles.indexOf(profile);
         }
@@ -87,7 +87,7 @@ void CardPrivate::update(const pa_card_info *info)
     QStringList newPorts;
     QStringList existingPorts;
 
-    for (const Port *port : qAsConst(m_ports)) {
+    for (const Port *port : std::as_const(m_ports)) {
         existingPorts << port->name();
     }
     for (auto **it = info->ports; it && *it != nullptr; ++it) {
@@ -103,7 +103,7 @@ void CardPrivate::update(const pa_card_info *info)
         port->d->setInfo(*it);
     }
 
-    for (CardPort *port : qAsConst(m_ports)) {
+    for (CardPort *port : std::as_const(m_ports)) {
         if (!newPorts.contains(port->name())) {
             m_ports.removeOne(port);
             delete port;

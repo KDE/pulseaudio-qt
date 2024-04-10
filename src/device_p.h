@@ -79,7 +79,7 @@ public:
         QStringList existingPorts;
 
         // Build list of existing ports
-        for (const Port *port : qAsConst(m_ports)) {
+        for (const Port *port : std::as_const(m_ports)) {
             existingPorts << port->name();
         }
 
@@ -101,7 +101,7 @@ public:
         }
 
         // Remove ports that are not in the updated port list
-        for (Port *port : qAsConst(m_ports)) {
+        for (Port *port : std::as_const(m_ports)) {
             if (!newPorts.contains(port->name())) {
                 m_ports.removeOne(port);
                 delete port;
@@ -109,7 +109,7 @@ public:
         }
 
         // Set active port
-        for (Port *port : qAsConst(m_ports)) {
+        for (Port *port : std::as_const(m_ports)) {
             if (info->active_port->name == port->name()) {
                 m_activePortIndex = m_ports.indexOf(port);
             }
