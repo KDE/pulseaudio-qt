@@ -34,7 +34,14 @@ StreamPrivate::~StreamPrivate()
 
 Client *Stream::client() const
 {
-    return Context::instance()->d->m_clients.data().value(d->m_clientIndex, nullptr);
+    const auto &clients = Context::instance()->d->m_clients.data();
+    auto it = std::find_if(clients.begin(), clients.end(), [this](Client *client) {
+        return client->index() == d->m_clientIndex;
+    });
+    if (it != clients.end()) {
+        return *it;
+    }
+    return nullptr;
 }
 
 bool Stream::isVirtualStream() const
