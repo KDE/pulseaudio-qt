@@ -48,7 +48,7 @@ bool VolumeObject::isVolumeWritable() const
     return d->m_volumeWritable;
 }
 
-QList<QString> VolumeObject::channels() const
+QStringList VolumeObject::channels() const
 {
     return d->m_channels;
 }

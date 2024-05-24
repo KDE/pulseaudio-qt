@@ -25,7 +25,7 @@ public:
     QString m_device;
     pa_cvolume m_volume;
     pa_channel_map m_channelMap;
-    QList<QString> m_channels;
+    QStringList m_channels;
     bool m_muted = false;
     quint32 m_index = 0;
 

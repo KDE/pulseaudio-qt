@@ -155,7 +155,7 @@ bool StreamRestore::isVolumeWritable() const
     return true;
 }
 
-QList<QString> StreamRestore::channels() const
+QStringList StreamRestore::channels() const
 {
     return d->m_channels;
 }
