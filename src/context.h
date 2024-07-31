@@ -49,8 +49,31 @@ PULSEAUDIOQT_EXPORT qint64 maximumUIVolume();
 class PULSEAUDIOQT_EXPORT Context : public QObject
 {
     Q_OBJECT
+    /**
+     * The state of the Context. This is further augmented by the autoConnecting property.
+     */
+    Q_PROPERTY(State state READ state NOTIFY stateChanged)
+    /**
+     * Regardless of the state, this property indicates whether the Context is presently trying to
+     * automatically establish a connection. When this is false it may be useful to give the
+     * user a manual way to trigger a connection attempt. AutoConnecting is subject to internal
+     * timeouts that when hit will prevent further auto connecting until the Context managed to
+     * connect.
+     */
+    Q_PROPERTY(bool autoConnecting READ isAutoConnecting NOTIFY autoConnectingChanged)
 
 public:
+    enum class State {
+        Unconnected = 0,
+        Connecting,
+        Authorizing,
+        SettingName,
+        Ready,
+        Failed,
+        Terminated,
+    };
+    Q_ENUM(State)
+
     ~Context() override;
 
     static Context *instance();
@@ -130,6 +153,16 @@ public:
     void setCardProfile(quint32 index, const QString &profile);
     void setDefaultSink(const QString &name);
     void setDefaultSource(const QString &name);
+
+    /// @returns the state of the context.
+    [[nodiscard]] State state() const;
+
+    /// @returns whether the Context is currently trying to auto-connect to the daemon
+    [[nodiscard]] bool isAutoConnecting() const;
+
+public Q_SLOTS:
+    /// When the Context is not auto-connecting this may be used to give the user a manual trigger (e.g. a button)
+    void reconnectDaemon();
 
 Q_SIGNALS:
     /**
@@ -211,6 +244,12 @@ Q_SIGNALS:
      * Indicates that streamRestore was removed.
      */
     void streamRestoreRemoved(PulseAudioQt::StreamRestore *streamRestore);
+
+    /// Context state changed.
+    void stateChanged();
+
+    /// Indicates that autoConnecting changed.
+    void autoConnectingChanged();
 
 private:
     explicit Context(QObject *parent = nullptr);

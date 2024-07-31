@@ -6,6 +6,7 @@
 #ifndef CONTEXT_P_H
 #define CONTEXT_P_H
 
+#include "context.h"
 #include "maps.h"
 #include "operation.h"
 #include <QTimer>
@@ -45,6 +46,7 @@ public:
 
     QTimer m_connectTimer;
     int m_connectTries;
+    Context::State m_state = Context::State::Unconnected;
 
     static QString s_applicationId;
 
@@ -80,6 +82,7 @@ public:
     void reset();
     void connectToDaemon();
     void checkConnectTries();
+    void forceDisconnect();
 
     Context *q;
 };

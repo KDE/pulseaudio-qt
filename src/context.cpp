@@ -249,6 +249,10 @@ Context::Context(QObject *parent)
     : QObject(parent)
     , d(new ContextPrivate(this))
 {
+    connect(this, &Context::stateChanged, this, [this] {
+        qCDebug(PULSEAUDIOQT) << "context state changed:" << d->m_state;
+    });
+
     d->m_server = new Server(this);
     d->m_context = nullptr;
     d->m_mainloop = nullptr;
@@ -262,6 +266,7 @@ Context::Context(QObject *parent)
     });
 
     connect(&d->m_connectTimer, &QTimer::timeout, this, [this] {
+        d->forceDisconnect();
         d->connectToDaemon();
         d->checkConnectTries();
     });
@@ -447,11 +452,35 @@ void ContextPrivate::subscribeCallback(pa_context *context, pa_subscription_even
 
 void ContextPrivate::contextStateCallback(pa_context *c)
 {
-    qCDebug(PULSEAUDIOQT) << "state callback";
     pa_context_state_t state = pa_context_get_state(c);
+    qCDebug(PULSEAUDIOQT) << "state callback" << state;
+
+    m_state = [state]() -> Context::State {
+        switch (state) {
+        case PA_CONTEXT_UNCONNECTED:
+            return Context::State::Unconnected;
+        case PA_CONTEXT_CONNECTING:
+            return Context::State::Connecting;
+        case PA_CONTEXT_AUTHORIZING:
+            return Context::State::Authorizing;
+        case PA_CONTEXT_SETTING_NAME:
+            return Context::State::SettingName;
+        case PA_CONTEXT_READY:
+            return Context::State::Ready;
+        case PA_CONTEXT_FAILED:
+            return Context::State::Failed;
+        case PA_CONTEXT_TERMINATED:
+            return Context::State::Terminated;
+        }
+        return Context::State::Unconnected;
+    }();
+    // Queue state changes to avoid race conditions with changes going on below in the code. It's not time critical anyway.
+    QMetaObject::invokeMethod(q, &Context::stateChanged, Qt::QueuedConnection);
+
     if (state == PA_CONTEXT_READY) {
         qCDebug(PULSEAUDIOQT) << "ready, stopping connect timer";
         m_connectTimer.stop();
+        Q_EMIT q->autoConnectingChanged();
 
         // 1. Register for the stream changes (except during probe)
         if (m_context == c) {
@@ -524,6 +553,7 @@ void ContextPrivate::contextStateCallback(pa_context *c)
         reset();
         qCDebug(PULSEAUDIOQT) << "Starting connect timer";
         m_connectTimer.start(std::chrono::seconds(5));
+        Q_EMIT q->autoConnectingChanged();
     }
 }
 
@@ -650,6 +680,11 @@ void ContextPrivate::connectToDaemon()
         return;
     }
 
+    qCDebug(PULSEAUDIOQT) << "Connecting to daemon.";
+
+    m_state = Context::State::Connecting;
+    Q_EMIT q->stateChanged();
+
     // We require a glib event loop
     if (!QByteArray(QAbstractEventDispatcher::instance()->metaObject()->className()).contains("Glib")) {
         qCWarning(PULSEAUDIOQT) << "Disabling PulseAudio integration for lack of GLib event loop";
@@ -678,10 +713,14 @@ void ContextPrivate::connectToDaemon()
     Q_ASSERT(m_context);
 
     if (pa_context_connect(m_context, NULL, PA_CONTEXT_NOFAIL, nullptr) < 0) {
+        qCWarning(PULSEAUDIOQT) << "Failed to connect context";
         pa_context_unref(m_context);
         pa_glib_mainloop_free(m_mainloop);
+        // Don't reset() here, it'd reset the retry count and possibly lead to infinite retries.
         m_context = nullptr;
         m_mainloop = nullptr;
+        m_state = Context::State::Unconnected;
+        Q_EMIT q->stateChanged();
         return;
     }
     pa_context_set_state_callback(m_context, &context_state_callback, this);
@@ -692,6 +731,7 @@ void ContextPrivate::checkConnectTries()
     if (++m_connectTries == 5) {
         qCWarning(PULSEAUDIOQT) << "Giving up after" << m_connectTries << "tries to connect";
         m_connectTimer.stop();
+        Q_EMIT q->autoConnectingChanged();
     }
 }
 
@@ -707,6 +747,8 @@ void ContextPrivate::reset()
     m_streamRestores.reset();
     m_server->reset();
     m_connectTries = 0;
+    m_state = Context::State::Unconnected;
+    Q_EMIT q->stateChanged();
 }
 
 bool Context::isValid()
@@ -859,6 +901,40 @@ void Context::setApplicationId(const QString &applicationId)
 pa_context *Context::context() const
 {
     return d->m_context;
+}
+
+Context::State Context::state() const
+{
+    return d->m_state;
+}
+
+bool Context::isAutoConnecting() const
+{
+    return d->m_connectTimer.isActive();
+}
+
+void Context::reconnectDaemon()
+{
+    if (isAutoConnecting()) { // must not be in the dptr; the dptr function is called by the auto connecting logic
+        qCDebug(PULSEAUDIOQT) << "Already in the process of auto connecting. Not connecting again.";
+        return;
+    }
+
+    d->forceDisconnect();
+    return d->connectToDaemon();
+}
+
+void ContextPrivate::forceDisconnect()
+{
+    if (m_context) {
+        pa_context_unref(m_context);
+        m_context = nullptr;
+    }
+
+    if (m_mainloop) {
+        pa_glib_mainloop_free(m_mainloop);
+        m_mainloop = nullptr;
+    }
 }
 
 } // PulseAudioQt
