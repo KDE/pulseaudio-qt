@@ -550,10 +550,12 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             pa_context_unref(m_context);
             m_context = nullptr;
         }
-        reset();
-        qCDebug(PULSEAUDIOQT) << "Starting connect timer";
-        m_connectTimer.start(std::chrono::seconds(5));
-        Q_EMIT q->autoConnectingChanged();
+        if (!m_connectTimer.isActive() && hasConnectionTriesLeft()) {
+            reset();
+            qCDebug(PULSEAUDIOQT) << "Starting connect timer";
+            m_connectTimer.start(std::chrono::seconds(5));
+            Q_EMIT q->autoConnectingChanged();
+        }
     }
 }
 
@@ -728,7 +730,7 @@ void ContextPrivate::connectToDaemon()
 
 void ContextPrivate::checkConnectTries()
 {
-    if (++m_connectTries == 5) {
+    if (++m_connectTries; !hasConnectionTriesLeft()) {
         qCWarning(PULSEAUDIOQT) << "Giving up after" << m_connectTries << "tries to connect";
         m_connectTimer.stop();
         Q_EMIT q->autoConnectingChanged();
@@ -935,6 +937,12 @@ void ContextPrivate::forceDisconnect()
         pa_glib_mainloop_free(m_mainloop);
         m_mainloop = nullptr;
     }
+}
+
+bool ContextPrivate::hasConnectionTriesLeft() const
+{
+    constexpr auto maxTries = 5;
+    return m_connectTries < maxTries;
 }
 
 } // PulseAudioQt

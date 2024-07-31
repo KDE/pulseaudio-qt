@@ -83,6 +83,7 @@ public:
     void connectToDaemon();
     void checkConnectTries();
     void forceDisconnect();
+    [[nodiscard]] bool hasConnectionTriesLeft() const;
 
     Context *q;
 };
