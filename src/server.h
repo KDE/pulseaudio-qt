@@ -26,6 +26,8 @@ class PULSEAUDIOQT_EXPORT Server : public QObject
     Q_PROPERTY(Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
     /// Whether the connected Server is PipeWire (rather than PulseAudio)
     Q_PROPERTY(bool isPipeWire READ isPipeWire NOTIFY isPipeWireChanged)
+    /// Whether the connected PipeWire is driven by WirePlumber
+    Q_PROPERTY(bool hasWirePlumber READ hasWirePlumber NOTIFY hasWirePlumberChanged)
 public:
     ~Server() override;
 
@@ -40,11 +42,17 @@ public:
      */
     bool isPipeWire() const;
 
+    /**
+     * Whether WirePlumber is running in addition to PipeWire.
+     */
+    [[nodiscard]] bool hasWirePlumber() const;
+
 Q_SIGNALS:
     void defaultSinkChanged(PulseAudioQt::Sink *sink);
     void defaultSourceChanged(PulseAudioQt::Source *source);
     void isPipeWireChanged();
     void updated();
+    void hasWirePlumberChanged();
 
 private:
     explicit Server(Context *context);
