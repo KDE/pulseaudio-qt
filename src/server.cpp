@@ -13,6 +13,8 @@
 #include "sink.h"
 #include "source.h"
 
+using namespace std::chrono_literals;
+
 namespace PulseAudioQt
 {
 Server::Server(Context *context)
@@ -25,6 +27,17 @@ Server::Server(Context *context)
     connect(&context->d->m_sinks, &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
     connect(&context->d->m_sources, &MapBaseQObject::added, this, &Server::updateDefaultDevices);
     connect(&context->d->m_sources, &MapBaseQObject::removed, this, &Server::updateDefaultDevices);
+
+    // WirePlumber detection works based on connected clients.
+    // Since we act on individual client changes let's compress them otherwise we may be switching state multiple times
+    // for no reason.
+    d->m_wirePlumberFindTimer.setInterval(250ms); // arbitrary compression time
+    d->m_wirePlumberFindTimer.setSingleShot(true);
+    connect(&d->m_wirePlumberFindTimer, &QTimer::timeout, this, [this] {
+        d->findWirePlumber();
+    });
+    connect(&context->d->m_clients, &MapBaseQObject::added, &d->m_wirePlumberFindTimer, qOverload<>(&QTimer::start));
+    connect(&context->d->m_clients, &MapBaseQObject::removed, &d->m_wirePlumberFindTimer, qOverload<>(&QTimer::start));
 }
 
 Server::~Server()
@@ -136,4 +149,28 @@ bool Server::isPipeWire() const
     return d->m_isPipeWire;
 }
 
+void ServerPrivate::findWirePlumber()
+{
+    if (!m_isPipeWire) {
+        return;
+    }
+
+    const auto clients = Context::instance()->clients();
+    for (const auto &client : clients) {
+        if (client->properties().value(QStringLiteral("wireplumber.daemon")) == QLatin1String("true")) {
+            m_hasWirePlumber = true;
+            Q_EMIT q->hasWirePlumberChanged();
+            return;
+        }
+    }
+
+    // Found no plumber, mark false
+    m_hasWirePlumber = false;
+    Q_EMIT q->hasWirePlumberChanged();
+}
+
+bool Server::hasWirePlumber() const
+{
+    return d->m_hasWirePlumber;
+}
 } // PulseAudioQt

@@ -7,6 +7,8 @@
 #include "server.h"
 #include <pulse/introspect.h>
 
+#include <QTimer>
+
 namespace PulseAudioQt
 {
 class ServerPrivate
@@ -22,7 +24,10 @@ public:
     Sink *m_defaultSink;
     Source *m_defaultSource;
     bool m_isPipeWire = false;
+    bool m_hasWirePlumber = false;
+    QTimer m_wirePlumberFindTimer;
 
     void update(const pa_server_info *info);
+    void findWirePlumber();
 };
 }
