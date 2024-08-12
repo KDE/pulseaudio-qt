@@ -65,7 +65,6 @@ AbstractModelPrivate::~AbstractModelPrivate()
 QHash<int, QByteArray> AbstractModel::roleNames() const
 {
     if (!d->m_roles.empty()) {
-        qCDebug(PULSEAUDIOQT) << "returning roles" << d->m_roles;
         return d->m_roles;
     }
     Q_UNREACHABLE();
