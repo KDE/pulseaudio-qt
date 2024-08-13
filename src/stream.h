@@ -49,7 +49,7 @@ protected:
     /** @private */
     explicit Stream(QObject *parent);
     /** @private */
-    class StreamPrivate *const d;
+    std::unique_ptr<class StreamPrivate> d;
 
     friend class SinkInputPrivate;
     friend class SourceOutputPrivate;

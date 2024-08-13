@@ -143,7 +143,7 @@ public:
         }
 
 #if !defined(UNDER_TEST)
-        qCDebug(PAOBJECT).noquote() << type << qobject_cast<PulseObject *>(obj)->d;
+        qCDebug(PAOBJECT).noquote() << type << qobject_cast<PulseObject *>(obj)->d.get();
 #endif
     }
 

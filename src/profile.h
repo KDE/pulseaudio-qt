@@ -91,7 +91,7 @@ protected:
     /** @private */
     explicit Profile(QObject *parent);
     /** @private */
-    class ProfilePrivate *const d;
+    std::unique_ptr<class ProfilePrivate> d;
 
     friend class Device;
     friend class CardPrivate;

@@ -23,7 +23,7 @@ public:
 private:
     explicit Client(QObject *parent);
 
-    class ClientPrivate *const d;
+    std::unique_ptr<class ClientPrivate> d;
     friend class MapBase<Client, pa_client_info>;
 };
 

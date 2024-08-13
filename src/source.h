@@ -37,7 +37,7 @@ public:
 private:
     explicit Source(QObject *parent);
 
-    class SourcePrivate *const d;
+    std::unique_ptr<class SourcePrivate> d;
     friend class MapBase<Source, pa_source_info>;
 };
 

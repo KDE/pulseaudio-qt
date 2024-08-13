@@ -28,7 +28,6 @@ Card::Card(QObject *parent)
 
 Card::~Card()
 {
-    delete d;
 }
 
 CardPrivate::CardPrivate(Card *q)

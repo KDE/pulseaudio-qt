@@ -32,7 +32,7 @@ public:
 private:
     SinkInput(QObject *parent);
 
-    class SinkInputPrivate *const d;
+    std::unique_ptr<class SinkInputPrivate> d;
     friend class MapBase<SinkInput, pa_sink_input_info>;
 };
 

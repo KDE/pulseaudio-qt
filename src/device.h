@@ -137,7 +137,7 @@ protected:
     /** @private */
     explicit Device(QObject *parent);
     /** @private */
-    DevicePrivate *d;
+    std::unique_ptr<class DevicePrivate> d;
 
 private:
     friend class SinkPrivate;

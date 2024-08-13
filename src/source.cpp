@@ -85,6 +85,5 @@ void Source::setChannelVolumes(const QList<qint64> &volumes)
 
 Source::~Source()
 {
-    delete d;
 }
 } // PulseAudioQt

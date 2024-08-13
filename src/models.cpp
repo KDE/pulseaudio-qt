@@ -49,7 +49,6 @@ AbstractModel::AbstractModel(const MapBaseQObject *map, QObject *parent)
 
 AbstractModel::~AbstractModel()
 {
-    delete d;
 }
 
 AbstractModelPrivate::AbstractModelPrivate(AbstractModel *q, const MapBaseQObject *map)

@@ -17,7 +17,6 @@ Profile::Profile(QObject *parent)
 
 Profile::~Profile()
 {
-    delete d;
 }
 
 ProfilePrivate::ProfilePrivate(Profile *q)

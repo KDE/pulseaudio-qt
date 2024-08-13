@@ -50,7 +50,7 @@ Q_SIGNALS:
 private:
     explicit Sink(QObject *parent);
 
-    class SinkPrivate *const d;
+    std::unique_ptr<class SinkPrivate> d;
     friend class MapBase<Sink, pa_sink_info>;
 };
 

@@ -63,7 +63,7 @@ private:
     void disconnectSignals();
     void updateDefaultDevices();
 
-    class ServerPrivate *const d;
+    std::unique_ptr<class ServerPrivate> d;
 
     friend class ServerPrivate;
     friend class Context;

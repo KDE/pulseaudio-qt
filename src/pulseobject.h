@@ -57,7 +57,7 @@ protected:
     explicit PulseObject(QObject *parent);
 
     /** @private */
-    class PulseObjectPrivate *const d;
+    std::unique_ptr<class PulseObjectPrivate> d;
 
 private:
     // Ensure that we get properly parented.

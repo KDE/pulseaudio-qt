@@ -31,6 +31,9 @@ public:
 
     Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
 
+    // Prevent leaf-classes from default constructing as we want to enforce
+    // them passing us a context or explicit nullptrs.
+    AbstractModel() = delete;
     ~AbstractModel() override;
     QHash<int, QByteArray> roleNames() const final override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const final override;
@@ -55,13 +58,7 @@ private:
     void onDataRemoved(int index);
     QMetaMethod propertyChangedMetaMethod() const;
 
-    AbstractModelPrivate *d;
-
-    // Prevent leaf-classes from default constructing as we want to enforce
-    // them passing us a context or explicit nullptrs.
-    AbstractModel()
-    {
-    }
+    std::unique_ptr<class AbstractModelPrivate> d;
 };
 
 class PULSEAUDIOQT_EXPORT CardModel : public AbstractModel

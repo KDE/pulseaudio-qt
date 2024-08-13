@@ -25,7 +25,6 @@ ClientPrivate::ClientPrivate(Client *q)
 
 Client::~Client()
 {
-    delete d;
 }
 
 void ClientPrivate::update(const pa_client_info *info)

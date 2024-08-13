@@ -20,7 +20,6 @@ Stream::Stream(QObject *parent)
 
 Stream::~Stream()
 {
-    delete d;
 }
 
 StreamPrivate::StreamPrivate(Stream *q)

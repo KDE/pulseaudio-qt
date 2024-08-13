@@ -27,7 +27,6 @@ StreamRestore::StreamRestore(quint32 index, const QVariantMap &properties, QObje
 
 StreamRestore::~StreamRestore()
 {
-    delete d;
 }
 
 StreamRestorePrivate::StreamRestorePrivate(StreamRestore *q)

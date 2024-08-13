@@ -49,7 +49,7 @@ Q_SIGNALS:
 private:
     explicit Card(QObject *parent);
 
-    class CardPrivate *const d;
+    std::unique_ptr<class CardPrivate> d;
     friend class MapBase<Card, pa_card_info>;
 };
 

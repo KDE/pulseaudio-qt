@@ -32,7 +32,7 @@ public:
 private:
     explicit SourceOutput(QObject *parent);
 
-    class SourceOutputPrivate *const d;
+    std::unique_ptr<class SourceOutputPrivate> d;
     friend class MapBase<SourceOutput, pa_source_output_info>;
 };
 

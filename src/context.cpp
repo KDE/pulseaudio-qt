@@ -340,7 +340,6 @@ ContextPrivate::ContextPrivate(Context *q)
 
 Context::~Context()
 {
-    delete d;
 }
 
 ContextPrivate::~ContextPrivate()
@@ -655,7 +654,7 @@ void Context::setDefaultSink(const QString &name)
 
     // Change device for all entries in stream-restore database
     d->m_newDefaultSink = name;
-    if (!PAOperation(pa_ext_stream_restore_read(d->m_context, ext_stream_restore_change_sink_cb, d))) {
+    if (!PAOperation(pa_ext_stream_restore_read(d->m_context, ext_stream_restore_change_sink_cb, d.get()))) {
         qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }
@@ -672,7 +671,7 @@ void Context::setDefaultSource(const QString &name)
 
     // Change device for all entries in stream-restore database
     d->m_newDefaultSource = name;
-    if (!PAOperation(pa_ext_stream_restore_read(d->m_context, ext_stream_restore_change_source_cb, d))) {
+    if (!PAOperation(pa_ext_stream_restore_read(d->m_context, ext_stream_restore_change_source_cb, d.get()))) {
         qCWarning(PULSEAUDIOQT) << "pa_ext_stream_restore_read failed";
     }
 }

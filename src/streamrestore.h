@@ -64,7 +64,7 @@ Q_SIGNALS:
 private:
     explicit StreamRestore(quint32 index, const QVariantMap &properties, QObject *parent);
 
-    class StreamRestorePrivate *const d;
+    std::unique_ptr<class StreamRestorePrivate> d;
     friend class MapBase<StreamRestore, pa_ext_stream_restore_info>;
     friend class ContextPrivate;
 };
