@@ -21,7 +21,6 @@ PulseObject::PulseObject(QObject *parent)
 
 PulseObject::~PulseObject()
 {
-    delete d;
 }
 
 PulseObjectPrivate::PulseObjectPrivate(PulseObject *q)

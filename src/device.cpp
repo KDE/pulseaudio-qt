@@ -83,7 +83,6 @@ Device::State DevicePrivate::stateFromPaState(int value) const
 
 Device::~Device()
 {
-    delete d;
 }
 
 } // namespace PulseAudioQt

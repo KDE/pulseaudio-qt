@@ -30,7 +30,7 @@ Q_SIGNALS:
 private:
     explicit Module(QObject *parent);
 
-    class ModulePrivate *const d;
+    std::unique_ptr<class ModulePrivate> d;
     friend class MapBase<Module, pa_module_info>;
 };
 

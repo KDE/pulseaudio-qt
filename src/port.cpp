@@ -16,7 +16,6 @@ Port::Port(QObject *parent)
 
 Port::~Port()
 {
-    delete d;
 }
 
 PortPrivate::PortPrivate(Port *q)

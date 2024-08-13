@@ -38,7 +38,7 @@ public:
     void setChannelVolumes(const QList<qint64> &channelVolumes) override;
 
     void switchStreams() override;
-    
+
     /**
      * Index of the monitor source for this sink.
      */
@@ -50,7 +50,7 @@ Q_SIGNALS:
 private:
     explicit Sink(QObject *parent);
 
-    class SinkPrivate *const d;
+    std::unique_ptr<class SinkPrivate> d;
     friend class MapBase<Sink, pa_sink_info>;
 };
 

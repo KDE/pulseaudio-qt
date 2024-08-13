@@ -31,7 +31,6 @@ SinkPrivate::SinkPrivate(Sink *q)
 
 Sink::~Sink()
 {
-    delete d;
 }
 
 void SinkPrivate::update(const pa_sink_info *info)

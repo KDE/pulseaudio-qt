@@ -59,7 +59,7 @@ protected:
     /** @private */
     explicit Port(QObject *parent);
     /** @private */
-    class PortPrivate *const d;
+    std::unique_ptr<class PortPrivate> d;
 
     friend class DevicePrivate;
     friend class CardPrivate;

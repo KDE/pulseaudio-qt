@@ -26,7 +26,6 @@ SinkInputPrivate::SinkInputPrivate(SinkInput *q)
 
 SinkInput::~SinkInput()
 {
-    delete d;
 }
 
 void SinkInputPrivate::update(const pa_sink_input_info *info)

@@ -69,7 +69,7 @@ protected:
     /** @private */
     explicit VolumeObject(QObject *parent);
     /** @private */
-    class VolumeObjectPrivate *const d;
+    std::unique_ptr<class VolumeObjectPrivate> d;
     friend class DevicePrivate;
     friend class StreamPrivate;
 };

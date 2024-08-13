@@ -279,7 +279,7 @@ Q_SIGNALS:
 private:
     explicit Context(QObject *parent = nullptr);
 
-    class ContextPrivate *const d;
+    std::unique_ptr<class ContextPrivate> d;
 
     friend class Sink;
     friend class SinkInput;

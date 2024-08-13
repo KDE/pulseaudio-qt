@@ -31,7 +31,7 @@ protected:
     /** @private */
     explicit IndexedPulseObject(QObject *parent);
     /** @private */
-    class IndexedPulseObjectPrivate *const d;
+    std::unique_ptr<class IndexedPulseObjectPrivate> d;
 
 private:
     // Ensure that we get properly parented.

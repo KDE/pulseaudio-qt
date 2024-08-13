@@ -19,7 +19,6 @@ IndexedPulseObject::IndexedPulseObject(QObject *parent)
 
 IndexedPulseObject::~IndexedPulseObject()
 {
-    delete d;
 }
 
 IndexedPulseObjectPrivate::IndexedPulseObjectPrivate(IndexedPulseObject *q)

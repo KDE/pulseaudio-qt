@@ -42,7 +42,6 @@ void ModulePrivate::update(const pa_module_info *info)
 
 Module::~Module()
 {
-    delete d;
 }
 
 QString Module::argument() const
