@@ -606,7 +606,7 @@ void ContextPrivate::streamRestoreCallback(const pa_ext_stream_restore_info *inf
         return;
     }
 
-    const int eventRoleIndex = 1;
+    const int eventRoleIndex = 0;
     StreamRestore *obj = qobject_cast<StreamRestore *>(m_streamRestores.data().value(eventRoleIndex));
 
     if (!obj) {
