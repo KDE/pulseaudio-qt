@@ -84,6 +84,7 @@ public:
     void checkConnectTries();
     void forceDisconnect();
     [[nodiscard]] bool hasConnectionTriesLeft() const;
+    void synthesizeEventStream();
 
     Context *q;
 };

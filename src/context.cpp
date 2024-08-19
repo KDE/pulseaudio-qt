@@ -543,10 +543,15 @@ void ContextPrivate::contextStateCallback(pa_context *c)
             return;
         }
 
+        // Always synthesize an event stream. Neither PA nor PW have one until the first event sound is played.
+        // This stream will eventually get updated by either the read_cb or the subscription.
+        // https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/4186
+        synthesizeEventStream();
         if (PAOperation(pa_ext_stream_restore_read(c, ext_stream_restore_read_cb, this))) {
             pa_ext_stream_restore_set_subscribe_cb(c, ext_stream_restore_subscribe_cb, this);
             PAOperation(pa_ext_stream_restore_subscribe(c, 1, nullptr, this));
         } else {
+            m_streamRestores.reset();
             qCWarning(PULSEAUDIOQT) << "Failed to initialize stream_restore extension";
         }
     } else if (!PA_CONTEXT_IS_GOOD(state)) {
@@ -948,6 +953,18 @@ bool ContextPrivate::hasConnectionTriesLeft() const
 {
     constexpr auto maxTries = 5;
     return m_connectTries < maxTries;
+}
+
+void ContextPrivate::synthesizeEventStream()
+{
+    const pa_ext_stream_restore_info info{
+        .name = EVENT_ROLE, //
+        .channel_map = {.channels = 1, .map = {PA_CHANNEL_POSITION_MONO}}, //
+        .volume = {.channels = 1, .values = {PA_VOLUME_NORM}}, //
+        .device = nullptr,
+        .mute = false,
+    };
+    streamRestoreCallback(&info);
 }
 
 } // PulseAudioQt
