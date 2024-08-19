@@ -56,6 +56,11 @@ QString ContextPrivate::s_applicationId;
 
 #ifndef K_DOXYGEN
 
+namespace
+{
+constexpr auto EVENT_ROLE = "sink-input-by-media-role:event";
+} // namespace
+
 static bool isGoodState(int eol)
 {
     if (eol < 0) {
@@ -91,7 +96,7 @@ static void sink_input_callback(pa_context *context, const pa_sink_input_info *i
         return;
     }
     if (const char *id = pa_proplist_gets(info->proplist, "module-stream-restore.id")) {
-        if (qstrcmp(id, "sink-input-by-media-role:event") == 0) {
+        if (qstrcmp(id, EVENT_ROLE) == 0) {
             qCDebug(PULSEAUDIOQT) << "Ignoring event role sink input.";
             return;
         }
@@ -597,7 +602,7 @@ void ContextPrivate::moduleCallback(const pa_module_info *info)
 
 void ContextPrivate::streamRestoreCallback(const pa_ext_stream_restore_info *info)
 {
-    if (qstrcmp(info->name, "sink-input-by-media-role:event") != 0) {
+    if (qstrcmp(info->name, EVENT_ROLE) != 0) {
         return;
     }
 
