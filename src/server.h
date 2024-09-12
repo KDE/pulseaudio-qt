@@ -44,6 +44,8 @@ public:
 
     /**
      * Whether WirePlumber is running in addition to PipeWire.
+     *
+     * @since 1.6
      */
     [[nodiscard]] bool hasWirePlumber() const;
 

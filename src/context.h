@@ -51,6 +51,8 @@ class PULSEAUDIOQT_EXPORT Context : public QObject
     Q_OBJECT
     /**
      * The state of the Context. This is further augmented by the autoConnecting property.
+     *
+     * @since 1.6
      */
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
     /**
@@ -63,6 +65,9 @@ class PULSEAUDIOQT_EXPORT Context : public QObject
     Q_PROPERTY(bool autoConnecting READ isAutoConnecting NOTIFY autoConnectingChanged)
 
 public:
+    /**
+     * @since 1.6
+     */
     enum class State {
         Unconnected = 0,
         Connecting,
@@ -154,14 +159,26 @@ public:
     void setDefaultSink(const QString &name);
     void setDefaultSource(const QString &name);
 
-    /// @returns the state of the context.
+    /**
+     * @returns the state of the context.
+     *
+     * @since 1.6
+     */
     [[nodiscard]] State state() const;
 
-    /// @returns whether the Context is currently trying to auto-connect to the daemon
+    /**
+     * @returns whether the Context is currently trying to auto-connect to the daemon
+     *
+     * @since 1.6
+     */
     [[nodiscard]] bool isAutoConnecting() const;
 
 public Q_SLOTS:
-    /// When the Context is not auto-connecting this may be used to give the user a manual trigger (e.g. a button)
+    /**
+     * When the Context is not auto-connecting this may be used to give the user a manual trigger (e.g. a button)
+     *
+     * @since 1.6
+     */
     void reconnectDaemon();
 
 Q_SIGNALS:
@@ -245,10 +262,18 @@ Q_SIGNALS:
      */
     void streamRestoreRemoved(PulseAudioQt::StreamRestore *streamRestore);
 
-    /// Context state changed.
+    /**
+     * Context state changed.
+     *
+     * @since 1.6
+     */
     void stateChanged();
 
-    /// Indicates that autoConnecting changed.
+    /**
+     * Indicates that autoConnecting changed.
+     *
+     * @since 1.6
+     */
     void autoConnectingChanged();
 
 private:
