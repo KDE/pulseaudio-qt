@@ -91,6 +91,15 @@ void Server::reset()
     }
 }
 
+void Server::disconnectSignals()
+{
+    disconnect(this, &Server::defaultSinkChanged, nullptr, nullptr);
+    disconnect(this, &Server::defaultSourceChanged, nullptr, nullptr);
+    disconnect(this, &Server::isPipeWireChanged, nullptr, nullptr);
+    disconnect(this, &Server::updated, nullptr, nullptr);
+    disconnect(this, &Server::hasWirePlumberChanged, nullptr, nullptr);
+}
+
 void ServerPrivate::update(const pa_server_info *info)
 {
     m_defaultSinkName = QString::fromUtf8(info->default_sink_name);

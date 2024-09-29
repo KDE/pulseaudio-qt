@@ -60,6 +60,7 @@ private:
     explicit Server(Context *context);
 
     void reset();
+    void disconnectSignals();
     void updateDefaultDevices();
 
     class ServerPrivate *const d;

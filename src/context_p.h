@@ -79,6 +79,7 @@ public:
                            pa_cvolume cVolume,
                            const std::function<pa_operation *(pa_context *, uint32_t, const pa_cvolume *, pa_context_success_cb_t, void *)> &);
 
+    void disconnectSignals();
     void reset();
     void connectToDaemon();
     void checkConnectTries();

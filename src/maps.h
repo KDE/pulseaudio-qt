@@ -50,6 +50,14 @@ public:
     virtual QObject *objectAt(int index) const = 0;
     virtual int indexOfObject(QObject *object) const = 0;
 
+    void disconnectSignals()
+    {
+        disconnect(this, &MapBaseQObject::aboutToBeAdded, nullptr, nullptr);
+        disconnect(this, &MapBaseQObject::added, nullptr, nullptr);
+        disconnect(this, &MapBaseQObject::aboutToBeRemoved, nullptr, nullptr);
+        disconnect(this, &MapBaseQObject::removed, nullptr, nullptr);
+    };
+
 Q_SIGNALS:
     void aboutToBeAdded(int index);
     void added(int index, QObject *object);

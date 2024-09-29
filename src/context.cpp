@@ -355,6 +355,7 @@ ContextPrivate::~ContextPrivate()
         m_mainloop = nullptr;
     }
 
+    disconnectSignals();
     reset();
 }
 
@@ -745,6 +746,23 @@ void ContextPrivate::checkConnectTries()
         m_connectTimer.stop();
         Q_EMIT q->autoConnectingChanged();
     }
+}
+
+void ContextPrivate::disconnectSignals()
+{
+    m_sinks.disconnectSignals();
+    m_sinkInputs.disconnectSignals();
+    m_sources.disconnectSignals();
+    m_sourceOutputs.disconnectSignals();
+    m_clients.disconnectSignals();
+    m_cards.disconnectSignals();
+    m_modules.disconnectSignals();
+    m_streamRestores.disconnectSignals();
+
+    m_server->disconnectSignals();
+
+    QObject::disconnect(q, &Context::stateChanged, nullptr, nullptr);
+    QObject::disconnect(q, &Context::autoConnectingChanged, nullptr, nullptr);
 }
 
 void ContextPrivate::reset()
