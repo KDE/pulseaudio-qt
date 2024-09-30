@@ -69,6 +69,8 @@ private:
     friend class VolumeObjectPrivate;
     friend class ProfilePrivate;
     friend class StreamRestorePrivate;
+    template<typename Type, typename PAInfo>
+    friend class MapBase;
 };
 
 } // PulseAudioQt

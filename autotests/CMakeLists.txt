@@ -1,5 +1,6 @@
 include(ECMAddTests)
 
+add_definitions(-DUNDER_TEST)
 ecm_add_test(
     ${CMAKE_SOURCE_DIR}/src/maps.h
     ${CMAKE_SOURCE_DIR}/src/module.cpp

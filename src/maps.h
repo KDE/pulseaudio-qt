@@ -17,7 +17,9 @@
 
 #include "card_p.h"
 #include "client_p.h"
+#include "debug_object.h"
 #include "module_p.h"
+#include "pulseobject_p.h"
 #include "sink_p.h"
 #include "sinkinput_p.h"
 #include "source_p.h"
@@ -130,13 +132,19 @@ public:
         }
 
         auto *obj = m_hash.value(info->index);
+        auto type = QLatin1String("create");
         if (!obj) {
             obj = new Type(parent);
             obj->d->update(info);
             insert(obj);
         } else {
+            type = QLatin1String("create");
             obj->d->update(info);
         }
+
+#if !defined(UNDER_TEST)
+        qCDebug(PAOBJECT).noquote() << type << qobject_cast<PulseObject *>(obj)->d;
+#endif
     }
 
     void removeEntry(quint32 index)

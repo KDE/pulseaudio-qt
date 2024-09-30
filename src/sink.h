@@ -38,7 +38,7 @@ public:
     void setChannelVolumes(const QList<qint64> &channelVolumes) override;
 
     void switchStreams() override;
-    
+
     /**
      * Index of the monitor source for this sink.
      */

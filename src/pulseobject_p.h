@@ -13,6 +13,7 @@
 #include <pulse/introspect.h>
 
 #include "context.h"
+#include "pulseobject.h"
 
 namespace PulseAudioQt
 {
@@ -54,4 +55,7 @@ public:
     }
 };
 }
+
+QDebug operator<<(QDebug dbg, PulseAudioQt::PulseObjectPrivate const *d);
+
 #endif

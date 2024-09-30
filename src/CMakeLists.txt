@@ -30,6 +30,12 @@ ecm_qt_declare_logging_category(KF${QT_MAJOR_VERSION}PulseAudioQt
     CATEGORY_NAME org.kde.pulseaudio
 )
 
+ecm_qt_declare_logging_category(KF${QT_MAJOR_VERSION}PulseAudioQt
+    HEADER debug_object.h
+    IDENTIFIER PAOBJECT
+    CATEGORY_NAME org.kde.pulseaudio.object
+)
+
 target_link_libraries(KF${QT_MAJOR_VERSION}PulseAudioQt
     PUBLIC
         Qt${QT_MAJOR_VERSION}::Core

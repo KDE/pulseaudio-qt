@@ -10,6 +10,7 @@
 #include "context.h"
 
 #include <QIcon>
+#include <QMetaProperty>
 
 namespace PulseAudioQt
 {
@@ -89,3 +90,41 @@ QVariantMap PulseObject::properties() const
 }
 
 } // PulseAudioQt
+
+QDebug operator<<(QDebug dbg, PulseAudioQt::PulseObjectPrivate const *d)
+{
+    QDebugStateSaver saver(dbg);
+
+    auto mo = d->q->metaObject();
+
+    QStringList superClasses;
+    auto superClass = mo;
+    while ((superClass = superClass->superClass())) {
+        superClasses.append(superClass->className());
+    }
+
+    dbg.nospace().noquote() << '\n' << mo->className() << '{' << superClasses.join(", ") << '}';
+    dbg.nospace() << "(\n";
+
+    auto indent = QLatin1String("    ");
+
+    for (int i = 0; i < mo->propertyCount(); i++) {
+        auto property = mo->property(i);
+        auto propertyValue = property.read(d->q);
+        if (propertyValue.canConvert<QVariantMap>()) {
+            dbg.nospace() << indent << property.name() << ":\n";
+            const auto properties = propertyValue.value<QVariantMap>();
+            for (auto it = properties.cbegin(); it != properties.cend(); ++it) {
+                auto &key = it.key();
+                auto &value = it.value();
+                dbg.nospace() << indent << indent << key << ": " << value << '\n';
+            }
+        } else {
+            dbg.nospace() << indent << property.name() << ": " << propertyValue << '\n';
+        }
+    }
+
+    dbg.nospace() << ')';
+
+    return dbg;
+}
