@@ -114,8 +114,10 @@ void StreamRestore::setVolume(qint64 volume)
     }
 
     if (d->m_cache.valid) {
+        qCDebug(PULSEAUDIOQT) << "Changing cached volume of StreamRestore" << name() << " to " << volume;
         d->writeChanges(vol, d->m_cache.muted, d->m_cache.device);
     } else {
+        qCDebug(PULSEAUDIOQT) << "Changing uncached volume of StreamRestore" << name() << " to " << volume;
         d->writeChanges(vol, d->m_muted, d->m_device);
     }
 }

@@ -34,6 +34,7 @@ void SourcePrivate::update(const pa_source_info *info)
 
 void Source::setVolume(qint64 volume)
 {
+    qCDebug(PULSEAUDIOQT) << "Changing volume of Source" << name() << " to " << volume;
     Context::instance()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_source_volume_by_index);
 }
 

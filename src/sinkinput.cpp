@@ -45,6 +45,7 @@ void SinkInput::setDeviceIndex(quint32 deviceIndex)
 
 void SinkInput::setVolume(qint64 volume)
 {
+    qCDebug(PULSEAUDIOQT) << "Changing volume of SinkInput" << name() << " to " << volume;
     Context::instance()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_input_volume);
 }
 

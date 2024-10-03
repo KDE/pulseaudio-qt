@@ -46,6 +46,7 @@ void SinkPrivate::update(const pa_sink_info *info)
 
 void Sink::setVolume(qint64 volume)
 {
+    qCDebug(PULSEAUDIOQT) << "Changing volume of Sink" << name() << " to " << volume;
     Context::instance()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_sink_volume_by_index);
 }
 

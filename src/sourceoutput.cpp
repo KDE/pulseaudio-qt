@@ -45,6 +45,7 @@ void SourceOutput::setDeviceIndex(quint32 deviceIndex)
 
 void SourceOutput::setVolume(qint64 volume)
 {
+    qCDebug(PULSEAUDIOQT) << "Changing volume of SourceOutput" << name() << " to " << volume;
     Context::instance()->d->setGenericVolume(index(), -1, volume, VolumeObject::d->cvolume(), &pa_context_set_source_output_volume);
 }
 
