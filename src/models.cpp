@@ -129,7 +129,7 @@ void AbstractModel::initRoleNames(const QMetaObject &qobjectMetaObject)
 
     QMetaEnum enumerator;
     for (int i = 0; i < metaObject()->enumeratorCount(); ++i) {
-        if (metaObject()->enumerator(i).name() == QLatin1String("ItemRole")) {
+        if (QString::fromLatin1(metaObject()->enumerator(i).name()) == QLatin1String("ItemRole")) {
             enumerator = metaObject()->enumerator(i);
             break;
         }
@@ -155,7 +155,7 @@ void AbstractModel::initRoleNames(const QMetaObject &qobjectMetaObject)
     auto mo = qobjectMetaObject;
     for (int i = 0; i < mo.propertyCount(); ++i) {
         QMetaProperty property = mo.property(i);
-        QString name(property.name());
+        auto name = QString::fromUtf8(property.name());
         name.replace(0, 1, name.at(0).toUpper());
         d->m_roles[++maxEnumValue] = name.toLatin1();
         d->m_objectProperties.insert(maxEnumValue, i);
@@ -224,7 +224,8 @@ QVariant SinkModel::data(const QModelIndex &index, int role) const
         // Workaround QTBUG-1548
         const QString pulseIndex = data(index, AbstractModel::role(QByteArrayLiteral("Index"))).toString();
         const QString defaultDevice = data(index, AbstractModel::role(QByteArrayLiteral("Default"))).toString();
-        return defaultDevice + pulseIndex;
+        const QString ret = defaultDevice + pulseIndex;
+        return ret;
     }
     return AbstractModel::data(index, role);
 }
@@ -241,7 +242,8 @@ QVariant SourceModel::data(const QModelIndex &index, int role) const
         // Workaround QTBUG-1548
         const QString pulseIndex = data(index, AbstractModel::role(QByteArrayLiteral("Index"))).toString();
         const QString defaultDevice = data(index, AbstractModel::role(QByteArrayLiteral("Default"))).toString();
-        return defaultDevice + pulseIndex;
+        const QString ret = defaultDevice + pulseIndex;
+        return ret;
     }
     return AbstractModel::data(index, role);
 }

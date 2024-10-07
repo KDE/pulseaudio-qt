@@ -18,7 +18,7 @@ public:
         QMetaObject metaObject = PulseAudioQt::Port::staticMetaObject;
         QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("Type"));
 
-        return QString(metaEnum.valueToKey(type));
+        return QString::fromUtf8(metaEnum.valueToKey(type));
     }
 };
 
