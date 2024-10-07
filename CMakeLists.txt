@@ -6,7 +6,7 @@ project(PulseAudioQt VERSION ${PROJECT_VERSION})
 
 include(FeatureSummary)
 find_package(ECM 6.0.0  NO_MODULE)
-set(KDE_COMPILERSETTINGS_LEVEL "5.82")
+set(KDE_COMPILERSETTINGS_LEVEL "6.0")
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://kde.org/products/frameworks/")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

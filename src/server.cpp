@@ -105,7 +105,7 @@ void ServerPrivate::update(const pa_server_info *info)
     m_defaultSinkName = QString::fromUtf8(info->default_sink_name);
     m_defaultSourceName = QString::fromUtf8(info->default_source_name);
 
-    const bool isPw = QString::fromUtf8(info->server_name).contains("PipeWire");
+    const bool isPw = QString::fromUtf8(info->server_name).contains(QLatin1String("PipeWire"));
 
     if (isPw != m_isPipeWire) {
         m_isPipeWire = isPw;

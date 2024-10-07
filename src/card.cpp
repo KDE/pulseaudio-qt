@@ -76,7 +76,7 @@ void CardPrivate::update(const pa_card_info *info)
     }
 
     for (Profile *profile : std::as_const(m_profiles)) {
-        if (info->active_profile2->name == profile->name()) {
+        if (QString::fromUtf8(info->active_profile2->name) == profile->name()) {
             m_activeProfileIndex = m_profiles.indexOf(profile);
         }
     }

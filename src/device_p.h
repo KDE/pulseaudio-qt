@@ -44,7 +44,7 @@ public:
         void *state = nullptr;
         while (auto key = pa_proplist_iterate(info->proplist, &state)) {
             const auto value = pa_proplist_gets(info->proplist, key);
-            pulseProperties.insert(key, QString::fromUtf8(value));
+            pulseProperties.insert(QString::fromUtf8(key), QString::fromUtf8(value));
         }
         if (pulseProperties != m_pulseProperties) {
             m_pulseProperties = pulseProperties;
@@ -57,8 +57,9 @@ public:
     {
         q->VolumeObject::d->updateVolumeObject(info);
 
-        if (m_description != info->description) {
-            m_description = info->description;
+        auto qDescription = QString::fromUtf8(info->description);
+        if (m_description != qDescription) {
+            m_description = qDescription;
             Q_EMIT q->descriptionChanged();
         }
         const char *form_factor = pa_proplist_gets(info->proplist, PA_PROP_DEVICE_FORM_FACTOR);
@@ -110,7 +111,7 @@ public:
 
         // Set active port
         for (Port *port : std::as_const(m_ports)) {
-            if (info->active_port->name == port->name()) {
+            if (QString::fromUtf8(info->active_port->name) == port->name()) {
                 m_activePortIndex = m_ports.indexOf(port);
             }
         }

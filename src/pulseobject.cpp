@@ -12,6 +12,8 @@
 #include <QIcon>
 #include <QMetaProperty>
 
+using namespace Qt::StringLiterals;
+
 namespace PulseAudioQt
 {
 PulseObject::PulseObject(QObject *parent)
@@ -100,10 +102,10 @@ QDebug operator<<(QDebug dbg, PulseAudioQt::PulseObjectPrivate const *d)
     QStringList superClasses;
     auto superClass = mo;
     while ((superClass = superClass->superClass())) {
-        superClasses.append(superClass->className());
+        superClasses.append(QString::fromLatin1(superClass->className()));
     }
 
-    dbg.nospace().noquote() << '\n' << mo->className() << '{' << superClasses.join(", ") << '}';
+    dbg.nospace().noquote() << '\n' << mo->className() << '{' << superClasses.join(u", "_s) << '}';
     dbg.nospace() << "(\n";
 
     auto indent = QLatin1String("    ");
