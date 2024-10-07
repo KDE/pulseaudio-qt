@@ -8,7 +8,7 @@ qt_add_resources(painspector_SRCS
 
 add_executable(painspector ${painspector_SRCS})
 target_link_libraries(painspector
-    Qt${QT_MAJOR_VERSION}::Qml
-    Qt${QT_MAJOR_VERSION}::Quick
-    KF${QT_MAJOR_VERSION}PulseAudioQt
+    Qt6::Qml
+    Qt6::Quick
+    KF6PulseAudioQt
 )

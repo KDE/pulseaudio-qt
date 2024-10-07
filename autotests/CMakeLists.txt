@@ -7,5 +7,5 @@ ecm_add_test(
     ${CMAKE_BINARY_DIR}/src/debug.cpp
     mapstest.cpp
     TEST_NAME mapstest
-    LINK_LIBRARIES Qt${QT_MAJOR_VERSION}::Test KF${QT_MAJOR_VERSION}PulseAudioQt PkgConfig::LIBPULSE
+    LINK_LIBRARIES Qt6::Test KF6PulseAudioQt PkgConfig::LIBPULSE
 )
