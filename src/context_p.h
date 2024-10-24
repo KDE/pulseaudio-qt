@@ -45,7 +45,7 @@ public:
     QString m_newDefaultSource;
 
     QTimer m_connectTimer;
-    int m_connectTries;
+    int m_connectTries = 0;
     Context::State m_state = Context::State::Unconnected;
 
     static QString s_applicationId;
