@@ -36,10 +36,10 @@ public:
     CardMap m_cards;
     ModuleMap m_modules;
     StreamRestoreMap m_streamRestores;
-    Server *m_server;
+    Server *m_server = nullptr;
 
-    pa_context *m_context;
-    pa_glib_mainloop *m_mainloop;
+    pa_context *m_context = nullptr;
+    pa_glib_mainloop *m_mainloop = nullptr;
 
     QString m_newDefaultSink;
     QString m_newDefaultSource;
