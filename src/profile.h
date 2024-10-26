@@ -27,7 +27,11 @@ class PULSEAUDIOQT_EXPORT Profile : public PulseObject
     Q_PROPERTY(quint32 sourceCount READ sourceCount NOTIFY sourceCountChanged)
 
 public:
-    enum Availability { Unknown, Available, Unavailable };
+    enum Availability {
+        Unknown,
+        Available,
+        Unavailable
+    };
     Q_ENUM(Availability)
 
     ~Profile() override;

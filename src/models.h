@@ -25,7 +25,9 @@ class PULSEAUDIOQT_EXPORT AbstractModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    enum ItemRole { PulseObjectRole = Qt::UserRole + 1 };
+    enum ItemRole {
+        PulseObjectRole = Qt::UserRole + 1
+    };
 
     Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
 
@@ -76,7 +78,9 @@ class PULSEAUDIOQT_EXPORT SinkModel : public AbstractModel
 {
     Q_OBJECT
 public:
-    enum ItemRole { SortByDefaultRole = PulseObjectRole + 1 };
+    enum ItemRole {
+        SortByDefaultRole = PulseObjectRole + 1
+    };
     Q_ENUM(ItemRole)
 
     SinkModel(QObject *parent = nullptr);
@@ -100,7 +104,9 @@ class PULSEAUDIOQT_EXPORT SourceModel : public AbstractModel
 {
     Q_OBJECT
 public:
-    enum ItemRole { SortByDefaultRole = PulseObjectRole + 1 };
+    enum ItemRole {
+        SortByDefaultRole = PulseObjectRole + 1
+    };
     Q_ENUM(ItemRole)
 
     SourceModel(QObject *parent = nullptr);
