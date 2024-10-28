@@ -138,7 +138,7 @@ public:
             obj->d->update(info);
             insert(obj);
         } else {
-            type = QLatin1String("create");
+            type = QLatin1String("update");
             obj->d->update(info);
         }
 
