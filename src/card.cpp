@@ -102,11 +102,15 @@ void CardPrivate::update(const pa_card_info *info)
         port->d->setInfo(*it);
     }
 
-    for (CardPort *port : std::as_const(m_ports)) {
+    QList<CardPort *> toDiscard;
+    for (auto port : std::as_const(m_ports)) {
         if (!newPorts.contains(port->name())) {
-            m_ports.removeOne(port);
-            delete port;
+            toDiscard << port;
         }
+    }
+    for (auto port : std::as_const(toDiscard)) {
+        m_ports.removeOne(port);
+        delete port;
     }
 
     Q_EMIT q->portsChanged();
