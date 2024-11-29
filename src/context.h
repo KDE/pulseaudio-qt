@@ -173,6 +173,27 @@ public:
      */
     [[nodiscard]] bool isAutoConnecting() const;
 
+    /**
+     * Loads a new module.
+     *
+     * @param name the name of the module to load
+     * @param argument the argument to pass to the module
+     *
+     * To know if the module loaded successfully listen to moduleAdded.
+     *
+     * @since 1.7
+     */
+    void loadModule(const QString &name, const QString &argument);
+
+    /**
+     * Unloads the module.
+     *
+     * To know if the module unloaded successfully listen to moduleRemoved.
+     *
+     * @since 1.7
+     */
+    void unloadModule(PulseAudioQt::Module *module);
+
 public Q_SLOTS:
     /**
      * When the Context is not auto-connecting this may be used to give the user a manual trigger (e.g. a button)

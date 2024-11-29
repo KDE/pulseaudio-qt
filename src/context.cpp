@@ -984,4 +984,20 @@ void ContextPrivate::synthesizeEventStream()
     streamRestoreCallback(&info);
 }
 
+void Context::loadModule(const QString &name, const QString &argument)
+{
+    // We could provide callback forwarding here, unfortunately that is a bit complicated because we don't do this elsewhere, so we'd have to invent
+    // new machinery. Additionally complicated by the fact that the caller may wish to supply a capturing lambda which doesn't decay to a pointer callable.
+    // Let's not do this until someone presents a good use case. Worst case, a caller can just use the context directly and side step this function.
+    if (!PAOperation(pa_context_load_module(d->m_context, qUtf8Printable(name), qUtf8Printable(argument), /*callback*/ nullptr, /*userdata*/ nullptr))) {
+        qCWarning(PULSEAUDIOQT) << "pa_context_load_module() failed" << name << argument;
+    }
+}
+
+void Context::unloadModule(PulseAudioQt::Module *module)
+{
+    if (!PAOperation(pa_context_unload_module(d->m_context, module->index(), /*callback*/ nullptr, /*userdata*/ nullptr))) {
+        qCWarning(PULSEAUDIOQT) << "pa_context_load_module() failed" << module->index() << module->name() << module->argument();
+    }
+}
 } // PulseAudioQt
