@@ -111,6 +111,15 @@ void ServerPrivate::update(const pa_server_info *info)
         Q_EMIT q->isPipeWireChanged();
     }
 
+    // Do not use the pulseaudio server version for pipewire
+    if (!isPw) {
+        const QString pulseVersion = QString::fromUtf8(info->server_version);
+        if (pulseVersion != m_version) {
+            m_version = pulseVersion;
+            Q_EMIT q->versionChanged();
+        }
+    }
+
     q->updateDefaultDevices();
 
     Q_EMIT q->updated();
@@ -157,6 +166,11 @@ bool Server::isPipeWire() const
     return d->m_isPipeWire;
 }
 
+QString Server::version() const
+{
+    return d->m_version;
+}
+
 void ServerPrivate::findWirePlumber()
 {
     if (!m_isPipeWire) {
@@ -164,21 +178,41 @@ void ServerPrivate::findWirePlumber()
     }
 
     const auto clients = Context::instance()->clients();
+
+    // Get the actual PipeWire version by reading the `core.version` property
+    // from one of the clients in the list that exposes it
+    for (const auto &client : clients) {
+        if (client->properties().contains(QStringLiteral("core.version"))) {
+            const QString pwVersion = client->properties().value(QStringLiteral("core.version")).toString();
+            if (pwVersion != m_version) {
+                m_version = pwVersion;
+                Q_EMIT q->versionChanged();
+                break;
+            }
+        }
+    }
+
     for (const auto &client : clients) {
         if (client->properties().value(QStringLiteral("wireplumber.daemon")) == QLatin1String("true")) {
-            m_hasWirePlumber = true;
+            m_wirePlumberVersion = client->properties().value(QStringLiteral("application.version")).toString();
             Q_EMIT q->hasWirePlumberChanged();
             return;
         }
     }
 
-    // Found no plumber, mark false
-    m_hasWirePlumber = false;
+    // Found no plumber, mark as not availabe
+    m_wirePlumberVersion = std::nullopt;
     Q_EMIT q->hasWirePlumberChanged();
 }
 
 bool Server::hasWirePlumber() const
 {
-    return d->m_hasWirePlumber;
+    return d->m_wirePlumberVersion.has_value();
 }
+
+QString Server::wirePlumberVersion() const
+{
+    return d->m_wirePlumberVersion.value_or(QString());
+}
+
 } // PulseAudioQt

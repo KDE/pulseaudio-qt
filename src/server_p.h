@@ -23,8 +23,9 @@ public:
     QString m_defaultSourceName;
     Sink *m_defaultSink;
     Source *m_defaultSource;
+    QString m_version;
     bool m_isPipeWire = true;
-    bool m_hasWirePlumber = true;
+    std::optional<QString> m_wirePlumberVersion;
     QTimer m_wirePlumberFindTimer;
 
     void update(const pa_server_info *info);
