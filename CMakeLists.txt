@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_VERSION 1.7.0)
+set(PROJECT_VERSION 1.8.0)
 
 project(PulseAudioQt VERSION ${PROJECT_VERSION})
 
