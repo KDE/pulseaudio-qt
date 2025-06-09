@@ -54,6 +54,11 @@ bool Device::isVirtualDevice() const
     return d->m_virtualDevice;
 }
 
+bool Device::supportsProAudio() const
+{
+    return d->m_supportsProAudio;
+}
+
 Device::Device(QObject *parent)
     : VolumeObject(parent)
     , d(new DevicePrivate(this))

@@ -34,6 +34,7 @@ class PULSEAUDIOQT_EXPORT Device : public VolumeObject
     Q_PROPERTY(qint64 baseVolume READ baseVolume NOTIFY baseVolumeChanged)
     Q_PROPERTY(QVariantMap pulseProperties READ pulseProperties NOTIFY pulsePropertiesChanged)
     Q_PROPERTY(bool virtualDevice READ isVirtualDevice NOTIFY virtualDeviceChanged)
+    Q_PROPERTY(bool supportsProAudio READ supportsProAudio NOTIFY supportsProAudioChanged)
 
 public:
     enum State {
@@ -121,6 +122,13 @@ public:
      */
     bool isVirtualDevice() const;
 
+    /**
+     * @returns true when the device is suitable for using the "Pro Audio" profile
+     * because it supports more than 8 channels of audio. See also
+     * https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/FAQ#what-is-the-pro-audio-profile
+     */
+    bool supportsProAudio() const;
+
 Q_SIGNALS:
     void stateChanged();
     void descriptionChanged();
@@ -132,6 +140,7 @@ Q_SIGNALS:
     void baseVolumeChanged();
     void pulsePropertiesChanged();
     void virtualDeviceChanged();
+    void supportsProAudioChanged();
 
 protected:
     /** @private */

@@ -34,6 +34,7 @@ public:
     qint64 m_baseVolume = -1;
     QVariantMap m_pulseProperties;
     bool m_virtualDevice = false;
+    bool m_supportsProAudio = false;
 
     Device::State stateFromPaState(int value) const;
 
@@ -134,6 +135,15 @@ public:
         if (m_virtualDevice != isVirtual) {
             m_virtualDevice = isVirtual;
             Q_EMIT q->virtualDeviceChanged();
+        }
+
+        // https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/FAQ#what-is-the-pro-audio-profile says
+        // this only makes sense for 9+ channel audio cards
+        const int channels = QString::fromUtf8(pa_proplist_gets(info->proplist, "audio.channels")).toInt();
+        const bool supportsProAudio = channels > 8;
+        if (m_supportsProAudio != supportsProAudio) {
+            m_supportsProAudio = supportsProAudio;
+            Q_EMIT q->supportsProAudioChanged();
         }
     }
 };
