@@ -3,13 +3,13 @@
 
     SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
-import QtQuick 2.7
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 
-import org.kde.kirigami 2.10 as Kirigami
+import org.kde.kirigami as Kirigami
 
-import org.kde.pulseaudioqt.painspector 1.0
+import org.kde.pulseaudioqt.painspector
 
 Column {
     Kirigami.FormData.label: "Ports:"
