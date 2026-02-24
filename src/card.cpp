@@ -74,9 +74,18 @@ void CardPrivate::update(const pa_card_info *info)
         }
     }
 
+    // Make sure it's -1 in the unlikely event that we don't have an active port
+    // https://bugs.kde.org/show_bug.cgi?id=496067
+    m_activeProfileIndex = -1;
     for (Profile *profile : std::as_const(m_profiles)) {
         if (QString::fromUtf8(info->active_profile2->name) == profile->name()) {
             m_activeProfileIndex = m_profiles.indexOf(profile);
+        }
+    }
+    if (m_activeProfileIndex == static_cast<quint32>(-1)) {
+        qCWarning(PULSEAUDIOQT) << "Failed to find active profile" << QString::fromUtf8(info->active_profile2->name);
+        for (const auto &profile : std::as_const(m_profiles)) {
+            qCWarning(PULSEAUDIOQT) << "Available profile:" << profile->name();
         }
     }
 
