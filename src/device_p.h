@@ -110,9 +110,18 @@ public:
         }
 
         // Set active port
+        // Make sure it's -1 in the unlikely event that we don't have an active port
+        // https://bugs.kde.org/show_bug.cgi?id=496067
+        m_activePortIndex = -1;
         for (Port *port : std::as_const(m_ports)) {
             if (QString::fromUtf8(info->active_port->name) == port->name()) {
                 m_activePortIndex = m_ports.indexOf(port);
+            }
+        }
+        if (m_activePortIndex == static_cast<quint32>(-1)) {
+            qCWarning(PULSEAUDIOQT) << "Failed to find active port" << QString::fromUtf8(info->active_port->name);
+            for (const auto &port : std::as_const(m_ports)) {
+                qCWarning(PULSEAUDIOQT) << "Available port:" << port->name();
             }
         }
 
