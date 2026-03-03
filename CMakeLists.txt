@@ -79,6 +79,7 @@ if (BUILD_TESTING)
     add_subdirectory(tests)
     if(Qt6Test_FOUND)
         add_subdirectory(autotests)
+        add_subdirectory(smoketest)
     endif()
 endif()
 
