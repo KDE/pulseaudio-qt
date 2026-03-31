@@ -951,7 +951,7 @@ void Context::reconnectDaemon()
 
     d->forceDisconnect();
     d->reset();
-    return d->connectToDaemon();
+    d->connectToDaemon();
 }
 
 void ContextPrivate::forceDisconnect()
