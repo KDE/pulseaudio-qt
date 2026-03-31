@@ -950,6 +950,7 @@ void Context::reconnectDaemon()
     }
 
     d->forceDisconnect();
+    d->reset();
     return d->connectToDaemon();
 }
 
