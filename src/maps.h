@@ -77,7 +77,10 @@ template<typename Type, typename PAInfo>
 class MapBase : public MapBaseQObject
 {
 public:
-    ~MapBase() override = default;
+    ~MapBase() override
+    {
+        qDeleteAll(m_data);
+    }
 
     const QList<Type *> &data() const
     {
@@ -119,10 +122,7 @@ public:
         Q_EMIT added(modelIndex, object);
     }
 
-    // Context is passed in as parent because context needs to include the maps
-    // so we'd cause a circular dep if we were to try to use the instance here.
-    // Plus that's weird separation anyway.
-    void updateEntry(const PAInfo *info, QObject *parent)
+    void updateEntry(const PAInfo *info)
     {
         Q_ASSERT(info);
 
@@ -134,7 +134,7 @@ public:
         auto *obj = m_hash.value(info->index);
         auto type = QLatin1String("create");
         if (!obj) {
-            obj = new Type(parent);
+            obj = new Type(nullptr);
             obj->d->update(info);
             insert(obj);
         } else {
