@@ -40,6 +40,7 @@ static void module_info_free(pa_module_info *info)
 
 void MapsTest::basicTest()
 {
+    QObject p;
     ModuleMap map;
 
     pa_module_info *info = module_info_new();
@@ -47,9 +48,9 @@ void MapsTest::basicTest()
 
     QCOMPARE(map.count(), 0);
 
-    map.updateEntry(info);
+    map.updateEntry(info, &p);
     QCOMPARE(map.count(), 1);
-    map.updateEntry(info);
+    map.updateEntry(info, &p);
     QCOMPARE(map.count(), 1);
 
     QObject *index10 = map.objectAt(0);
@@ -59,7 +60,7 @@ void MapsTest::basicTest()
 
     // Add 0 (10, 0)
     info->index = 0;
-    map.updateEntry(info);
+    map.updateEntry(info, &p);
     QCOMPARE(map.count(), 2);
     QCOMPARE(map.objectAt(0), index10);
 
@@ -71,9 +72,9 @@ void MapsTest::basicTest()
 
     // Add 4, 15 (10, 0, 4, 15)
     info->index = 4;
-    map.updateEntry(info);
+    map.updateEntry(info, &p);
     info->index = 15;
-    map.updateEntry(info);
+    map.updateEntry(info, &p);
 
     QCOMPARE(map.count(), 4);
     QCOMPARE(map.objectAt(0), index10);
@@ -116,6 +117,7 @@ void MapsTest::basicTest()
 
 void MapsTest::pendingRemovalsTest()
 {
+    QObject p;
     ModuleMap map;
 
     pa_module_info *info = module_info_new();
@@ -126,11 +128,11 @@ void MapsTest::pendingRemovalsTest()
     // 10 is not in map, should set pending removal
     map.removeEntry(10);
     // 10 is in pending removals, this should eat it and not add it into map
-    map.updateEntry(info);
+    map.updateEntry(info, &p);
     QCOMPARE(map.count(), 0);
 
     // No more pending removals, this should add it
-    map.updateEntry(info);
+    map.updateEntry(info, &p);
     QCOMPARE(map.count(), 1);
 
     module_info_free(info);

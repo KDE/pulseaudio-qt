@@ -572,37 +572,37 @@ void ContextPrivate::contextStateCallback(pa_context *c)
 void ContextPrivate::sinkCallback(const pa_sink_info *info)
 {
     // This parenting here is a bit weird
-    m_sinks.updateEntry(info);
+    m_sinks.updateEntry(info, q);
 }
 
 void ContextPrivate::sinkInputCallback(const pa_sink_input_info *info)
 {
-    m_sinkInputs.updateEntry(info);
+    m_sinkInputs.updateEntry(info, q);
 }
 
 void ContextPrivate::sourceCallback(const pa_source_info *info)
 {
-    m_sources.updateEntry(info);
+    m_sources.updateEntry(info, q);
 }
 
 void ContextPrivate::sourceOutputCallback(const pa_source_output_info *info)
 {
-    m_sourceOutputs.updateEntry(info);
+    m_sourceOutputs.updateEntry(info, q);
 }
 
 void ContextPrivate::clientCallback(const pa_client_info *info)
 {
-    m_clients.updateEntry(info);
+    m_clients.updateEntry(info, q);
 }
 
 void ContextPrivate::cardCallback(const pa_card_info *info)
 {
-    m_cards.updateEntry(info);
+    m_cards.updateEntry(info, q);
 }
 
 void ContextPrivate::moduleCallback(const pa_module_info *info)
 {
-    m_modules.updateEntry(info);
+    m_modules.updateEntry(info, q);
 }
 
 void ContextPrivate::streamRestoreCallback(const pa_ext_stream_restore_info *info)
