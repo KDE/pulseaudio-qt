@@ -129,18 +129,16 @@ void ServerPrivate::update(const pa_server_info *info)
 template<typename Type, typename Vector>
 static Type *findByName(const Vector &vector, const QString &name)
 {
-    Type *out = nullptr;
     if (name.isEmpty()) {
-        return out;
+        return nullptr;
     }
     for (Type *t : vector) {
-        out = t;
-        if (out->name() == name) {
-            return out;
+        if (t->name() == name) {
+            return t;
         }
     }
     qCWarning(PULSEAUDIOQT) << "No object for name" << name;
-    return out;
+    return nullptr;
 }
 
 void Server::updateDefaultDevices()
