@@ -20,6 +20,7 @@ class PULSEAUDIOQT_EXPORT VolumeObject : public IndexedPulseObject
     Q_PROPERTY(qint64 volume READ volume WRITE setVolume NOTIFY volumeChanged)
     Q_PROPERTY(bool muted READ isMuted WRITE setMuted NOTIFY mutedChanged)
     Q_PROPERTY(bool volumeWritable READ isVolumeWritable NOTIFY isVolumeWritableChanged)
+    Q_PROPERTY(bool muteWritable READ isMuteWritable NOTIFY isMuteWritableChanged)
     Q_PROPERTY(QStringList channels READ channels NOTIFY channelsChanged)
     Q_PROPERTY(QList<qint64> channelVolumes READ channelVolumes WRITE setChannelVolumes NOTIFY channelVolumesChanged)
     Q_PROPERTY(QStringList rawChannels READ rawChannels NOTIFY rawChannelsChanged)
@@ -50,6 +51,7 @@ public:
     virtual void setMuted(bool muted) = 0;
 
     bool isVolumeWritable() const;
+    bool isMuteWritable() const;
 
     QStringList channels() const;
     QStringList rawChannels() const;
@@ -61,6 +63,7 @@ Q_SIGNALS:
     void volumeChanged();
     void mutedChanged();
     void isVolumeWritableChanged();
+    void isMuteWritableChanged();
     void channelsChanged();
     void rawChannelsChanged();
     void channelVolumesChanged();

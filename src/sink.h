@@ -23,6 +23,13 @@ class PULSEAUDIOQT_EXPORT Sink : public Device
 public:
     ~Sink() override;
 
+    /**
+     * These are fallback values for when volume is not read/writable
+     */
+    Q_INVOKABLE void volumeUp();
+    Q_INVOKABLE void volumeDown();
+    Q_INVOKABLE void toggleMute();
+
     void setVolume(qint64 volume) override;
 
     void setMuted(bool muted) override;

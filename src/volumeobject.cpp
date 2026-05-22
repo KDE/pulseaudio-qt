@@ -47,6 +47,11 @@ bool VolumeObject::isVolumeWritable() const
     return d->m_volumeWritable;
 }
 
+bool VolumeObject::isMuteWritable() const
+{
+    return d->m_muteWritable;
+}
+
 QStringList VolumeObject::channels() const
 {
     return d->m_channels;

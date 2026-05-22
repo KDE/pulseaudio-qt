@@ -4,11 +4,15 @@
     SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 
+#include <pulse/introspect.h>
+
 #include "sink.h"
 #include "sink_p.h"
 
 #include "context.h"
 #include "context_p.h"
+#include "debug.h"
+#include "operation.h"
 #include "server.h"
 #include "sinkinput.h"
 
@@ -31,6 +35,48 @@ SinkPrivate::SinkPrivate(Sink *q)
 
 Sink::~Sink()
 {
+}
+
+void Sink::volumeUp()
+{
+    if (!Context::instance()->context()) {
+        return;
+    }
+
+    const QString recipientName = QStringLiteral("/sink/%1/volume-control").arg(name());
+    const QByteArray recipientNameData = recipientName.toUtf8();
+    if (!PAOperation(
+            pa_context_send_message_to_object(Context::instance()->context(), recipientNameData.constData(), "volume-up", nullptr, nullptr, nullptr))) {
+        qCWarning(PULSEAUDIOQT) << "pa_context_send_message_to_object failed for" << recipientName << "volume-up";
+    }
+}
+
+void Sink::volumeDown()
+{
+    if (!Context::instance()->context()) {
+        return;
+    }
+
+    const QString recipientName = QStringLiteral("/sink/%1/volume-control").arg(name());
+    const QByteArray recipientNameData = recipientName.toUtf8();
+    if (!PAOperation(
+            pa_context_send_message_to_object(Context::instance()->context(), recipientNameData.constData(), "volume-down", nullptr, nullptr, nullptr))) {
+        qCWarning(PULSEAUDIOQT) << "pa_context_send_message_to_object failed for" << recipientName << "volume-down";
+    }
+}
+
+void Sink::toggleMute()
+{
+    if (!Context::instance()->context()) {
+        return;
+    }
+
+    const QString recipientName = QStringLiteral("/sink/%1/volume-control").arg(name());
+    const QByteArray recipientNameData = recipientName.toUtf8();
+    if (!PAOperation(
+            pa_context_send_message_to_object(Context::instance()->context(), recipientNameData.constData(), "mute-toggle", nullptr, nullptr, nullptr))) {
+        qCWarning(PULSEAUDIOQT) << "pa_context_send_message_to_object failed for" << recipientName << "mute-toggle";
+    }
 }
 
 void SinkPrivate::update(const pa_sink_info *info)

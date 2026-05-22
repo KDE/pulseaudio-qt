@@ -6,6 +6,7 @@
 #ifndef VOLUMEOBJECT_P_H
 #define VOLUMEOBJECT_P_H
 
+#include <pulse/proplist.h>
 #include <pulse/volume.h>
 
 #include "indexedpulseobject_p.h"
@@ -23,6 +24,7 @@ public:
     pa_cvolume m_volume;
     bool m_muted = true;
     bool m_volumeWritable = true;
+    bool m_muteWritable = true;
     QStringList m_channels;
     QStringList m_rawChannels;
 
@@ -31,8 +33,33 @@ public:
     template<typename PAInfo>
     void updateVolumeObject(PAInfo *info)
     {
+        const auto readBoolProplistValue = [](const char *value) {
+            if (!value) {
+                return true;
+            }
+
+            const QString stringValue = QString::fromUtf8(value).trimmed().toLower();
+            return stringValue == QLatin1String("1") || stringValue == QLatin1String("true") || stringValue == QLatin1String("yes")
+                || stringValue == QLatin1String("on");
+        };
+
         q->IndexedPulseObject::d->updatePulseObject(info);
         q->PulseObject::d->updateProperties(info);
+
+        qDebug() << "querying device.volume.write-volume" << QString::fromUtf8(pa_proplist_gets(info->proplist, "device.volume.write-volume"));
+
+        const bool volumeWritable = readBoolProplistValue(pa_proplist_gets(info->proplist, "device.volume.write-volume"));
+        if (m_volumeWritable != volumeWritable) {
+            m_volumeWritable = volumeWritable;
+            Q_EMIT q->isVolumeWritableChanged();
+        }
+
+        const bool muteWritable = readBoolProplistValue(pa_proplist_gets(info->proplist, "device.volume.write-mute-value"));
+        if (m_muteWritable != muteWritable) {
+            m_muteWritable = muteWritable;
+            Q_EMIT q->isMuteWritableChanged();
+        }
+
         if (m_muted != info->mute) {
             m_muted = info->mute;
             Q_EMIT q->mutedChanged();
