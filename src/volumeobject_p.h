@@ -33,28 +33,27 @@ public:
     template<typename PAInfo>
     void updateVolumeObject(PAInfo *info)
     {
-        const auto readBoolProplistValue = [](const char *value) {
-            if (!value) {
+        const auto readBoolProplistValue = [](const char *value, bool defaultValue) {
+            const QString stringValue = QString::fromUtf8(value).trimmed().toLower();
+            if (stringValue == QLatin1String("true") || stringValue == QLatin1String("1")) {
                 return true;
+            } else if (stringValue == QLatin1String("false") || stringValue == QLatin1String("0")) {
+                return false;
             }
 
-            const QString stringValue = QString::fromUtf8(value).trimmed().toLower();
-            return stringValue == QLatin1String("1") || stringValue == QLatin1String("true") || stringValue == QLatin1String("yes")
-                || stringValue == QLatin1String("on");
+            return defaultValue;
         };
 
         q->IndexedPulseObject::d->updatePulseObject(info);
         q->PulseObject::d->updateProperties(info);
 
-        qDebug() << "querying device.volume.write-volume" << QString::fromUtf8(pa_proplist_gets(info->proplist, "device.volume.write-volume"));
-
-        const bool volumeWritable = readBoolProplistValue(pa_proplist_gets(info->proplist, "device.volume.write-volume"));
+        const bool volumeWritable = readBoolProplistValue(pa_proplist_gets(info->proplist, "device.volume.write-volume-value"), true);
         if (m_volumeWritable != volumeWritable) {
             m_volumeWritable = volumeWritable;
             Q_EMIT q->isVolumeWritableChanged();
         }
 
-        const bool muteWritable = readBoolProplistValue(pa_proplist_gets(info->proplist, "device.volume.write-mute-value"));
+        const bool muteWritable = readBoolProplistValue(pa_proplist_gets(info->proplist, "device.volume.write-mute-value"), true);
         if (m_muteWritable != muteWritable) {
             m_muteWritable = muteWritable;
             Q_EMIT q->isMuteWritableChanged();
