@@ -24,6 +24,13 @@ target_sources(KF6PulseAudioQt PRIVATE
     indexedpulseobject.cpp
 )
 
+qt_extract_metatypes(KF6PulseAudioQt OUTPUT_FILES METATYPES_FILE)
+
+# see https://qt-project.atlassian.net/browse/QTBUG-123052
+# might be replaced with proper Qt API once that exists
+get_filename_component(METATYPES_FILE_NAME ${METATYPES_FILE} NAME)
+target_sources(KF6PulseAudioQt INTERFACE $<INSTALL_INTERFACE:${KDE_INSTALL_QTMETATYPESDIR}/${METATYPES_FILE_NAME}>)
+
 ecm_qt_declare_logging_category(KF6PulseAudioQt
     HEADER debug.h
     IDENTIFIER PULSEAUDIOQT
@@ -114,3 +121,5 @@ if(BUILD_QCH)
         COMPONENT Devel
     )
 endif()
+
+install(FILES ${METATYPES_FILE} DESTINATION ${KDE_INSTALL_QTMETATYPESDIR})
