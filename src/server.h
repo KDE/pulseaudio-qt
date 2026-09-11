@@ -20,9 +20,9 @@ class Context;
 class PULSEAUDIOQT_EXPORT Server : public QObject
 {
     Q_OBJECT
-    /// The default Sink (SinkInputs that aren't otherwise assigned explicitly will use this Sink)
+    /// The default Sink (SinkInputs that aren't otherwise assigned explicitly will use this Sink). May be null.
     Q_PROPERTY(Sink *defaultSink READ defaultSink NOTIFY defaultSinkChanged)
-    /// The default Source (SourceOutputs that aren't otherwise assigned explicitly will use this Source)
+    /// The default Source (SourceOutputs that aren't otherwise assigned explicitly will use this Source). May be null.
     Q_PROPERTY(Source *defaultSource READ defaultSource NOTIFY defaultSourceChanged)
     /// Whether the connected Server is PipeWire (rather than PulseAudio)
     Q_PROPERTY(bool isPipeWire READ isPipeWire NOTIFY isPipeWireChanged)
@@ -36,9 +36,11 @@ class PULSEAUDIOQT_EXPORT Server : public QObject
 public:
     ~Server() override;
 
+    /*! The default sink device. May be null when resolution failed or isn't done yet */
     Sink *defaultSink() const;
     void setDefaultSink(Sink *sink);
 
+    /*! The default source device. May be null when resolution failed or isn't done yet */
     Source *defaultSource() const;
     void setDefaultSource(Source *source);
 

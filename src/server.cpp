@@ -140,7 +140,7 @@ static Type *findByName(const Vector &vector, const QString &name)
         }
     }
     qCWarning(PULSEAUDIOQT) << "No object for name" << name;
-    return out;
+    return nullptr;
 }
 
 void Server::updateDefaultDevices()
