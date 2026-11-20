@@ -15,7 +15,6 @@
 
 namespace PulseAudioQt
 {
-class Port;
 class DevicePrivate;
 
 /**

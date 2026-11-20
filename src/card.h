@@ -17,8 +17,6 @@ struct pa_card_info;
 
 namespace PulseAudioQt
 {
-class CardPort;
-class Profile;
 
 class PULSEAUDIOQT_EXPORT Card : public IndexedPulseObject
 {

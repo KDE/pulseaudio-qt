@@ -10,6 +10,15 @@
 #include "pulseaudioqt_export.h"
 #include <QObject>
 
+#include "card.h"
+#include "module.h"
+#include "server.h"
+#include "sink.h"
+#include "sinkinput.h"
+#include "source.h"
+#include "sourceoutput.h"
+#include "streamrestore.h"
+
 struct pa_context;
 
 /**
@@ -17,16 +26,6 @@ struct pa_context;
  */
 namespace PulseAudioQt
 {
-class Card;
-class Client;
-class Sink;
-class SinkInput;
-class Source;
-class SourceOutput;
-class StreamRestore;
-class Module;
-class Server;
-
 /**
  * The normal volume (100%, 0 dB). Equivalent to PA_VOLUME_NORM.
  */
