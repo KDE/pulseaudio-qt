@@ -9,7 +9,6 @@
 #include "port.h"
 
 #include <QObject>
-#include <pulse/introspect.h>
 
 namespace PulseAudioQt
 {
@@ -22,8 +21,6 @@ class PULSEAUDIOQT_EXPORT CardPort : public Port
 
 public:
     ~CardPort() override;
-
-    void update(const pa_card_port_info *info);
 
 private:
     explicit CardPort(QObject *parent);
